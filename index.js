@@ -11,6 +11,7 @@ mongoose.connect(process.env.MONGO_URI, () => console.log('MongoDB connected!'))
 
 // App setup
 app.use(morgan('combined'));
+app.use(bodyParser.json());
 router(app);
 
 // Serve static files for production

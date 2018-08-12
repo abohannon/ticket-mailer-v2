@@ -14,6 +14,16 @@ app.use(morgan('combined'));
 app.use(bodyParser.json({ type: '*/*' }));
 router(app);
 
+// Serve static files for production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/dist'));
+
+  const path = require('path');
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolved(__dirname, 'client', 'public', 'index.html'));
+  })
+}
+
 // Server setup
 const PORT = process.env.PORT || 3001;
 const server = http.createServer(app);

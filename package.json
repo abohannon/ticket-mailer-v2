@@ -1,0 +1,36 @@
+{
+  "name": "showstubs-ticket-mailer-server",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "8.11.2",
+    "npm": "6.0.1"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "server": "nodemon -r dotenv/config index.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postbuild": "cd client && yarn install && npm run build"
+  },
+  "author": "Adam Bohannon",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "jwt-simple": "^0.5.1",
+    "mongoose": "^5.2.7",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^3.6.1",
+    "nodemon": "^1.18.3"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "showstubs-ticket-mailer-client",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "proxy": {
+    "/api/*": {
+      "target": "http://localhost:3001"
+    }
+  },
+  "scripts": {
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack --mode development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adam Bohannon",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-hot-loader": "^4.3.4"
+  },
+  "devDependencies": {
+    "babel-loader": "^7.1.5",
+    "css-loader": "^1.0.0",
+    "style-loader": "^0.22.1",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
+  }
+}

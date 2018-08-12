@@ -13,7 +13,7 @@
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "cd client && yarn install && npm run build"
+    "heroku-postbuild": "cd client && yarn install && yarn install --dev && npm run build"
   },
   "author": "Adam Bohannon",
   "license": "ISC",

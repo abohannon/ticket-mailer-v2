@@ -10,7 +10,7 @@
   "scripts": {
     "start": "node index.js",
     "server": "nodemon -r dotenv/config index.js",
-    "client": "npm run dev --prefix client",
+    "client": "npm run client:dev --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "cd client && yarn install && npm run build"

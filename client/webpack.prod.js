@@ -6,6 +6,6 @@ module.exports = merge(common, {
   mode: 'production',
   devServer: {
     contentBase: path.join(__dirname, 'public/'),
-    publicPath: 'dist/',
+    publicPath: 'public/',
   },
 });

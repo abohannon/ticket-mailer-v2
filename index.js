@@ -16,11 +16,11 @@ router(app);
 
 // Serve static files for production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/public'));
+  app.use(express.static('client/dist'));
 
   const path = require('path');
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'public', 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
   })
 }
 

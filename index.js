@@ -3,9 +3,6 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const app = express();
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const flash = require('connect-flash');
 const router = require('./router');
 const mongoose = require('mongoose');
 
@@ -15,9 +12,6 @@ mongoose.connect(process.env.MONGO_URI, () => console.log('MongoDB connected!'))
 // App setup
 app.use(morgan('combined'));
 app.use(bodyParser.json());
-app.use(cookieParser('dream on'));
-app.use(session({ cookie: { maxAge: 60000 }}));
-app.use(flash());
 router(app);
 
 // Serve static files for production

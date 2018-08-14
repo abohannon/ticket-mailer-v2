@@ -1,5 +1,6 @@
 const jwt = require('jwt-simple');
 const User = require('../models/user');
+const passport = require('passport');
 
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
@@ -10,12 +11,13 @@ const tokenForUser = (user) => {
 }
 
 exports.signin = (req, res, next) => {
-  // User has already had email and password authed
-  // Just need a token
-  console.log(req.flash())
-  console.log(req.user)
-  res.send({ token: tokenForUser(req.user) });
-}
+  passport.authenticate('local', { session: false }, (err, user, info) => {
+    if (err) return res.status(500).json({ ...info, errorMessage: err });
+    if (!user) return res.status(402).json(info)
+    
+    res.status(200).json({ token: tokenForUser(user) });
+  })(req, res, next);
+};
 
 exports.signup = (req, res, next) => {
   const { email, password, name } = req.body

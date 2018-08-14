@@ -24,10 +24,10 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
     user.comparePassword(password, (err, isMatch) => {
       if (err) return done(err);
 
-      // user not found
+      // password doesn't macth
       if (!isMatch) return done(null, false, { message: 'Incorrect login.' });
 
-      // user found, return user.
+      // password matches, return user.
       return done(null, user);
     })
   })

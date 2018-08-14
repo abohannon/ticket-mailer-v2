@@ -16,14 +16,16 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
     if (err) return done(err)
 
     // user not found
-    if (!user) return done(null, false)
+    if (!user) {
+      return done(null, false, { message: 'Incorrect login.' })
+    };
 
     // compare passwords
     user.comparePassword(password, (err, isMatch) => {
       if (err) return done(err);
 
       // user not found
-      if (!isMatch) return done(null, false);
+      if (!isMatch) return done(null, false, { message: 'Incorrect login.' });
 
       // user found, return user.
       return done(null, user);

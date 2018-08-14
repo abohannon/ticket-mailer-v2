@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "proxy": {
     "/api/*": {
       "target": "http://localhost:3001"

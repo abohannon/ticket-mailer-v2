@@ -12,6 +12,7 @@ const tokenForUser = (user) => {
 exports.signin = (req, res, next) => {
   // User has already had email and password authed
   // Just need a token
+  console.log(req.flash())
   console.log(req.user)
   res.send({ token: tokenForUser(req.user) });
 }

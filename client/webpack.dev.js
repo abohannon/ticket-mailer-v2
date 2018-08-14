@@ -10,6 +10,9 @@ module.exports = merge(common, {
     contentBase: path.join(__dirname, 'dist'),
     port: 3000,
     hotOnly: true,
+    proxy: {
+      '/api/*':'http://localhost:3001'
+    }
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),

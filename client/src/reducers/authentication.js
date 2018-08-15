@@ -4,7 +4,6 @@ import {
 
 import {
   PENDING,
-  FULFILLED,
   REJECTED,
 } from '../constants';
 
@@ -21,20 +20,31 @@ export default (state = INITIAL_STATE, action) => {
   switch (type) {
     case LOGIN_USER: {
       if (status === PENDING) {
-        const newState = { pending: action };
+        const newState = {
+          pending: action,
+          fulfilled: {},
+          rejected: {},
+        };
 
         return { ...state, ...newState };
       }
 
       if (status === REJECTED) {
-        const newState = { rejected: action };
+        const newState = {
+          isAuthenticated: false,
+          pending: {},
+          fulfilled: {},
+          rejected: action,
+        };
 
         return { ...state, ...newState };
       }
 
       const newState = {
         isAuthenticated: true,
+        pending: {},
         fulfilled: action,
+        rejected: {},
       };
 
       return { ...state, ...newState };

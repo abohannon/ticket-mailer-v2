@@ -1,52 +1,120 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import {
+  Card, Form, Icon, Input, Button, Checkbox,
+} from 'antd';
 
+const FormItem = Form.Item;
+
+const StyledCard = styled(Card)`
+  display: flex;
+  max-width: 300px;
+  width: 100%;
+`;
+
+const Title = styled.h1`
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .3rem;
+  font-weight: 200;
+  margin-bottom: 1rem;
+`;
 
 class Login extends Component {
-  state = {
-    email: '',
-    password: '',
+  componentDidMount() {
+    this.props.form.validateFields();
   }
+
+  hasErrors = fieldsError => Object.keys(fieldsError).some(field => fieldsError[field])
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log('submit');
+    const { handleLogin, form } = this.props;
+
+    form.validateFields((err, values) => {
+      if (err) {
+        console.log(err);
+      }
+
+      handleLogin(values);
+    });
   };
 
-  handleChange = (event) => {
-    const { target } = event;
-    const { name, value } = target;
-
-    this.setState({
-      [name]: value,
-    });
-  }
-
   render() {
+    const cardProps = {
+      bodyStyle: {
+        width: '100%',
+      },
+    };
+
+    const {
+      form: {
+        getFieldDecorator,
+        getFieldsError,
+        getFieldError,
+        isFieldTouched,
+      },
+    } = this.props;
+
+    const emailError = isFieldTouched('email') && getFieldError('email');
+    const passwordError = isFieldTouched('password') && getFieldError('password');
+
     return (
       <div>
-        <h1>Login</h1>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <input
-              name="email"
-              placeholder="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div>
-            <input
-              name="password"
-              placeholder="password"
-              value={this.state.password}
-              onChange={this.handleChange}
-            />
-          </div>
-          <button type="submit">Login</button>
-        </form>
+        <Title>Ticket Mailer</Title>
+        <StyledCard {...cardProps}>
+          <Form onSubmit={this.handleSubmit} className="login-form">
+            <FormItem
+              validateStatus={emailError ? 'error' : ''}
+              help={emailError || ''}
+            >
+              {getFieldDecorator('email', {
+                rules: [{ required: true, message: 'Please enter your email.' }],
+              })(
+                <Input
+                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0, .25)' }} />}
+                  placeholder="Email"
+                />,
+              )}
+            </FormItem>
+            <FormItem
+              validateStatus={passwordError ? 'error' : ''}
+              help={passwordError || ''}
+            >
+              {getFieldDecorator('password', {
+                rules: [{ required: true, message: 'Please enter your password.' }],
+              })(
+                <Input
+                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0, .25)' }} />}
+                  type="password"
+                  placeholder="Password"
+                />,
+              )}
+            </FormItem>
+            <FormItem style={{ marginBottom: 0 }}>
+              {getFieldDecorator('remember', {
+                valuePropName: 'checked',
+                initialValue: true,
+              })(
+                <Checkbox>Remember me</Checkbox>,
+              )}
+              <a className="login-form-forgot" style={{ float: 'right' }} href="">Forgot password</a>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form-buttom"
+                disabled={this.hasErrors(getFieldsError())}
+                block
+              >
+              Log in
+              </Button>
+            </FormItem>
+          </Form>
+        </StyledCard>
       </div>
     );
   }
 }
 
-export default Login;
+export default Form.create()(Login);

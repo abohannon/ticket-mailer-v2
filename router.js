@@ -7,6 +7,6 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 
 module.exports = (app) => {
   app.get('/api/test', (req, res) => res.send({ hello: "world" }) );
-  app.post('/api/signin', Authentication.signin);
-  app.post('/api/signup', Authentication.signup);
+  app.post('/api/auth/login', Authentication.login);
+  app.post('/api/auth/signup', Authentication.signup);
 }

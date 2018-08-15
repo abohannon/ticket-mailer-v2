@@ -10,7 +10,7 @@ const tokenForUser = (user) => {
   )
 }
 
-exports.signin = (req, res, next) => {
+exports.login = (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) return res.status(500).json({ ...info, errorMessage: err });
     if (!user) return res.status(402).json(info)

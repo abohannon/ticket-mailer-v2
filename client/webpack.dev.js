@@ -10,6 +10,7 @@ module.exports = merge(common, {
     contentBase: path.join(__dirname, 'dist'),
     port: 3000,
     hotOnly: true,
+    historyApiFallback: true,
     proxy: {
       '/api/*': 'http://localhost:3001',
     },
@@ -19,7 +20,7 @@ module.exports = merge(common, {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify('development'),
-      API_HOST: JSON.stringify('http://localhost:3000'),
+      API_HOST: JSON.stringify('http://localhost:3000/api'),
     }),
   ],
 });

@@ -1,17 +1,52 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const Login = () => (
-  <div>
-    <h1>Login</h1>
-    <form>
+
+class Login extends Component {
+  state = {
+    email: '',
+    password: '',
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('submit');
+  };
+
+  handleChange = (event) => {
+    const { target } = event;
+    const { name, value } = target;
+
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  render() {
+    return (
       <div>
-        <input placeholder="email" />
+        <h1>Login</h1>
+        <form onSubmit={this.handleSubmit}>
+          <div>
+            <input
+              name="email"
+              placeholder="email"
+              value={this.state.email}
+              onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <input
+              name="password"
+              placeholder="password"
+              value={this.state.password}
+              onChange={this.handleChange}
+            />
+          </div>
+          <button type="submit">Login</button>
+        </form>
       </div>
-      <div>
-        <input placeholder="password" />
-      </div>
-    </form>
-  </div>
-);
+    );
+  }
+}
 
 export default Login;

@@ -2,15 +2,24 @@ import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+import { thunk } from 'redux-thunk';
+import reducers from './reducers';
+
 import AppContainer from './containers/AppContainer';
 
 const rootEl = document.getElementById('root');
+const middlewares = [];
 
-// const store = createStore({});
+if (NODE_ENV === 'development') {
+  const { logger } = require('redux-logger');
+  middlewares.push(logger);
+}
+
+const store = compose(applyMiddleware(...middlewares))(createStore)(reducers);
 
 const renderApp = Component => render(
-  <Provider>
+  <Provider store={store}>
     <BrowserRouter>
       <Component />
     </BrowserRouter>

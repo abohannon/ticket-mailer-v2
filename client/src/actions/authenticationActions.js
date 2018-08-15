@@ -17,7 +17,7 @@ export const loginUser = body => async (dispatch) => {
   };
   dispatch(action);
 
-  const endpoint = `${API_HOST}/api/auth/login`;
+  const endpoint = `${API_HOST}/auth/login`;
 
   const headers = {
     Accept: 'application/json',
@@ -44,6 +44,7 @@ export const loginUser = body => async (dispatch) => {
 
     if (response.ok) {
       const { token } = json;
+      localStorage.clear();
       localStorage.setItem('id_token', token);
     }
 

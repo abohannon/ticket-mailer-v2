@@ -12,5 +12,9 @@
         "react/jsx-filename-extension": [1, {
             "extensions": [".js", ".jsx"]
         }]
+    },
+    "globals": {
+        "NODE_ENV": true,
+        "API_HOST": true
     }
 }

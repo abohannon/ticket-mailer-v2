@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import isEmpty from 'lodash/isEmpty';
+import { AUTH_USER } from '../actions/types';
 
 // Components
 import Login from '../components/Login';
 
 // Actions
-import { loginUser } from '../actions/authenticationActions';
+import { loginUser, authenticateUser } from '../actions/authenticationActions';
 
 const Wrapper = styled.div`
   box-sizing: border-box;
@@ -21,8 +23,39 @@ const Wrapper = styled.div`
 `;
 
 class Landing extends Component {
+  componentDidMount() {
+    const {
+      authentication: { isAuthenticated },
+      history,
+      dispatch,
+    } = this.props;
+
+    if (isAuthenticated) {
+      history.push('/dashboard');
+    }
+
+    const token = localStorage.getItem('id_token');
+
+    if (token && !isAuthenticated) {
+      dispatch(authenticateUser(token));
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { authentication: { isAuthenticated }, history } = this.props;
+
+    if (!prevProps.isAuthenticated && isAuthenticated) {
+      history.push('/dashboard');
+    }
+  }
+
   render() {
-    const { dispatch } = this.props;
+    const { dispatch, authentication } = this.props;
+
+    if (!isEmpty(authentication.pending)
+      && authentication.pending.type === AUTH_USER) {
+      return null;
+    }
 
     return (
       <Wrapper className="wrapper-landing">

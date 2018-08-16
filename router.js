@@ -9,6 +9,5 @@ module.exports = (app) => {
   app.get('/api/test', (req, res) => res.send({ hello: "world" }) );
   app.post('/api/auth/login', Authentication.login);
   app.post('/api/auth/signup', Authentication.signup);
-  // TODO: Create controller to return user profile
-  app.get('/api/auth/user', requireAuth, (req, res) => res.send(req.user));
+  app.get('/api/auth/user', requireAuth, Authentication.authenticateUser);
 }

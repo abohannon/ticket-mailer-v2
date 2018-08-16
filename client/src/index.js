@@ -1,11 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore, compose } from 'redux';
 import thunk from 'redux-thunk';
-import './App.css';
 
+import history from './helpers/history';
+import './App.css';
 
 import reducers from './reducers';
 import AppContainer from './containers/AppContainer';
@@ -23,9 +24,9 @@ const store = composeEnhancers(applyMiddleware(...middlewares))(createStore)(red
 
 const renderApp = Component => render(
   <Provider store={store}>
-    <BrowserRouter>
+    <Router history={history}>
       <Component />
-    </BrowserRouter>
+    </Router>
   </Provider>,
   rootEl,
 );

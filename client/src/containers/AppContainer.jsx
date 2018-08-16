@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
+
+// Components
 import Routes from '../routes/Routes';
 
 class AppContainer extends Component {

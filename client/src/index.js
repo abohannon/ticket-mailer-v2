@@ -18,8 +18,8 @@ if (NODE_ENV === 'development') {
   const { logger } = require('redux-logger');
   middlewares.push(logger);
 }
-
-const store = compose(applyMiddleware(...middlewares))(createStore)(reducers);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = composeEnhancers(applyMiddleware(...middlewares))(createStore)(reducers);
 
 const renderApp = Component => render(
   <Provider store={store}>

@@ -1,18 +1,48 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 const propTypes = {
 
 };
 
+const PrivateRoute = (route) => {
+  const { routes, ...rest } = route;
+
+  return (
+    <Route
+      path={route.path}
+      render={props => (route.isAuthenticated
+        ? <route.component {...props} {...rest} routes={route.routes} />
+        : (
+          <Redirect
+            to={{
+              pathname: route.redirect ? props.match.url.replace(route.redirect.from, route.redirect.to) : '/',
+              state: { from: props.location },
+            }}
+          />
+        ))
+      }
+    />
+  );
+};
+
 const RouteHandler = route => (
-  <Route
-    path={route.path}
-    render={props => <route.component {...props} routes={route.routes} />}
-  />
+  route.protected
+    ? <PrivateRoute {...route} />
+    : (
+      <Route
+        path={route.path}
+        render={props => <route.component {...props} routes={route.routes} />}
+      />
+    )
 );
 
 RouteHandler.propTypes = propTypes;
 
-export default RouteHandler;
+const mapStateToProps = ({ authentication }) => ({
+  isAuthenticated: authentication.isAuthenticated,
+});
+
+export default connect(mapStateToProps)(RouteHandler);

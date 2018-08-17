@@ -20,6 +20,11 @@ module.exports = {
             'react',
             'stage-0',
           ],
+          env: {
+            test: {
+              presets: [['env'], 'react'],
+            },
+          },
         },
       },
       {

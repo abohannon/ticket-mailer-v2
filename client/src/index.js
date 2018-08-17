@@ -25,11 +25,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = composeEnhancers(applyMiddleware(...middlewares))(createStore)(reducers);
 
 const renderApp = Component => render(
-  <Provider store={store}>
+  <Root>
     <Router history={history}>
       <Component />
     </Router>
-  </Provider>,
+  </Root>,
   rootEl,
 );
 

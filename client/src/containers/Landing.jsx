@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   background: linear-gradient(142deg, rgba(47,47,204,1) 0%, rgba(0,144,255,1) 100%);
 `;
 
-class Landing extends Component {
+export class Landing extends Component {
   componentDidMount() {
     const {
       authentication: { isAuthenticated },
@@ -52,7 +52,7 @@ class Landing extends Component {
   render() {
     const { dispatch, authentication } = this.props;
 
-    if (!isEmpty(authentication.pending)
+    if (authentication && !isEmpty(authentication.pending)
       && authentication.pending.type === AUTH_USER) {
       return null;
     }

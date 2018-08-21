@@ -10,8 +10,18 @@ const routes = [
   {
     protected: true,
     exact: true,
-    path: '/dashboard',
+    path: '/dashboard/tours',
     component: Dashboard,
+    routes: [
+      {
+        path: '/dashboard/shows',
+        component: null,
+      },
+      {
+        path: '/dashboard/sent',
+        component: null,
+      },
+    ],
   },
 ];
 

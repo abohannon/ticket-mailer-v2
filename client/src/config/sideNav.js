@@ -1,4 +1,4 @@
-export const configTop = [
+export const config = [
   {
     name: 'Home',
     path: '/dashboard',
@@ -19,9 +19,6 @@ export const configTop = [
     path: '/sent',
     icon: 'mail',
   },
-];
-
-export const configBottom = [
   {
     name: 'Logout',
     path: '/',

@@ -4,25 +4,15 @@ import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore, compose } from 'redux';
 import thunk from 'redux-thunk';
-import reducers from './reducers';
+import reducers from 'reducers';
 
-import history from './helpers/history';
-import Root from './Root';
-import './App.css';
+import history from 'helpers/history';
+import Root from 'Root';
+import 'App.css';
 
-import AppContainer from './containers/AppContainer';
+import AppContainer from 'containers/AppContainer';
 
 const rootEl = document.getElementById('root');
-
-const middlewares = [thunk];
-
-if (NODE_ENV === 'development') {
-  const { logger } = require('redux-logger');
-  middlewares.push(logger);
-}
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = composeEnhancers(applyMiddleware(...middlewares))(createStore)(reducers);
 
 const renderApp = Component => render(
   <Root>

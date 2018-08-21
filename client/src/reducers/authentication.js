@@ -2,12 +2,12 @@ import {
   LOGIN_USER,
   LOGOUT_USER,
   AUTH_USER,
-} from '../actions/types';
+} from 'actions/types';
 
 import {
   PENDING,
   REJECTED,
-} from '../constants';
+} from 'constants';
 
 const INITIAL_STATE = {
   isAuthenticated: false,

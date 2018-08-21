@@ -5,6 +5,11 @@
         "browser": true,
         "jest": true
     },
+    "settings": {
+        "import/resolver": {
+            "babel-module": {}
+        }
+    },
     "rules": {
         "react/sort-comp": 0,
         "no-debugger": 0,
@@ -13,7 +18,9 @@
         "react/jsx-filename-extension": [1, {
             "extensions": [".js", ".jsx"]
         }],
-        "react/no-array-index-key": 0
+        "react/no-array-index-key": 0,
+        "react/forbid-prop-types": 0,
+        "react/require-default-props": 0
     },
     "globals": {
         "NODE_ENV": true,

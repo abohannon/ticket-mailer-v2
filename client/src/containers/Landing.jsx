@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import isEmpty from 'lodash/isEmpty';
-import { AUTH_USER } from '../actions/types';
+import { AUTH_USER } from 'actions/types';
 
 // Components
-import Login from '../components/Login';
+import Login from 'components/Login';
 
 // Actions
-import { loginUser, authenticateUser } from '../actions/authenticationActions';
+import { loginUser, authenticateUser } from 'actions/authenticationActions';
 
 const Wrapper = styled.div`
   box-sizing: border-box;
@@ -45,7 +45,7 @@ export class Landing extends Component {
     const { authentication: { isAuthenticated }, history } = this.props;
 
     if (!prevProps.isAuthenticated && isAuthenticated) {
-      history.push('/dashboard');
+      history.push('/dashboard/tours');
     }
   }
 

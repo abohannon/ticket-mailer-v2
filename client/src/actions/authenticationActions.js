@@ -1,9 +1,4 @@
 import fetch from 'isomorphic-fetch';
-import {
-  LOGIN_USER,
-  LOGOUT_USER,
-  AUTH_USER,
-} from './types';
 
 import {
   PENDING,
@@ -11,7 +6,13 @@ import {
   REJECTED,
   POST,
   GET,
-} from '../constants';
+} from 'constants';
+
+import {
+  LOGIN_USER,
+  LOGOUT_USER,
+  AUTH_USER,
+} from 'actions/types';
 
 export const loginUser = body => async (dispatch) => {
   let action = {

@@ -13,4 +13,5 @@ export const DELETE = 'DELETE';
 // Style
 export const BLUE = 'rgba(47,47,204,1)';
 export const LIGHT_BLUE = 'rgba(0,144,255,1)';
-export const DARK_BLUE = 'rgba(23,23,102,1)';
+export const DARK_BLUE = 'rgba(0,11,51,1)';
+export const BOX_SHADOW = '0px 3px 6px 0px rgba(0,0,0,.1)';

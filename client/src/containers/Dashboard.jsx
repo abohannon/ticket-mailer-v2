@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 // Components
-import Sidebar from '../components/Sidebar';
+import SideNav from '../components/SideNav';
 import Main from '../components/Main';
 
 // Actions
@@ -20,7 +20,7 @@ class Dashboard extends Component {
     const { dispatch } = this.props;
     return (
       <Wrapper>
-        <Sidebar onLogout={() => dispatch(logoutUser())} />
+        <SideNav onLogout={() => dispatch(logoutUser())} />
         <Main />
       </Wrapper>
     );

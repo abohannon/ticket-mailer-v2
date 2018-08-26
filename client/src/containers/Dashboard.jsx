@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 // Components
 import Main from 'components/Main';
 import SideNav from 'components/SideNav';
-
 
 // Actions
 import { logoutUser } from 'actions/authenticationActions';
@@ -19,6 +19,10 @@ const Wrapper = styled.main`
 `;
 
 class Dashboard extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+  }
+
   render() {
     const { dispatch } = this.props;
     return (

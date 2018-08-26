@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Icon } from 'antd';
 
@@ -28,6 +29,10 @@ const Title = styled.h3`
 `;
 
 class Sidebar extends Component {
+  static propTypes = {
+    onLogout: PropTypes.func,
+  }
+
   render() {
     return (
       <Wrapper className="side-nav">

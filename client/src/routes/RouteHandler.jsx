@@ -1,11 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
-
-const propTypes = {
-
-};
 
 const PrivateRoute = (route) => {
   const { routes, ...rest } = route;
@@ -38,8 +33,6 @@ const RouteHandler = route => (
       />
     )
 );
-
-RouteHandler.propTypes = propTypes;
 
 const mapStateToProps = ({ authentication }) => ({
   isAuthenticated: authentication.isAuthenticated,

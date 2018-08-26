@@ -17,3 +17,7 @@ body {
   font-size: inherit;
   background-color: #e3e8ee;
 }
+
+.table-cell {
+  padding: 16px 32px;
+}

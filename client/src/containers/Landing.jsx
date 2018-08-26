@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import isEmpty from 'lodash/isEmpty';
@@ -23,6 +24,12 @@ const Wrapper = styled.div`
 `;
 
 export class Landing extends Component {
+  static propTypes = {
+    authentication: PropTypes.object,
+    history: PropTypes.object,
+    dispatch: PropTypes.func,
+  }
+
   componentDidMount() {
     const {
       authentication: { isAuthenticated },

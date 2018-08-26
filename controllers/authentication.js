@@ -42,7 +42,7 @@ exports.signup = (req, res, next) => {
   const { email, password, name } = req.body
 
   if (!email || !password || !name) {
-    return res.status(422).send({ error: 'You must provide an email, password, and name.' })
+    return res.status(422).json({ error: 'You must provide an email, password, and name.' })
   }
 
   // See if a user with the given email exists

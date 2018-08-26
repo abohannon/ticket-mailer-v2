@@ -3,8 +3,10 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const app = express();
-const router = require('./router');
 const mongoose = require('mongoose');
+
+const appRoutes = require('./routes/appRoutes');
+const shopifyRoutes = require('./routes/shopifyRoutes');
 
 // DB Setup
 mongoose.connect(process.env.MONGO_URI, () => console.log('MongoDB connected!'));
@@ -12,7 +14,11 @@ mongoose.connect(process.env.MONGO_URI, () => console.log('MongoDB connected!'))
 // App setup
 app.use(morgan('combined'));
 app.use(bodyParser.json());
-router(app);
+app.set('trust proxy', true);
+
+// Routes
+appRoutes(app);
+shopifyRoutes(app);
 
 // Serve static files for production
 if (process.env.NODE_ENV === 'production') {

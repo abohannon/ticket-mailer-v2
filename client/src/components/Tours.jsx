@@ -1,8 +1,29 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 import { Card, Table } from 'components/common';
 
 class Tours extends Component {
+  static propTypes = {
+    fetchToursPending: PropTypes.object,
+    fetchToursResolved: PropTypes.object,
+  }
+
+  tableData = () => {
+    const { fetchToursResolved } = this.props;
+
+    if (!isEmpty(fetchToursResolved)) {
+      return fetchToursResolved.payload.map((tour, index) => ({
+        key: index,
+        tour: tour.title,
+      }));
+    }
+    return [];
+  };
+
   render() {
+    const { fetchToursPending } = this.props;
+
     const columns = [
       {
         dataIndex: 'tour',
@@ -11,16 +32,7 @@ class Tours extends Component {
       },
     ];
 
-    const data = [
-      {
-        key: 1,
-        tour: 'Circa Survive Anniversary Tour',
-      },
-      {
-        key: 2,
-        tour: 'Every Time I Die Fuck You Tour',
-      },
-    ];
+    const loading = !isEmpty(fetchToursPending);
 
     return (
       <Card
@@ -30,9 +42,10 @@ class Tours extends Component {
       >
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={this.tableData()}
           pagination={false}
           showHeader={false}
+          loading={loading}
         />
       </Card>
     );

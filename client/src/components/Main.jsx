@@ -13,9 +13,21 @@ const Wrapper = styled.div`
 
 class Main extends Component {
   render() {
+    const {
+      fetchToursPending,
+      fetchToursRejected,
+      fetchToursResolved,
+    } = this.props.application;
+
+    const toursProps = {
+      fetchToursPending,
+      fetchToursRejected,
+      fetchToursResolved,
+    };
+
     return (
       <Wrapper>
-        <Tours />
+        <Tours {...toursProps} />
       </Wrapper>
     );
   }

@@ -7,6 +7,7 @@ const propTypes = {
   showHeader: PropTypes.bool,
   columns: PropTypes.array,
   dataSource: PropTypes.array,
+  loading: PropTypes.bool,
 };
 
 const Table = (props) => {
@@ -15,6 +16,7 @@ const Table = (props) => {
     showHeader,
     columns,
     dataSource,
+    loading,
   } = props;
 
   return (
@@ -23,6 +25,7 @@ const Table = (props) => {
       dataSource={dataSource}
       pagination={pagination}
       showHeader={showHeader}
+      loading={loading}
     />
   );
 };

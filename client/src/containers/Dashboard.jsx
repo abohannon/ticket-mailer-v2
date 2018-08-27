@@ -9,6 +9,7 @@ import SideNav from 'components/SideNav';
 
 // Actions
 import { logoutUser } from 'actions/authenticationActions';
+import { fetchTours } from 'actions/shopifyActions';
 
 const Wrapper = styled.main`
   display: flex;
@@ -21,17 +22,25 @@ const Wrapper = styled.main`
 class Dashboard extends Component {
   static propTypes = {
     dispatch: PropTypes.func,
+    application: PropTypes.object,
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchTours());
   }
 
   render() {
-    const { dispatch } = this.props;
+    const { dispatch, application } = this.props;
     return (
       <Wrapper>
         <SideNav onLogout={() => dispatch(logoutUser())} />
-        <Main />
+        <Main application={application} />
       </Wrapper>
     );
   }
 }
 
-export default connect()(Dashboard);
+const mapStateToProps = ({ application }) => ({ application });
+
+export default connect(mapStateToProps)(Dashboard);

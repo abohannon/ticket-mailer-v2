@@ -18,6 +18,18 @@ body {
   background-color: #e3e8ee;
 }
 
-.table-cell {
-  padding: 16px 32px;
+p {
+  color: #444444;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  color: #141414;
+}
+
+a {
+  color: #444444;
+}
+
+a:hover {
+  color: #141414;
 }

@@ -37,8 +37,8 @@ class Tours extends Component {
     return (
       <Card
         title="Current Tours"
-        bodyStyle={{ paddingLeft: 0, paddingRight: 0, paddingTop: 1 }}
         style={{ minHeight: 400 }}
+        loading={loading}
       >
         <Table
           columns={columns}

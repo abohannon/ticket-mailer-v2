@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import isEmpty from 'lodash/isEmpty';
 import { AUTH_USER } from 'actions/types';
+import { BLUE, LIGHT_BLUE } from 'constants';
 
 // Components
 import Login from 'components/Login';
@@ -19,8 +20,8 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
   margin: 0;
-  background: rgb(47,47,204);
-  background: linear-gradient(142deg, rgba(47,47,204,1) 0%, rgba(0,144,255,1) 100%);
+  background: ${BLUE};
+  background: linear-gradient(142deg, ${BLUE} 0%, ${LIGHT_BLUE} 100%);
 `;
 
 export class Landing extends Component {

@@ -4,8 +4,13 @@ const passport = require('passport');
 
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
+  const exp = timestamp + (60 * 60 * 24 * 1000 * 7)
   return jwt.encode(
-    { sub: user.id, iat: timestamp },
+    {
+      sub: user.id,
+      iat: timestamp,
+      exp,
+    },
     process.env.JWT_SECRET
   )
 }

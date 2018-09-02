@@ -1,5 +1,7 @@
-import Landing from '../containers/Landing';
-import Dashboard from '../containers/Dashboard';
+import Landing from 'containers/Landing';
+import Dashboard from 'containers/Dashboard';
+import Tours from 'components/Tours';
+import Shows from 'components/Shows';
 
 const routes = [
   {
@@ -9,13 +11,16 @@ const routes = [
   },
   {
     protected: true,
-    exact: true,
-    path: '/dashboard/tours',
+    path: '/dashboard',
     component: Dashboard,
     routes: [
       {
+        path: '/dashboard/tours',
+        component: Tours,
+      },
+      {
         path: '/dashboard/shows',
-        component: null,
+        component: Shows,
       },
       {
         path: '/dashboard/sent',

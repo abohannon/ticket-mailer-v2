@@ -52,9 +52,9 @@ export class Landing extends Component {
   componentDidUpdate(prevProps) {
     const { authentication: { isAuthenticated }, history } = this.props;
 
-    if (!prevProps.isAuthenticated && isAuthenticated) {
-      history.push('/dashboard/tours');
-    }
+    // if (!prevProps.isAuthenticated && isAuthenticated) {
+    //   history.push('/dashboard/tours');
+    // }
   }
 
   render() {

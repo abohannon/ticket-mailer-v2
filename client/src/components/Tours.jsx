@@ -9,6 +9,10 @@ class Tours extends Component {
     fetchToursResolved: PropTypes.object,
   }
 
+  componentDidMount() {
+    console.log('Tours mounted');
+  }
+
   tableData = () => {
     const { fetchToursResolved } = this.props;
 

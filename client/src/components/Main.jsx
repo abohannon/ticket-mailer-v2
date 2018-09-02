@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Tours from 'components/Tours';
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,22 +11,16 @@ const Wrapper = styled.div`
 `;
 
 class Main extends Component {
-  render() {
-    const {
-      fetchToursPending,
-      fetchToursRejected,
-      fetchToursResolved,
-    } = this.props.application;
+  componentDidMount() {
+    console.log('Main mounted');
+  }
 
-    const toursProps = {
-      fetchToursPending,
-      fetchToursRejected,
-      fetchToursResolved,
-    };
+  render() {
+    const { render } = this.props;
 
     return (
       <Wrapper>
-        <Tours {...toursProps} />
+        {render()}
       </Wrapper>
     );
   }

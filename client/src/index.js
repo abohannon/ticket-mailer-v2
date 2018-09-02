@@ -1,10 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { applyMiddleware, createStore, compose } from 'redux';
-import thunk from 'redux-thunk';
-import reducers from 'reducers';
 
 import history from 'helpers/history';
 import Root from 'Root';

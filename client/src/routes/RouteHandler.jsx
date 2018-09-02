@@ -23,16 +23,17 @@ const PrivateRoute = (route) => {
   );
 };
 
-const RouteHandler = route => (
-  route.protected
+const RouteHandler = (route) => {
+  console.log(route);
+  return route.protected
     ? <PrivateRoute {...route} />
     : (
       <Route
         path={route.path}
-        render={props => <route.component {...props} routes={route.routes} />}
+        render={props => <route.component {...props} {...route} routes={route.routes} />}
       />
-    )
-);
+    );
+};
 
 const mapStateToProps = ({ authentication }) => ({
   isAuthenticated: authentication.isAuthenticated,

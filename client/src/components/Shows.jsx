@@ -4,7 +4,7 @@ import { Card, Table } from 'components/common';
 class Shows extends Component {
   render() {
     return (
-      <Card>
+      <Card title="Current Shows">
         <div>SHOWS</div>
       </Card>
     );

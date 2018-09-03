@@ -10,10 +10,11 @@ import { loadState, saveState } from 'helpers/storage';
 export default ({ children }) => {
   const persistedState = () => {
     const storedState = loadState();
+
     if (storedState) {
       const { authentication } = storedState;
       const token = localStorage.getItem('id_token');
-      const decoded = decode(token);
+      const decoded = token && decode(token);
       const date = new Date();
 
       if (token && decoded.exp > date.getTime()) {

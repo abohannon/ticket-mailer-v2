@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 
 // Components
 import Main from 'components/Main';
 import SideNav from 'components/SideNav';
-import Tours from 'components/Tours';
 
 // Actions
 import { logoutUser } from 'actions/authenticationActions';
-import { fetchTours } from 'actions/shopifyActions';
 
 import RouteHandler from '../routes/RouteHandler';
 
@@ -30,19 +28,13 @@ class Dashboard extends Component {
     routes: PropTypes.array,
   }
 
-  // componentDidMount() {
-  //   const { dispatch } = this.props;
-  //   dispatch(fetchTours());
-  // }
+  componentDidMount() {
+    const { history } = this.props;
+    history.replace('/dashboard/tours', { from: '/dashboard' });
+  }
 
   render() {
     const { dispatch, application, routes } = this.props;
-
-    const toursProps = {
-      fetchToursPending: application.fetchToursPending,
-      fetchToursRejected: application.fetchToursRejected,
-      fetchToursResolved: application.fetchToursResolved,
-    };
 
     return (
       <Wrapper>
@@ -51,7 +43,7 @@ class Dashboard extends Component {
           <Switch>
             {routes.map((route, i) => (
               <RouteHandler
-                key={`dashboard ${i}`}
+                key={`dashboard-${i}`}
                 {...route}
                 {...application}
               />

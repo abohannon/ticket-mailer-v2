@@ -39,7 +39,7 @@ export class Landing extends Component {
     } = this.props;
 
     if (isAuthenticated) {
-      history.push('/dashboard/tours');
+      history.push('/dashboard');
     }
 
     const token = localStorage.getItem('id_token');
@@ -53,7 +53,7 @@ export class Landing extends Component {
     const { authentication: { isAuthenticated }, history } = this.props;
 
     if (!prevProps.isAuthenticated && isAuthenticated) {
-      history.push('/dashboard/tours');
+      history.push('/dashboard');
     }
   }
 

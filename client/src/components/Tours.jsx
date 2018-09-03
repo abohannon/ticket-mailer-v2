@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import { Card, Table } from 'components/common';
 
+// Actions
+import { fetchTours } from 'actions/shopifyActions';
+
 class Tours extends Component {
   static propTypes = {
     fetchToursPending: PropTypes.object,
@@ -10,7 +13,8 @@ class Tours extends Component {
   }
 
   componentDidMount() {
-    console.log('Tours mounted');
+    const { dispatch } = this.props;
+    dispatch(fetchTours());
   }
 
   tableData = () => {

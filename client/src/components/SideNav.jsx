@@ -41,11 +41,11 @@ class Sidebar extends Component {
         </Header>
         <Spacer />
         <Menu>
-          <MenuItem path="/dashboard" index={0}>
+          <MenuItem path="/dashboard/tours" index={0}>
             <StyledIcon type="profile" />
             Tours
           </MenuItem>
-          <MenuItem path="/dashboard" index={1}>
+          <MenuItem path="/dashboard/shows" index={1}>
             <StyledIcon type="environment-o" />
             Shows
           </MenuItem>

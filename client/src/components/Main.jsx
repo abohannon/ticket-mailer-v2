@@ -11,10 +11,6 @@ const Wrapper = styled.div`
 `;
 
 class Main extends Component {
-  componentDidMount() {
-    console.log('Main mounted');
-  }
-
   render() {
     const { render } = this.props;
 

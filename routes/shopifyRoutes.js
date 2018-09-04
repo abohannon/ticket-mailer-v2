@@ -1,6 +1,6 @@
-const ShopifyController = require('../controllers/shopifyController');
+import { fetchTours, fetchAllShows } from '../controllers/shopifyController';
 
-module.exports = (app) => {
-  app.get('/api/fetchTours', ShopifyController.fetchTours)
-  app.get('/api/fetchAllShows', ShopifyController.fetchAllShows)
+export default (app) => {
+  app.get('/api/fetchTours', fetchTours)
+  app.get('/api/fetchAllShows', fetchAllShows)
 }

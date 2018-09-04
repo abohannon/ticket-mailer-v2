@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-exports.REF_USER = {
+export const REF_USER = {
   type: mongoose.Schema.ObjectId,
   ref: 'user',
 };

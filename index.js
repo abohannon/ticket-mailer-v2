@@ -1,17 +1,16 @@
-const express = require('express');
-const http = require('http');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const app = express();
-const mongoose = require('mongoose');
-
-const appRoutes = require('./routes/appRoutes');
-const shopifyRoutes = require('./routes/shopifyRoutes');
+import express from 'express';
+import http from 'http';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
+import appRoutes from './routes/appRoutes';
+import shopifyRoutes from './routes/shopifyRoutes';
 
 // DB Setup
 mongoose.connect(process.env.MONGO_URI, () => console.log('MongoDB connected!'));
 
 // App setup
+const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 

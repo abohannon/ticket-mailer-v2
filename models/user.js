@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+
 const Schema = mongoose.Schema;
-const bcrypt = require('bcrypt');
 
 // Define our model
 const userSchema = new Schema({
@@ -42,4 +43,4 @@ userSchema.methods.comparePassword = function(candidatePassword, callback) {
 const ModelClass = mongoose.model('user', userSchema);
 
 // Export the model
-module.exports = ModelClass;
+export default ModelClass;

@@ -1,6 +1,6 @@
-const Show = require('../models/show');
+import Show from '../models/show';
 
-exports.saveShowsToDatabase = (showsList) => {
+export const saveShowsToDatabase = (showsList) => {
   showsList.forEach((show) => {
     Show.findOne({ product_id: show.product_id }, (err, foundShow) => {
       if (err) throw new Error({ message: 'Error finding show', error: err })

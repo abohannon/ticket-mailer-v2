@@ -1,6 +1,6 @@
-const jwt = require('jwt-simple');
-const User = require('../models/user');
-const passport = require('passport');
+import jwt from 'jwt-simple';
+import User from '../models/user';
+import passport from 'passport';
 
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
@@ -15,7 +15,7 @@ const tokenForUser = (user) => {
   )
 }
 
-exports.authenticateUser = (req, res) => {
+export const authenticateUser = (req, res) => {
   const { admin, email, name } = req.user
 
   const user = {
@@ -27,7 +27,7 @@ exports.authenticateUser = (req, res) => {
   res.status(200).json(user)
 }
 
-exports.login = (req, res, next) => {
+export const login = (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err) return res.status(500).json({ ...info, errorMessage: err });
     if (!user) return res.status(401).json(info)
@@ -43,7 +43,7 @@ exports.login = (req, res, next) => {
   })(req, res, next);
 };
 
-exports.signup = (req, res, next) => {
+export const signup = (req, res, next) => {
   const { email, password, name } = req.body
 
   if (!email || !password || !name) {

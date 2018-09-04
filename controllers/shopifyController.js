@@ -22,14 +22,15 @@ export const fetchAllShows = async (req, res) => {
 
     if (showsList.length < 1) throw new Error('No shows found.');
 
-    // TODO: Refactor this to be a promise?
-    saveShowsToDatabase(showsList)
-    // fetchShowsFromDatabase()
+    await saveShowsToDatabase(showsList)
+    
+    const shows = await fetchShowsFromDatabase()
 
-    return res.status(200).json({ message: 'Shows updated' })
+    if (!shows) throw new Error('Error fetching shows.')
+
+    return res.status(200).json(shows)
 
   } catch (err) {
-    console.log({ message: 'Error fetching shows', error: err })
-    res.status(500).json({ message: 'Error fetching shows', error: err });
+    return res.status(500).json(err);
   }
 }

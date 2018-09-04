@@ -1,41 +1,44 @@
 import Show from '../models/show';
 
-export const saveShowsToDatabase = (showsList) => {
-  showsList.forEach((show) => {
-    Show.findOne({ product_id: show.product_id }, (err, foundShow) => {
-      if (err) throw new Error({ message: 'Error finding show', error: err })
+export const saveShowsToDatabase = async (showsList) => {
+    const promiseArray = showsList.map((show) => {
+      if (!show.product_id) reject('Bad input.')
 
-      // if show already exists, skip it
-      if (foundShow) {
-        return console.log('Show already exists')
-      }
+      return new Promise((resolve, reject) => {
+      Show.findOne({ product_id: show.product_id }, (err, foundShow) => {
+        if (err) reject('Error finding show.');
 
-      // if show doesn't exist in the DB, save it
-      if (!foundShow) {
-        const newShow = new Show({
-          product_id: show.product_id,
-          handle: show.handle,
-          updated_at: show.updated_at,
-          title: show.title,
-          variants: show.variants,
-          vendor: show.vendor,
-        }) 
-
-        console.log(`${show.product_id} saved!`)
-        return newShow.save()
-      }
-    })
-  })
+         if (!foundShow) {
+          const newShow = new Show({
+            product_id: show.product_id,
+            handle: show.handle,
+            updated_at: show.updated_at,
+            title: show.title,
+            variants: show.variants,
+            vendor: show.vendor,
+          }) 
+  
+          newShow.save((err) => {
+            if (err) reject(err)
+            resolve('Show saved!')
+          })
+        } else {
+          resolve('Show already exists, move on.')
+        }
+      })
+      })
+    }) 
+    
+   await Promise.all(promiseArray)
 }
 
-export const fetchShowsFromDatabase = () => {
-  Show.find({}, (err, result) => {
-    if (err) throw new Error({ message: 'Error fetching shows from database', error: err })
+export const fetchShowsFromDatabase = async () => {
+  console.log('fetch shows from')
+  const results = await Show.find({})
 
-    if (!result) {
-      return { message: 'No shows found.'}
-    }
+  if (!results || results.length < 1) {
+    return null
+  };
 
-    console.log(result)
-  })
+  return results;
 }

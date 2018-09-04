@@ -4,7 +4,7 @@ import { REF_USER } from './schemaTypes';
 const Schema = mongoose.Schema;
 
 const showSchema = new Schema({
-  product_id: Number,
+  product_id: { type: Number, unique: true },
   handle: String,
   updated_at: Date,
   title: String,

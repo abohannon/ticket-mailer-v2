@@ -6,6 +6,8 @@ import mongoose from 'mongoose';
 import appRoutes from './routes/appRoutes';
 import shopifyRoutes from './routes/shopifyRoutes';
 
+mongoose.Promise = Promise
+
 // DB Setup
 mongoose.connect(process.env.MONGO_URI, () => console.log('MongoDB connected!'));
 

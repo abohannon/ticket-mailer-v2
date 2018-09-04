@@ -1,5 +1,8 @@
 import shopify from '../services/shopify';
-import { saveShowsToDatabase } from '../services/db-service';
+import {
+  saveShowsToDatabase,
+  fetchShowsFromDatabase,
+} from '../services/db-service';
 
 export const fetchTours = async (req, res) => {
   try {
@@ -19,7 +22,9 @@ export const fetchAllShows = async (req, res) => {
 
     if (showsList.length < 1) throw new Error('No shows found.');
 
+    // TODO: Refactor this to be a promise?
     saveShowsToDatabase(showsList)
+    // fetchShowsFromDatabase()
 
     return res.status(200).json({ message: 'Shows updated' })
 

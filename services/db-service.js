@@ -27,3 +27,15 @@ export const saveShowsToDatabase = (showsList) => {
     })
   })
 }
+
+export const fetchShowsFromDatabase = () => {
+  Show.find({}, (err, result) => {
+    if (err) throw new Error({ message: 'Error fetching shows from database', error: err })
+
+    if (!result) {
+      return { message: 'No shows found.'}
+    }
+
+    console.log(result)
+  })
+}

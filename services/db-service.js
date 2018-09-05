@@ -33,7 +33,7 @@ export const saveShowsToDatabase = async (showsList) => {
 }
 
 export const fetchShowsFromDatabase = async () => {
-  console.log('fetch shows from')
+
   const results = await Show.find({})
 
   if (!results || results.length < 1) {

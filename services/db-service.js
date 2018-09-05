@@ -1,5 +1,6 @@
 import Show from '../models/show';
 
+//TODO: Need to improve this to check for more changes (e.g. title)
 export const saveShowsToDatabase = async (showsList) => {
     const promiseArray = showsList.map((show) => {
       if (!show.product_id) reject('Bad input.')

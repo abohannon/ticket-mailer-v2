@@ -19,7 +19,7 @@ export const fetchTours = async (req, res) => {
 export const fetchAllShows = async (req, res) => {
   try {
     const showsList = await shopify.productListing.list()
-
+  
     if (showsList.length < 1) throw new Error('No shows found.');
 
     await saveShowsToDatabase(showsList)

@@ -5,6 +5,7 @@ import { Router } from 'react-router-dom';
 import history from 'helpers/history';
 import Root from 'Root';
 import 'App.css';
+import 'styles/antd-styles.css';
 
 import AppContainer from 'containers/AppContainer';
 

@@ -5,7 +5,7 @@ import { BOX_SHADOW } from 'constants';
 
 export const Card = (props) => {
   const {
-    title, loading, style, bodyStyle, children,
+    title, loading, style, bodyStyle, headStyle, children,
   } = props;
 
   const cardProps = {
@@ -13,7 +13,11 @@ export const Card = (props) => {
     loading,
     bordered: false,
     style: { boxShadow: BOX_SHADOW, ...style },
-    bodyStyle: { ...bodyStyle },
+    bodyStyle: { padding: '1px 0px', ...bodyStyle },
+    headStyle: {
+      padding: '0px 16px',
+      ...headStyle,
+    },
   };
 
   return (

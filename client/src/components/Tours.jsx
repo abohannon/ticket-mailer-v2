@@ -10,6 +10,7 @@ class Tours extends Component {
   static propTypes = {
     fetchToursPending: PropTypes.object,
     fetchToursResolved: PropTypes.object,
+    dispatch: PropTypes.func,
   }
 
   componentDidMount() {
@@ -32,27 +33,27 @@ class Tours extends Component {
   render() {
     const { fetchToursPending } = this.props;
 
+    const loading = !isEmpty(fetchToursPending);
+
     const columns = [
       {
+        title: 'Name',
         dataIndex: 'tour',
         className: 'table-cell',
         render: text => <a href="#">{text}</a>,
       },
     ];
 
-    const loading = !isEmpty(fetchToursPending);
-
     return (
       <Card
         title="Current Tours"
         style={{ minHeight: 400 }}
-        loading={loading}
       >
         <Table
           columns={columns}
           dataSource={this.tableData()}
           pagination={false}
-          showHeader={false}
+          showHeader
           loading={loading}
         />
       </Card>

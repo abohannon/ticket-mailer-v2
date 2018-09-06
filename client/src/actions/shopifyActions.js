@@ -46,7 +46,7 @@ export const fetchAllShows = () => async (dispatch) => {
   };
   dispatch(action);
 
-  const endpoint = `${API_HOST}/fetchAllShows`;
+  const endpoint = `${API_HOST}/fetchShows`;
   const options = { method: GET };
 
   try {

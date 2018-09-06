@@ -43,9 +43,18 @@ export const saveShowsToDatabase = async (showsList, collection_id) => {
    await Promise.all(promiseArray)
 }
 
-// TODO: Need to check for collection_id
-export const fetchShowsFromDatabase = async () => {
+export const fetchShowsFromDatabase = async (collection_id) => {
 
+  const results = await Show.find({ collection_id })
+
+  if (!results || results.length < 1) {
+    return null
+  };
+
+  return results;
+}
+
+export const fetchAllShowsFromDatabase = async () => {
   const results = await Show.find({})
 
   if (!results || results.length < 1) {

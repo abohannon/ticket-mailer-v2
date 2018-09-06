@@ -8,12 +8,12 @@ import {
 export const fetchTours = async (req, res) => {
   try {
     const tourList = await shopify.collectionListing.list()
-    if (tourList.length < 1) throw new Error('No tours found.'); 
+    if (tourList.length < 1) throw 'No tours found.'; 
 
     return res.status(200).json(tourList);
 
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching tours', error: err });
+    res.status(500).json({ error: err });
   }
 };
 
@@ -43,6 +43,6 @@ export const fetchShows = async (req, res) => {
     
     return res.status(200).json(shows);
   } catch (err) {
-    return res.status(500).json({error: err})
+    return res.status(500).json({ error: err })
   }
 }

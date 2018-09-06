@@ -1,11 +1,13 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 // Define our model
 const userSchema = new Schema({
-  email: { type: String, unique: true, lowercase: true, required: true },
+  email: {
+    type: String, unique: true, lowercase: true, required: true,
+  },
   password: { type: String, required: true },
   name: { type: String, required: true },
   admin: { type: Boolean, default: false },
@@ -13,30 +15,30 @@ const userSchema = new Schema({
 
 // On Save Hook, encrypt password
 // Before save, run this function
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function preHook(next) {
   const user = this;
 
   // generate salt
-  bcrypt.genSalt(10, function(err, salt) {
+  bcrypt.genSalt(10, (err, salt) => {
     if (err) return next(err);
 
     // encypt password
-    bcrypt.hash(user.password, salt, function(err, hash) {
+    bcrypt.hash(user.password, salt, (err, hash) => {
       if (err) return next(err);
 
       // overwrite plain text password with encrypted password
       user.password = hash;
       next();
-    })
-  })
+    });
+  });
 });
 
-userSchema.methods.comparePassword = function(candidatePassword, callback) {
+userSchema.methods.comparePassword = function comparePass(candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     if (err) return callback(err);
 
     callback(null, isMatch);
-  })
+  });
 };
 
 // Creat the model class

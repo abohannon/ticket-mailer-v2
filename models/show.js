@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { REF_USER } from './schemaTypes';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const showSchema = new Schema({
   product_id: { type: Number, unique: true },
@@ -16,7 +16,7 @@ const showSchema = new Schema({
   successful_emails: { type: Number, default: 0 },
   failed_emails: { type: Number, default: 0 },
   visible: { type: Boolean, default: true },
-})
+});
 
 const ModelClass = mongoose.model('show', showSchema);
 

@@ -1,65 +1,64 @@
 import Show from '../models/show';
 
-//TODO: Need check for updated_at
+// TODO: Need check for updated_at
 export const saveShowsToDatabase = async (showsList, collection_id) => {
-    const promiseArray = showsList.map((show) => {
-      if (!show.product_id) reject('Bad input.')
+  const promiseArray = showsList.map((show) => {
+    if (!show.product_id) throw new Error('Bad input.');
 
-      return new Promise((resolve, reject) => {
-        Show.findOne({ product_id: show.product_id }, (err, foundShow) => {
-          if (err) reject('Error finding show.');
-          /* 
+    return new Promise((resolve, reject) => {
+      Show.findOne({ product_id: show.product_id }, (err, foundShow) => {
+        if (err) reject(new Error('Error finding show.'));
+        /*
           * If show doesn't exist in the DB, add it.
           * Else if the show exists, but doesn't have a collection_id yet, update it.
           */
-          if (!foundShow) {
-            const newShow = new Show({
-              product_id: show.product_id,
-              collection_id: collection_id || null,
-              handle: show.handle,
-              updated_at: show.updated_at,
-              title: show.title,
-              variants: show.variants,
-              vendor: show.vendor,
-            }) 
-            newShow.save((err) => {
-              if (err) reject(err)
-              resolve('Show saved!')
-            })
-          } else if (collection_id && !foundShow.collection_id) {
-            foundShow.collection_id = collection_id;  
+        if (!foundShow) {
+          const newShow = new Show({
+            product_id: show.product_id,
+            collection_id: collection_id || null,
+            handle: show.handle,
+            updated_at: show.updated_at,
+            title: show.title,
+            variants: show.variants,
+            vendor: show.vendor,
+          });
+          newShow.save((saveErr) => {
+            if (saveErr) reject(saveErr);
+            resolve('Show saved!');
+          });
+        } else if (collection_id && !foundShow.collection_id) {
+          foundShow.collection_id = collection_id;
 
-            foundShow.save((err) => {
-              if (err) reject(err)
-              resolve('Show updated!')
-            })
-          }
-          
-          resolve('Show already exists, move on.')
-        })
-      })
-    }) 
-    
-   await Promise.all(promiseArray)
-}
+          foundShow.save((saveErr) => {
+            if (saveErr) reject(saveErr);
+            resolve('Show updated!');
+          });
+        }
+
+        resolve('Show already exists, move on.');
+      });
+    });
+  });
+
+  await Promise.all(promiseArray);
+};
 
 export const fetchShowsFromDatabase = async (collection_id) => {
-
-  const results = await Show.find({ collection_id })
+  const results = await Show.find({ collection_id });
 
   if (!results || results.length < 1) {
-    return null
-  };
+    return null;
+  }
 
   return results;
-}
+};
 
 export const fetchAllShowsFromDatabase = async () => {
-  const results = await Show.find({})
+  const results = await Show.find({});
 
   if (!results || results.length < 1) {
-    return null
-  };
+    return null;
+  }
 
   return results;
-}
+};

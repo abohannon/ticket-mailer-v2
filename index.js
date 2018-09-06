@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import appRoutes from './routes/appRoutes';
 import shopifyRoutes from './routes/shopifyRoutes';
 
-mongoose.Promise = Promise
+mongoose.Promise = Promise;
 
 // DB Setup
 mongoose.connect(process.env.MONGO_URI, () => console.log('MongoDB connected!'));
@@ -27,12 +27,11 @@ if (process.env.NODE_ENV === 'production') {
   const path = require('path');
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
-  })
+  });
 }
 
 // Server setup
 const PORT = process.env.PORT || 3001;
 const server = http.createServer(app);
 server.listen(PORT);
-console.log(`Server listening on ${PORT}`)
-
+console.log(`Server listening on ${PORT}`);

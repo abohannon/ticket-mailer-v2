@@ -12,6 +12,7 @@ class Shows extends Component {
     fetchShowsPending: PropTypes.object,
     fetchShowsResolved: PropTypes.object,
     dispatch: PropTypes.func,
+    location: PropTypes.object,
   }
 
   componentDidMount() {

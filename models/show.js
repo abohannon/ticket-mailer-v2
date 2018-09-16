@@ -9,12 +9,16 @@ const showSchema = new Schema({
   handle: String,
   updated_at: Date,
   title: String,
-  variants: Array,
+  variants: [{
+    created_at: Date,
+    updated_at: Date,
+    id: Number,
+    title: String,
+    email_sent: { type: Boolean, default: false },
+    failed_emails: { type: Number, default: 0 },
+  }],
   vendor: String,
   customers: [REF_USER],
-  email_sent: { type: Boolean, default: false },
-  successful_emails: { type: Number, default: 0 },
-  failed_emails: { type: Number, default: 0 },
   visible: { type: Boolean, default: true },
 });
 

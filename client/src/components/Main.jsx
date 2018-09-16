@@ -14,11 +14,11 @@ const Wrapper = styled.div`
 
 class Main extends Component {
   render() {
-    const { render } = this.props;
+    const { render, user } = this.props;
 
     return (
       <Wrapper>
-        <Header />
+        <Header user={user} />
         <Spacer />
         {render()}
       </Wrapper>

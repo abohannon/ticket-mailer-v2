@@ -34,28 +34,32 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { dispatch, application, routes } = this.props;
+    const {
+      dispatch, application, authentication: { user }, routes,
+    } = this.props;
 
     return (
       <Wrapper>
         <SideNav onLogout={() => dispatch(logoutUser())} />
-        <Main render={() => (
-          <Switch>
-            {routes.map((route, i) => (
-              <RouteHandler
-                key={`dashboard-${i}`}
-                {...route}
-                {...application}
-              />
-            ))}
-          </Switch>
-        )}
+        <Main
+          user={user}
+          render={() => (
+            <Switch>
+              {routes.map((route, i) => (
+                <RouteHandler
+                  key={`dashboard-${i}`}
+                  {...route}
+                  {...application}
+                />
+              ))}
+            </Switch>
+          )}
         />
       </Wrapper>
     );
   }
 }
 
-const mapStateToProps = ({ application }) => ({ application });
+const mapStateToProps = ({ application, authentication }) => ({ application, authentication });
 
 export default connect(mapStateToProps)(Dashboard);

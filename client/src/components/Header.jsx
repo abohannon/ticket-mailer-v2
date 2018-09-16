@@ -30,7 +30,7 @@ const StyledIcon = styled(Icon)`
 
 const Header = props => (
   <Wrapper>
-    Header!
+    <div>{`Welcome back, ${props.user.name}!`}</div>
     <IconWrapper>
       <StyledIcon type="user" />
     </IconWrapper>

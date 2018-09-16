@@ -29,7 +29,10 @@ class Shows extends Component {
       return fetchShowsResolved.payload.map((show, index) => ({
         key: index,
         show: show.title,
-        bundles: show.variants.map(variant => variant.title),
+        bundles: show.variants.map(variant => ({
+          title: variant.title,
+          email_sent: variant.email_sent,
+        })),
       }));
     }
     return [];
@@ -53,11 +56,11 @@ class Shows extends Component {
           <span>
             {bundles.map(bundle => (
               <Tag
-                color="blue"
-                key={bundle}
-                onClick={() => console.log(bundle)}
+                color={bundle.email_sent ? 'green' : 'blue'}
+                key={bundle.title}
+                onClick={() => console.log(bundle.title)}
               >
-                {bundle}
+                {bundle.title}
               </Tag>
             ))}
           </span>

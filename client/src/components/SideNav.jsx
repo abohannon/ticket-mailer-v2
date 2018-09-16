@@ -26,6 +26,7 @@ const Header = styled.div`
 const Title = styled.h3`
   text-transform: uppercase;
   letter-spacing: .2rem;
+  margin: 0;
 `;
 
 class Sidebar extends Component {

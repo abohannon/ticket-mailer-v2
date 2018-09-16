@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import Header from 'components/Header';
+import { Spacer } from 'components/common';
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,6 +18,8 @@ class Main extends Component {
 
     return (
       <Wrapper>
+        <Header />
+        <Spacer />
         {render()}
       </Wrapper>
     );

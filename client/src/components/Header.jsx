@@ -5,9 +5,10 @@ import { Icon } from 'antd';
 import { BOX_SHADOW } from 'constants';
 
 const Wrapper = styled.div`
-display: flex;
-flex: 1;
-align-items: center;
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  top: 0;
 `;
 
 const IconWrapper = styled.div`

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
+import { Link } from 'react-router-dom';
 import { Card, Table } from 'components/common';
+import { formatUrlString } from 'helpers/util';
 
 // Actions
 import { fetchTours } from 'actions/shopifyActions';
@@ -25,6 +27,7 @@ class Tours extends Component {
       return fetchToursResolved.payload.map((tour, index) => ({
         key: index,
         tour: tour.title,
+        tour_id: tour.collection_id,
       }));
     }
     return [];
@@ -40,7 +43,15 @@ class Tours extends Component {
         title: 'Name',
         dataIndex: 'tour',
         className: 'table-cell',
-        render: text => <a href="#">{text}</a>,
+        render: (text, record, index) => (
+          <Link to={{
+            pathname: `shows/${formatUrlString(text)}`,
+            search: `?collection_id=${record.tour_id}`,
+          }}
+          >
+            {text}
+          </Link>
+        ),
       },
     ];
 

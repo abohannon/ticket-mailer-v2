@@ -2,7 +2,6 @@ import shopify from '../services/shopify-service';
 import {
   saveShowsToDatabase,
   fetchShowsFromDatabase,
-  fetchAllShowsFromDatabase,
 } from '../services/db-service';
 
 export const fetchTours = async (req, res) => {

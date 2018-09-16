@@ -5,25 +5,27 @@ import { Tag } from 'antd';
 import { Card, Table } from 'components/common';
 
 // Actions
-import { fetchAllShows } from 'actions/shopifyActions';
+import { fetchShows } from 'actions/shopifyActions';
 
 class Shows extends Component {
   static propTypes = {
-    fetchAllShowsPending: PropTypes.object,
-    fetchAllShowsResolved: PropTypes.object,
+    fetchShowsPending: PropTypes.object,
+    fetchShowsResolved: PropTypes.object,
     dispatch: PropTypes.func,
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchAllShows());
+    const { dispatch, location } = this.props;
+    const searchQuery = location.search;
+
+    dispatch(fetchShows(searchQuery));
   }
 
   tableData = () => {
-    const { fetchAllShowsResolved } = this.props;
+    const { fetchShowsResolved } = this.props;
 
-    if (!isEmpty(fetchAllShowsResolved)) {
-      return fetchAllShowsResolved.payload.map((show, index) => ({
+    if (!isEmpty(fetchShowsResolved)) {
+      return fetchShowsResolved.payload.map((show, index) => ({
         key: index,
         show: show.title,
         bundles: show.variants.map(variant => variant.title),
@@ -33,9 +35,9 @@ class Shows extends Component {
   };
 
   render() {
-    const { fetchAllShowsPending } = this.props;
+    const { fetchShowsPending } = this.props;
 
-    const loading = !isEmpty(fetchAllShowsPending);
+    const loading = !isEmpty(fetchShowsPending);
 
     const columns = [
       {

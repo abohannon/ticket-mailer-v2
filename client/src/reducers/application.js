@@ -11,9 +11,9 @@ const INITIAL_STATE = {
   fetchToursResolved: {},
   fetchToursPending: {},
   fetchToursRejected: {},
-  fetchAllShowsResolved: {},
-  fetchAllShowsPending: {},
-  fetchAllShowsRejected: {},
+  fetchShowsResolved: {},
+  fetchShowsPending: {},
+  fetchShowsRejected: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -46,25 +46,25 @@ export default (state = INITIAL_STATE, action) => {
     }
     case FETCH_SHOWS_RESOLVED: {
       const newState = {
-        fetchAllShowsResolved: action,
-        fetchAllShowsPending: {},
-        fetchAllShowsRejected: {},
+        fetchShowsResolved: action,
+        fetchShowsPending: {},
+        fetchShowsRejected: {},
       };
       return { ...state, ...newState };
     }
     case FETCH_SHOWS_PENDING: {
       const newState = {
-        fetchAllShowsResolved: {},
-        fetchAllShowsPending: action,
-        fetchAllShowsRejected: {},
+        fetchShowsResolved: {},
+        fetchShowsPending: action,
+        fetchShowsRejected: {},
       };
       return { ...state, ...newState };
     }
     case FETCH_SHOWS_REJECTED: {
       const newState = {
-        fetchAllShowsResolved: {},
-        fetchAllShowsPending: {},
-        fetchAllShowsRejected: action,
+        fetchShowsResolved: {},
+        fetchShowsPending: {},
+        fetchShowsRejected: action,
       };
       return { ...state, ...newState };
     }

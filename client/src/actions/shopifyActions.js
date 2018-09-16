@@ -40,13 +40,13 @@ export const fetchTours = () => async (dispatch) => {
   }
 };
 
-export const fetchAllShows = () => async (dispatch) => {
+export const fetchShows = searchQuery => async (dispatch) => {
   let action = {
     type: FETCH_SHOWS_PENDING,
   };
   dispatch(action);
 
-  const endpoint = `${API_HOST}/fetchShows`;
+  const endpoint = searchQuery ? `${API_HOST}/fetchShows${searchQuery}` : `${API_HOST}/fetchShows`;
   const options = { method: GET };
 
   try {

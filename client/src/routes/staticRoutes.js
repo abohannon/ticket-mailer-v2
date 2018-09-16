@@ -19,7 +19,11 @@ const routes = [
         component: Tours,
       },
       {
-        path: '/dashboard/shows',
+        path: '/dashboard/shows/all',
+        component: Shows,
+      },
+      {
+        path: '/dashboard/shows/:tour_title',
         component: Shows,
       },
       {

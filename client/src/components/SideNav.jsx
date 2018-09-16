@@ -45,7 +45,7 @@ class Sidebar extends Component {
             <StyledIcon type="profile" />
             Tours
           </MenuItem>
-          <MenuItem path="/dashboard/shows" index={1}>
+          <MenuItem path="/dashboard/shows/all" index={1}>
             <StyledIcon type="environment-o" />
             Shows
           </MenuItem>

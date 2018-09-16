@@ -2,9 +2,9 @@ import {
   FETCH_TOURS_RESOLVED,
   FETCH_TOURS_PENDING,
   FETCH_TOURS_REJECTED,
-  FETCH_ALL_SHOWS_RESOLVED,
-  FETCH_ALL_SHOWS_PENDING,
-  FETCH_ALL_SHOWS_REJECTED,
+  FETCH_SHOWS_RESOLVED,
+  FETCH_SHOWS_PENDING,
+  FETCH_SHOWS_REJECTED,
 } from 'actions/types';
 
 const INITIAL_STATE = {
@@ -44,7 +44,7 @@ export default (state = INITIAL_STATE, action) => {
       };
       return { ...state, ...newState };
     }
-    case FETCH_ALL_SHOWS_RESOLVED: {
+    case FETCH_SHOWS_RESOLVED: {
       const newState = {
         fetchAllShowsResolved: action,
         fetchAllShowsPending: {},
@@ -52,7 +52,7 @@ export default (state = INITIAL_STATE, action) => {
       };
       return { ...state, ...newState };
     }
-    case FETCH_ALL_SHOWS_PENDING: {
+    case FETCH_SHOWS_PENDING: {
       const newState = {
         fetchAllShowsResolved: {},
         fetchAllShowsPending: action,
@@ -60,7 +60,7 @@ export default (state = INITIAL_STATE, action) => {
       };
       return { ...state, ...newState };
     }
-    case FETCH_ALL_SHOWS_REJECTED: {
+    case FETCH_SHOWS_REJECTED: {
       const newState = {
         fetchAllShowsResolved: {},
         fetchAllShowsPending: {},

@@ -44,17 +44,9 @@ export const saveShowsToDatabase = async (showsList, collection_id) => {
 };
 
 export const fetchShowsFromDatabase = async (collection_id) => {
-  const results = await Show.find({ collection_id });
+  const query = collection_id ? { collection_id } : {};
 
-  if (!results || results.length < 1) {
-    return null;
-  }
-
-  return results;
-};
-
-export const fetchAllShowsFromDatabase = async () => {
-  const results = await Show.find({});
+  const results = await Show.find(query);
 
   if (!results || results.length < 1) {
     return null;

@@ -1,4 +1,4 @@
-import shopify from '../services/shopify';
+import shopify from '../services/shopify-service';
 import {
   saveShowsToDatabase,
   fetchShowsFromDatabase,
@@ -18,7 +18,7 @@ export const fetchTours = async (req, res) => {
 
 export const fetchShows = async (req, res) => {
   try {
-    // If no collection_id query is present on URL, collection_id will be null GET will fetch // all shows/products
+    // collection_id is optional
     const { collection_id } = req.query;
 
     const showsList = await shopify.productListing.list({ collection_id });
@@ -29,13 +29,7 @@ export const fetchShows = async (req, res) => {
 
     await saveShowsToDatabase(showsList, collection_id);
 
-    let shows;
-
-    if (collection_id) {
-      shows = await fetchShowsFromDatabase(collection_id);
-    } else {
-      shows = await fetchAllShowsFromDatabase();
-    }
+    const shows = await fetchShowsFromDatabase(collection_id);
 
     if (!shows) throw new Error('Error fetching shows.');
 

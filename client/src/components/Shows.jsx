@@ -13,13 +13,20 @@ class Shows extends Component {
     fetchShowsResolved: PropTypes.object,
     dispatch: PropTypes.func,
     location: PropTypes.object,
+    toggleSearchBar: PropTypes.func,
   }
 
   componentDidMount() {
-    const { dispatch, location } = this.props;
+    const { dispatch, location, toggleSearchBar } = this.props;
     const searchQuery = location.search;
 
+    toggleSearchBar();
     dispatch(fetchShows(searchQuery));
+  }
+
+  componentWillUnmount() {
+    const { toggleSearchBar } = this.props;
+    toggleSearchBar();
   }
 
   tableData = () => {

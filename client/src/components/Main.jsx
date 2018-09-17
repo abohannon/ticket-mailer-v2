@@ -16,17 +16,27 @@ const Wrapper = styled.div`
 `;
 
 class Main extends Component {
+  state = {
+    showSearchBar: false,
+  }
+
+  toggleSearchBar = () => {
+    this.setState(prevState => ({ showSearchBar: !prevState.showSearchBar }));
+  }
+
   render() {
     const { routes, application, user } = this.props;
+    const { showSearchBar } = this.state;
 
     return (
       <Wrapper>
-        <Header user={user} />
+        <Header user={user} showSearchBar={showSearchBar} />
         <Spacer />
         <Switch>
           {routes.map((route, i) => (
             <RouteHandler
               key={`dashboard-${i}`}
+              toggleSearchBar={this.toggleSearchBar}
               {...route}
               {...application}
             />

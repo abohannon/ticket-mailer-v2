@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Icon, Input } from 'antd';
+import { Icon } from 'antd';
 import { BOX_SHADOW } from 'constants';
 
-const { Search } = Input;
+import { SearchInput } from 'components/common';
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,11 +44,7 @@ const StyledIcon = styled(Icon)`
 
 const Header = props => (
   <Wrapper>
-    <Search
-      placeholder="Looking for something specific?"
-      onSearch={value => console.log(value)}
-      style={{ width: 300 }}
-    />
+    <SearchInput show={props.showSearchBar} />
     <UserDisplay>
       <Greeting>{`Welcome back, ${props.user.name}!`}</Greeting>
       <IconWrapper>

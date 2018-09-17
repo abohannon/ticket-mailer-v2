@@ -1,14 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Icon } from 'antd';
+import { Icon, Input } from 'antd';
 import { BOX_SHADOW } from 'constants';
+
+const { Search } = Input;
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   height: 3rem;
   top: 0;
+`;
+
+const UserDisplay = styled.div`
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+`;
+
+const Greeting = styled.div`
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-right: 2rem;
 `;
 
 const IconWrapper = styled.div`
@@ -30,10 +44,17 @@ const StyledIcon = styled(Icon)`
 
 const Header = props => (
   <Wrapper>
-    <div>{`Welcome back, ${props.user.name}!`}</div>
-    <IconWrapper>
-      <StyledIcon type="user" />
-    </IconWrapper>
+    <Search
+      placeholder="Looking for something specific?"
+      onSearch={value => console.log(value)}
+      style={{ width: 300 }}
+    />
+    <UserDisplay>
+      <Greeting>{`Welcome back, ${props.user.name}!`}</Greeting>
+      <IconWrapper>
+        <StyledIcon type="user" />
+      </IconWrapper>
+    </UserDisplay>
   </Wrapper>
 );
 

@@ -26,6 +26,8 @@ class Dashboard extends Component {
     dispatch: PropTypes.func,
     application: PropTypes.object,
     routes: PropTypes.array,
+    history: PropTypes.object,
+    authentication: PropTypes.object,
   }
 
   componentDidMount() {
@@ -41,20 +43,7 @@ class Dashboard extends Component {
     return (
       <Wrapper>
         <SideNav onLogout={() => dispatch(logoutUser())} />
-        <Main
-          user={user}
-          render={() => (
-            <Switch>
-              {routes.map((route, i) => (
-                <RouteHandler
-                  key={`dashboard-${i}`}
-                  {...route}
-                  {...application}
-                />
-              ))}
-            </Switch>
-          )}
-        />
+        <Main user={user} application={application} routes={routes} />
       </Wrapper>
     );
   }

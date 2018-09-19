@@ -1,10 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Icon } from 'antd';
+import {
+  Button, Menu, Dropdown, Icon,
+} from 'antd';
 import { BOX_SHADOW } from 'constants';
 
+// Actions
+import { logoutUser } from 'actions/authenticationActions';
+
+// Components
 import { SearchInput } from 'components/common';
+
+const StyledIcon = styled(Icon)`
+  margin-right: 1rem; 
+  font-size: 1.5rem;
+`;
+
+const HeaderMenu = (props) => {
+  const menu = (
+    <Menu>
+      <Menu.Item key="0">
+        <StyledIcon type="setting" />
+        Settings
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="1" onClick={() => props.dispatch(logoutUser())}>
+        <StyledIcon type="logout" />
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
+
+  return (
+    <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+      {props.children}
+    </Dropdown>
+  );
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -25,33 +59,30 @@ const Greeting = styled.div`
   margin-right: 2rem;
 `;
 
-const IconWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 4px;
-  border-radius: 50%;
-  background-color: white;
-  width: 2.8rem;
-  height: 2.8rem;
-  margin-left: auto;
+const StyledButton = styled(Button)`
   box-shadow: ${BOX_SHADOW};
 `;
 
-const StyledIcon = styled(Icon)`
-  font-size: 1.8rem;
-`;
+const propTypes = {
+  showSearchBar: PropTypes.bool,
+  user: PropTypes.object,
+};
 
-const Header = props => (
-  <Wrapper>
-    <SearchInput show={props.showSearchBar} />
-    <UserDisplay>
-      <Greeting>{`Welcome back, ${props.user.name}!`}</Greeting>
-      <IconWrapper>
-        <StyledIcon type="user" />
-      </IconWrapper>
-    </UserDisplay>
-  </Wrapper>
-);
+const Header = (props) => {
+  const { showSearchBar, user } = props;
+  return (
+    <Wrapper>
+      <SearchInput show={showSearchBar} />
+      <UserDisplay>
+        <Greeting>{`Welcome back, ${user.name}!`}</Greeting>
+        <HeaderMenu {...props}>
+          <StyledButton shape="circle" icon="user" size="medium" />
+        </HeaderMenu>
+      </UserDisplay>
+    </Wrapper>
+  );
+};
 
-export default Header;
+Header.propTypes = propTypes;
+
+export default connect()(Header);

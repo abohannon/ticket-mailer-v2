@@ -2,16 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Switch } from 'react-router-dom';
 
 // Components
 import Main from 'components/Main';
 import SideNav from 'components/SideNav';
-
-// Actions
-import { logoutUser } from 'actions/authenticationActions';
-
-import RouteHandler from '../routes/RouteHandler';
 
 const Wrapper = styled.main`
   display: flex;
@@ -37,12 +31,12 @@ class Dashboard extends Component {
 
   render() {
     const {
-      dispatch, application, authentication: { user }, routes,
+      application, authentication: { user }, routes,
     } = this.props;
 
     return (
       <Wrapper>
-        <SideNav onLogout={() => dispatch(logoutUser())} />
+        <SideNav />
         <Main user={user} application={application} routes={routes} />
       </Wrapper>
     );

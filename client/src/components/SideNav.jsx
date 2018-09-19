@@ -51,14 +51,10 @@ class Sidebar extends Component {
             Shows
           </MenuItem>
           <MenuItem path="/dashboard" index={2}>
-            <StyledIcon type="mail" />
+            <StyledIcon type="inbox" />
             Sent Emails
           </MenuItem>
           <Spacer />
-          <MenuItem path="/" index={3} onClick={this.props.onLogout}>
-            <StyledIcon type="logout" />
-            Logout
-          </MenuItem>
         </Menu>
       </Wrapper>
     );

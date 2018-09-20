@@ -22,6 +22,7 @@ export const saveShowsToDatabase = async (showsList, collection_id) => {
             variants: show.variants,
             vendor: show.vendor,
           });
+
           newShow.save((saveErr) => {
             if (saveErr) reject(saveErr);
             resolve('Show saved!');
@@ -33,9 +34,9 @@ export const saveShowsToDatabase = async (showsList, collection_id) => {
             if (saveErr) reject(saveErr);
             resolve('Show updated!');
           });
+        } else {
+          resolve('Show already exists. Moving on.');
         }
-
-        resolve('Show already exists, move on.');
       });
     });
   });
@@ -46,7 +47,7 @@ export const saveShowsToDatabase = async (showsList, collection_id) => {
 export const fetchShowsFromDatabase = async (collection_id) => {
   const query = collection_id ? { collection_id } : {};
 
-  const results = await Show.find(query);
+  const results = await Show.find(query).exec();
 
   if (!results || results.length < 1) {
     return null;

@@ -13,7 +13,7 @@ export default ({ children }) => {
 
     if (storedState) {
       const { authentication } = storedState;
-      const token = localStorage.getItem('id_token');
+      const token = localStorage.getItem('tm_id_token');
       const decoded = token && decode(token);
       const date = new Date();
 

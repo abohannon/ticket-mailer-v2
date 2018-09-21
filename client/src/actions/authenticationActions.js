@@ -49,7 +49,7 @@ export const loginUser = body => async (dispatch) => {
     if (response.ok) {
       const { token } = json;
       localStorage.clear();
-      localStorage.setItem('id_token', token);
+      localStorage.setItem('tm_id_token', token);
     }
 
     dispatch(action);
@@ -66,7 +66,7 @@ export const loginUser = body => async (dispatch) => {
 
 export const logoutUser = () => (dispatch) => {
   dispatch({ type: LOGOUT_USER, status: FULFILLED });
-  localStorage.removeItem('id_token');
+  localStorage.removeItem('tm_id_token');
 };
 
 export const authenticateUser = token => async (dispatch) => {

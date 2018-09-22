@@ -37,3 +37,29 @@ export const fetchShows = async (req, res) => {
     return res.status(500).json({ error: err.message });
   }
 };
+
+export const fetchOrders = async (req, res) => {
+  try {
+    const { variant_id } = req.query;
+
+    const orders = await shopify.order.list();
+
+    // if a variant_id query is passed, filter the orders
+    if (Object.keys(req.query).includes('variant_id')) {
+      const variantOrders = orders.reduce((filtered, order) => {
+        order.line_items.forEach((item) => {
+          if (item.variant_id == variant_id) {
+            filtered.push(order);
+          }
+        });
+        return filtered;
+      }, []);
+
+      return res.status(200).json(variantOrders);
+    }
+
+    return res.status(200).json(orders);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};

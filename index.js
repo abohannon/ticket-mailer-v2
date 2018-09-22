@@ -3,8 +3,8 @@ import http from 'http';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-import appRoutes from './routes/appRoutes';
-import shopifyRoutes from './routes/shopifyRoutes';
+import authRoutes from './routes/authRoutes';
+import dataRoutes from './routes/dataRoutes';
 
 mongoose.Promise = Promise;
 
@@ -17,8 +17,8 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 
 // Routes
-appRoutes(app);
-shopifyRoutes(app);
+authRoutes(app);
+dataRoutes(app);
 
 // Serve static files for production
 if (process.env.NODE_ENV === 'production') {

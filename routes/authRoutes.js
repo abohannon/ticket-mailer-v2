@@ -1,6 +1,6 @@
 import passport from 'passport';
-import { login, signup, authenticateUser } from '../controllers/authentication';
-import passportService from '../services/passport-service';
+import { login, signup, authenticateUser } from '../controllers/authController';
+import passportService from '../services/passportService';
 
 // { session: false } tells passport not to create a cookie
 const requireAuth = passport.authenticate('jwt', { session: false });

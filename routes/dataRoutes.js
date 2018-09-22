@@ -2,7 +2,7 @@ import {
   fetchTours,
   fetchShows,
   fetchOrders,
-} from '../controllers/shopifyController';
+} from '../controllers/dataController';
 
 export default (app) => {
   app.get('/api/fetchTours', fetchTours);

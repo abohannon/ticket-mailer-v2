@@ -9,9 +9,9 @@ export const saveShowsToDatabase = async (showsList, collection_id) => {
       Show.findOne({ product_id: show.product_id }, (err, foundShow) => {
         if (err) reject(new Error('Error finding show.'));
         /*
-          * If show doesn't exist in the DB, add it.
-          * Else if the show exists, but doesn't have a collection_id yet, update it.
-          */
+        * If show doesn't exist in the DB, add it.
+        * Else if the show exists, but doesn't have a collection_id yet, update it.
+        */
         if (!foundShow) {
           const newShow = new Show({
             product_id: show.product_id,
@@ -54,4 +54,17 @@ export const fetchShowsFromDatabase = async (collection_id) => {
   }
 
   return results;
+};
+
+export const filterOrdersByVariantId = (orders, id) => {
+  if (!Array.isArray(orders)) throw new Error('Param "orders" must be an array');
+
+  return orders.reduce((filtered, order) => {
+    order.line_items.forEach((item) => {
+      if (item.variant_id == id) {
+        filtered.push(order);
+      }
+    });
+    return filtered;
+  }, []);
 };

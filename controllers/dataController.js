@@ -1,8 +1,9 @@
-import shopify from '../services/shopify-service';
+import shopify from '../services/shopifyService';
 import {
   saveShowsToDatabase,
   fetchShowsFromDatabase,
-} from '../services/db-service';
+  filterOrdersByVariantId,
+} from '../services/dataService';
 
 export const fetchTours = async (req, res) => {
   try {
@@ -44,17 +45,9 @@ export const fetchOrders = async (req, res) => {
 
     const orders = await shopify.order.list();
 
-    // if a variant_id query is passed, filter the orders
+    // if a variant_id query is passed, filter the orders for that variant
     if (Object.keys(req.query).includes('variant_id')) {
-      const variantOrders = orders.reduce((filtered, order) => {
-        order.line_items.forEach((item) => {
-          if (item.variant_id == variant_id) {
-            filtered.push(order);
-          }
-        });
-        return filtered;
-      }, []);
-
+      const variantOrders = filterOrdersByVariantId(orders, variant_id);
       return res.status(200).json(variantOrders);
     }
 

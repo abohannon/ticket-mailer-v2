@@ -23,45 +23,6 @@ const InnerContent = styled.div`
   font-weight: ${props => (props.active ? 500 : null)};
 `;
 
-/* Start Menu Component */
-class Menu extends Component {
-  static propTypes = {
-    children: PropTypes.array,
-    style: PropTypes.object,
-  }
-
-  state = {
-    activeIndex: 0,
-  }
-
-  updateActiveIndex = (index) => {
-    console.log(index);
-    this.setState({ activeIndex: index });
-  }
-
-  render() {
-    const { children, style } = this.props;
-
-    const childProps = {
-      activeIndex: this.state.activeIndex,
-      updateActiveIndex: this.updateActiveIndex,
-    };
-
-    // So we can pass props to our children
-    const childrenWithProps = React.Children.map(children, child => (
-      React.cloneElement(child, childProps)
-    ));
-
-    return (
-      <Wrapper className="menu__inner-wrapper" style={{ ...style }}>
-        <UnorderedList>
-          {childrenWithProps}
-        </UnorderedList>
-      </Wrapper>
-    );
-  }
-}
-
 /* Start MenuItem Component */
 const propTypes = {
   children: PropTypes.array,
@@ -106,5 +67,44 @@ const MenuItem = (props) => {
 };
 
 MenuItem.propTypes = propTypes;
+
+/* Start Menu Component */
+class Menu extends Component {
+  static propTypes = {
+    children: PropTypes.array,
+    style: PropTypes.object,
+  }
+
+  state = {
+    activeIndex: 0,
+  }
+
+  updateActiveIndex = (index) => {
+    console.log(index);
+    this.setState({ activeIndex: index });
+  }
+
+  render() {
+    const { children, style } = this.props;
+
+    const childProps = {
+      activeIndex: this.state.activeIndex,
+      updateActiveIndex: this.updateActiveIndex,
+    };
+
+    // So we can pass props to our children
+    const childrenWithProps = React.Children.map(children, child => (
+      React.cloneElement(child, childProps)
+    ));
+
+    return (
+      <Wrapper className="menu__inner-wrapper" style={{ ...style }}>
+        <UnorderedList>
+          {childrenWithProps}
+        </UnorderedList>
+      </Wrapper>
+    );
+  }
+}
 
 export { Menu, MenuItem };

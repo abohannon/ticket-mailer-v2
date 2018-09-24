@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   Button, Menu, Dropdown, Icon,
@@ -22,8 +23,10 @@ const HeaderMenu = (props) => {
   const menu = (
     <Menu>
       <Menu.Item key="0">
-        <StyledIcon type="setting" />
-        Settings
+        <Link to="/dashboard/settings/user">
+          <StyledIcon type="setting" />
+          Settings
+        </Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item key="1" onClick={() => props.dispatch(logoutUser())}>
@@ -76,7 +79,7 @@ const Header = (props) => {
       <UserDisplay>
         <Greeting>{`Welcome back, ${user.name}!`}</Greeting>
         <HeaderMenu {...props}>
-          <StyledButton shape="circle" icon="user" size="medium" />
+          <StyledButton shape="circle" icon="user" size="default" />
         </HeaderMenu>
       </UserDisplay>
     </Wrapper>

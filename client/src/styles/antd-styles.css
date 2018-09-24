@@ -1,7 +1,7 @@
 /* CARD STYLES */
 .ant-card-head-title {
-  font-size: 32px;
-  font-weight: 200;
+  font-size: inherit;
+  font-weight: inherit;
 }
 
 /* TABLE STYLES */

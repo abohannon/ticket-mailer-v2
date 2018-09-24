@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import { Link } from 'react-router-dom';
 import { Card, Table } from 'components/common';
 import { formatUrlString } from 'helpers/util';
+import { CARD_TITLE_PRIMARY } from 'constants';
 
 // Actions
 import { fetchTours } from 'actions/shopifyActions';
@@ -59,6 +60,8 @@ class Tours extends Component {
       <Card
         title="Current Tours"
         style={{ minHeight: 400 }}
+        headStyle={CARD_TITLE_PRIMARY}
+        fullWidth
       >
         <Table
           columns={columns}

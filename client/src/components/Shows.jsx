@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import { Tag } from 'antd';
 import { Card, Table } from 'components/common';
+import { CARD_TITLE_PRIMARY } from 'constants';
 
 // Actions
 import { fetchShows } from 'actions/shopifyActions';
@@ -76,7 +77,11 @@ class Shows extends Component {
     ];
 
     return (
-      <Card title="Current Shows">
+      <Card
+        title="Current Shows"
+        headStyle={CARD_TITLE_PRIMARY}
+        fullWidth
+      >
         <Table
           columns={columns}
           dataSource={this.tableData()}

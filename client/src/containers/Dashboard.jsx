@@ -26,7 +26,9 @@ class Dashboard extends Component {
 
   componentDidMount() {
     const { history } = this.props;
-    history.replace('/dashboard/tours', { from: '/dashboard' });
+    if (history.location.pathname === '/dashboard') {
+      history.replace('/dashboard/tours', { from: '/dashboard' });
+    }
   }
 
   render() {

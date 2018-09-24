@@ -37,7 +37,7 @@ export class Landing extends Component {
       history,
       dispatch,
     } = this.props;
-
+    console.log('landing mounted');
     if (isAuthenticated) {
       history.push('/dashboard');
     }

@@ -2,6 +2,7 @@ import Landing from 'containers/Landing';
 import Dashboard from 'containers/Dashboard';
 import Tours from 'components/Tours';
 import Shows from 'components/Shows';
+import UserSettings from 'components/UserSettings';
 
 const routes = [
   {
@@ -29,6 +30,10 @@ const routes = [
       {
         path: '/dashboard/sent',
         component: null,
+      },
+      {
+        path: '/dashboard/settings/user',
+        component: UserSettings,
       },
     ],
   },

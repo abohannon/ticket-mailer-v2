@@ -17,3 +17,6 @@ export const DARK_BLUE = 'rgba(0,11,51,1)';
 export const BOX_SHADOW = '0px 3px 6px 0px rgba(0,0,0,.1)';
 export const GREY = '#444444';
 export const DARK_GREY = '#141414';
+
+export const CARD_TITLE_PRIMARY = { fontSize: 32, fontWeight: 200 };
+export const CARD_TITLE_SECONDARY = { fontSize: 14 };

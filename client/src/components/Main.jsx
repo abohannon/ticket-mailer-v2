@@ -25,7 +25,7 @@ class Main extends Component {
   }
 
   render() {
-    const { routes, application, user } = this.props;
+    const { routes, user } = this.props;
     const { showSearchBar } = this.state;
 
     return (
@@ -38,7 +38,6 @@ class Main extends Component {
               key={`dashboard-${i}`}
               toggleSearchBar={this.toggleSearchBar}
               {...route}
-              {...application}
             />
           ))}
         </Switch>

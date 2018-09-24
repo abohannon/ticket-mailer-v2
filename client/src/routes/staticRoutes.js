@@ -1,8 +1,8 @@
 import Landing from 'containers/Landing';
 import Dashboard from 'containers/Dashboard';
-import Tours from 'components/Tours';
-import Shows from 'components/Shows';
-import UserSettings from 'components/UserSettings';
+import Tours from 'containers/Tours';
+import Shows from 'containers/Shows';
+import UserSettings from 'containers/UserSettings';
 
 const routes = [
   {

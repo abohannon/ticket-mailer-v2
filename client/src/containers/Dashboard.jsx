@@ -17,8 +17,6 @@ const Wrapper = styled.main`
 
 class Dashboard extends Component {
   static propTypes = {
-    dispatch: PropTypes.func,
-    application: PropTypes.object,
     routes: PropTypes.array,
     history: PropTypes.object,
     authentication: PropTypes.object,
@@ -33,18 +31,18 @@ class Dashboard extends Component {
 
   render() {
     const {
-      application, authentication: { user }, routes,
+      authentication: { user }, routes,
     } = this.props;
 
     return (
       <Wrapper>
         <SideNav />
-        <Main user={user} application={application} routes={routes} />
+        <Main user={user} routes={routes} />
       </Wrapper>
     );
   }
 }
 
-const mapStateToProps = ({ application, authentication }) => ({ application, authentication });
+const mapStateToProps = ({ authentication }) => ({ authentication });
 
 export default connect(mapStateToProps)(Dashboard);

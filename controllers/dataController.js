@@ -3,33 +3,10 @@ import {
   saveShowsToDatabase,
   fetchShowsFromDatabase,
   filterOrdersByVariantId,
+  createMetafield,
+  fetchMetafields,
+  filterMetafields,
 } from '../services/dataService';
-
-export const createProductMetafield = async (req, res) => {
-  try {
-    const {
-      key,
-      value,
-      value_type,
-      namespace,
-      owner_resource,
-      owner_id,
-    } = req.body;
-
-    const result = await shopify.metafield.create({
-      key,
-      value,
-      value_type,
-      namespace,
-      owner_resource,
-      owner_id,
-    });
-
-    return res.status(200).json(result);
-  } catch (err) {
-    return res.status(500).json({ error: err });
-  }
-};
 
 export const fetchProductMetafields = async (req, res) => {
   const { owner_resource, owner_id } = req.query;
@@ -59,37 +36,19 @@ export const fetchShows = async (req, res) => {
 
     const showsList = await shopify.productListing.list({ collection_id });
 
-    const promises = showsList.map(show => show.variants.map(variant => shopify.metafield.list({
-      metafield: {
-        owner_resource: 'variant',
-        owner_id: variant.id,
-      },
-    }).then((metafields) => {
-      const filtered = metafields.reduce((acc, metafield) => {
-        acc[metafield.key] = metafield.value;
-        return acc;
-      }, {});
+    const modifiedShowsList = showsList.map(async (show) => {
+      const promises = await Promise.all(show.variants.map(async (variant) => {
+        const metafields = await fetchMetafields('variant', variant.id);
 
-      console.log({ ...variant, ...filtered });
-    })));
+        const filtered = filterMetafields(metafields);
 
-    // const modifiedShowsList = await Promise.all(promises);
+        return { ...variant, ...filtered };
+      }));
+      console.log(promises);
+      // TODO: Look into lodash merge
+    });
 
-    // res.status(200).json(modifiedShowsList);
-
-    // res.status(200).json(showsList);
-
-    // if (!showsList || showsList.length < 1) {
-    //   throw new Error('No shows found for that collection or collection id is incorrect.');
-    // }
-
-    // await saveShowsToDatabase(showsList, collection_id);
-
-    // const shows = await fetchShowsFromDatabase(collection_id);
-
-    // if (!shows) throw new Error('Error fetching shows.');
-
-    // return res.status(200).json(shows);
+    res.status(200).json(modifiedShowsList[0]);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

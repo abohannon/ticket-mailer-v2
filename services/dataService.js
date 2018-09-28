@@ -1,4 +1,49 @@
+import shopify from './shopifyService';
 import Show from '../models/show';
+
+
+export const createMetafield = async (data) => {
+  const {
+    key,
+    value,
+    value_type,
+    namespace,
+    owner_resource,
+    owner_id,
+  } = data;
+
+  try {
+    const result = await shopify.metafield.create({
+      key,
+      value,
+      value_type,
+      namespace,
+      owner_resource,
+      owner_id,
+    });
+
+    return { status: 'success', data: result };
+  } catch (err) {
+    return { status: 'error', error: err };
+  }
+};
+
+export const fetchMetafields = async (owner_resource, owner_id) => {
+  const metafields = await shopify.metafield.list({
+    metafield: {
+      owner_resource,
+      owner_id,
+    },
+  });
+
+  return metafields;
+};
+
+export const filterMetafields = obj => obj.reduce((acc, item) => {
+  acc[item.key] = item.value;
+  return acc;
+}, {});
+
 
 // TODO: Need check for updated_at
 export const saveShowsToDatabase = async (showsList, collection_id) => {

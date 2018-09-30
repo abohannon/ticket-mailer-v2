@@ -1,12 +1,6 @@
 import shopify from '../services/shopifyService';
 import {
-  saveShowsToDatabase,
-  fetchShowsFromDatabase,
   filterOrdersByVariantId,
-  createMetafield,
-  fetchMetafields,
-  filterMetafields,
-  mergeMetafields,
   addMetafieldsToShows,
 } from '../services/dataService';
 

@@ -44,6 +44,26 @@ export const filterMetafields = obj => obj.reduce((acc, item) => {
   return acc;
 }, {});
 
+export const mergeMetafields = (metafields, object) => {
+  for (const key in metafields) {
+    if (metafields.hasOwnProperty(key)) {
+      object[key] = metafields[key];
+    }
+  }
+};
+
+export const addMetafieldsToShows = showsList => Promise.all(showsList.map(async (show) => {
+  await Promise.all(show.variants.map(async (variant) => {
+    const metafields = await fetchMetafields('variant', variant.id);
+    const filtered = filterMetafields(metafields);
+
+    if (Object.keys(filtered).length > 0) {
+      mergeMetafields(filtered, variant);
+    }
+  }));
+  return show;
+}));
+
 
 // TODO: Need check for updated_at
 export const saveShowsToDatabase = async (showsList, collection_id) => {

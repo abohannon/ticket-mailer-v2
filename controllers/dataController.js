@@ -6,6 +6,8 @@ import {
   createMetafield,
   fetchMetafields,
   filterMetafields,
+  mergeMetafields,
+  addMetafieldsToShows,
 } from '../services/dataService';
 
 export const fetchProductMetafields = async (req, res) => {
@@ -36,19 +38,9 @@ export const fetchShows = async (req, res) => {
 
     const showsList = await shopify.productListing.list({ collection_id });
 
-    const modifiedShowsList = showsList.map(async (show) => {
-      const promises = await Promise.all(show.variants.map(async (variant) => {
-        const metafields = await fetchMetafields('variant', variant.id);
+    const modifiedShowsList = await addMetafieldsToShows(showsList);
 
-        const filtered = filterMetafields(metafields);
-
-        return { ...variant, ...filtered };
-      }));
-      console.log(promises);
-      // TODO: Look into lodash merge
-    });
-
-    res.status(200).json(modifiedShowsList[0]);
+    res.status(200).json(modifiedShowsList);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

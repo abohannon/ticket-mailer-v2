@@ -2,7 +2,8 @@ import {
   fetchTours,
   fetchShows,
   fetchOrders,
-  fetchProductMetafields,
+  fetchMetafieldsForResource,
+  fetchSingleMetafield,
 } from '../controllers/dataController';
 
 export default (app) => {
@@ -10,5 +11,6 @@ export default (app) => {
   app.get('/api/fetchShows', fetchShows);
   app.get('/api/fetchOrders', fetchOrders);
 
-  app.get('/api/fetchProductMetafields', fetchProductMetafields);
+  app.get('/api/fetchMetafieldsForResource', fetchMetafieldsForResource);
+  app.get('/api/fetchSingleMetafield', fetchSingleMetafield);
 };

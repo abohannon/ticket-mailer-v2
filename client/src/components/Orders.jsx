@@ -51,7 +51,7 @@ const OrdersTable = (props) => {
   };
 
   return (
-    <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+    <Table rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
   );
 };
 
@@ -68,7 +68,7 @@ class Orders extends Component {
   render() {
     const tabList = [{
       key: 'orders',
-      tab: 'Orders',
+      tab: 'List',
     },
     {
       key: 'email',
@@ -89,6 +89,7 @@ class Orders extends Component {
           tabList={tabList}
           activeTabKey={this.state.activeTab}
           onTabChange={key => this.onTabChange(key)}
+          fullWidth
         >
           {tabListContent[this.state.activeTab]}
         </Card>

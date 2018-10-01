@@ -5,19 +5,15 @@ import { BOX_SHADOW } from 'constants';
 
 export const Card = (props) => {
   const {
-    title,
-    loading,
     style,
     bodyStyle,
     headStyle,
     children,
     fullWidth,
+    ...rest
   } = props;
 
   const cardProps = {
-    title,
-    loading,
-    bordered: false,
     style: { boxShadow: BOX_SHADOW, ...style },
     bodyStyle: {
       padding: fullWidth && '1px 0px',
@@ -28,6 +24,7 @@ export const Card = (props) => {
       padding: '0px 16px',
       ...headStyle,
     },
+    ...rest,
   };
 
   return (

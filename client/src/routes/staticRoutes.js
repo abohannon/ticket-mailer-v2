@@ -2,6 +2,7 @@ import Landing from 'containers/Landing';
 import Dashboard from 'containers/Dashboard';
 import Tours from 'containers/Tours';
 import Shows from 'containers/Shows';
+import Orders from 'components/Orders';
 import UserSettings from 'containers/UserSettings';
 
 const routes = [
@@ -26,6 +27,10 @@ const routes = [
       {
         path: '/dashboard/shows/:tour_title',
         component: Shows,
+      },
+      {
+        path: '/dashboard/orders/:tour_title/:bundle_title',
+        component: Orders,
       },
       {
         path: '/dashboard/sent',

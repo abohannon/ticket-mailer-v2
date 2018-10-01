@@ -2,7 +2,58 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { CARD_TITLE_PRIMARY, CARD_TITLE_SECONDARY } from 'constants';
 
-import { Card } from 'components/common';
+import { Card, Table } from 'components/common';
+
+
+const OrdersTable = (props) => {
+  const columns = [{
+    title: 'Name',
+    dataIndex: 'name',
+    render: text => <a href="#">{text}</a>,
+  }, {
+    title: 'Age',
+    dataIndex: 'age',
+  }, {
+    title: 'Address',
+    dataIndex: 'address',
+  }];
+
+  const data = [{
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+  }, {
+    key: '2',
+    name: 'Jim Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+  }, {
+    key: '3',
+    name: 'Joe Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park',
+  }, {
+    key: '4',
+    name: 'Disabled User',
+    age: 99,
+    address: 'Sidney No. 1 Lake Park',
+  }];
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: record => ({
+      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
+
+  return (
+    <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+  );
+};
 
 class Orders extends Component {
   state = {
@@ -26,7 +77,7 @@ class Orders extends Component {
     ];
 
     const tabListContent = {
-      orders: <p>Orders list</p>,
+      orders: <OrdersTable />,
       email: <p>Edit email form</p>,
     };
 

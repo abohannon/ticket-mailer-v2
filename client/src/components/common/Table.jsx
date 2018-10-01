@@ -10,25 +10,11 @@ const propTypes = {
   loading: PropTypes.bool,
 };
 
-const Table = (props) => {
-  const {
-    pagination,
-    showHeader,
-    columns,
-    dataSource,
-    loading,
-  } = props;
-
-  return (
-    <AntTable
-      columns={columns}
-      dataSource={dataSource}
-      pagination={pagination}
-      showHeader={showHeader}
-      loading={loading}
-    />
-  );
-};
+const Table = props => (
+  <AntTable
+    {...props}
+  />
+);
 
 Table.propTypes = propTypes;
 

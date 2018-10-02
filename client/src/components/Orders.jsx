@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 import { CARD_TITLE_PRIMARY, CARD_TITLE_SECONDARY } from 'constants';
 
 import { Card, Table } from 'components/common';
@@ -28,27 +29,21 @@ const OrdersTable = (props) => {
   },
   ];
 
-  const data = [{
-    key: '1',
-    orderNumber: '#100',
-    name: 'John Brown',
-    email: 'john@email.com',
-    status: 'Unsent',
-  },
-  {
-    key: '2',
-    orderNumber: '#101',
-    name: 'Ashley Smith',
-    email: 'ashley@email.com',
-    status: 'Unsent',
-  },
-  {
-    key: '3',
-    orderNumber: '#102',
-    name: 'Adam Bo',
-    email: 'adam@email.com',
-    status: 'Unsent',
-  }];
+  const renderTableData = () => {
+    const { orders } = props;
+
+    if (orders && orders.length > 0) {
+      return (
+        orders.map((order, index) => ({
+          key: index,
+          orderNumber: order.name,
+          name: `${order.customer.first_name} ${order.customer.last_name}`,
+          email: order.customer.email,
+          status: order.email_sent ? 'Sent' : 'Unsent',
+        }))
+      );
+    }
+  };
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -61,7 +56,13 @@ const OrdersTable = (props) => {
   };
 
   return (
-    <Table rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
+    <Table
+      rowSelection={rowSelection}
+      columns={columns}
+      dataSource={renderTableData()}
+      pagination={false}
+      loading={props.loading}
+    />
   );
 };
 
@@ -72,18 +73,21 @@ class Orders extends Component {
 
   componentDidMount() {
     const { dispatch, location } = this.props;
-
     const searchQuery = location.search;
 
     dispatch(fetchOrders(searchQuery));
   }
 
   onTabChange = (key) => {
-    console.log(key);
     this.setState({ activeTab: key });
   }
 
   render() {
+    const {
+      fetchOrdersPending,
+      fetchOrdersResolved: { payload },
+    } = this.props;
+
     const tabList = [{
       key: 'orders',
       tab: 'List',
@@ -94,8 +98,10 @@ class Orders extends Component {
     },
     ];
 
+    const loading = !isEmpty(fetchOrdersPending);
+
     const tabListContent = {
-      orders: <OrdersTable />,
+      orders: <OrdersTable orders={payload} loading={loading} />,
       email: <p>Edit email form</p>,
     };
 
@@ -116,4 +122,16 @@ class Orders extends Component {
   }
 }
 
-export default connect()(Orders);
+const mapStateToProps = ({
+  application: {
+    fetchOrdersResolved,
+    fetchOrdersPending,
+    fetchOrdersRejected,
+  },
+}) => ({
+  fetchOrdersResolved,
+  fetchOrdersPending,
+  fetchOrdersRejected,
+});
+
+export default connect(mapStateToProps)(Orders);

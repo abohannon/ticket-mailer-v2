@@ -32,7 +32,7 @@ class Shows extends Component {
     toggleSearchBar();
   }
 
-  tableData = () => {
+  renderTableData = () => {
     const { fetchShowsResolved } = this.props;
 
     if (!isEmpty(fetchShowsResolved)) {
@@ -94,7 +94,7 @@ class Shows extends Component {
       >
         <Table
           columns={columns}
-          dataSource={this.tableData()}
+          dataSource={this.renderTableData()}
           pagination={false}
           showHeader
           loading={loading}

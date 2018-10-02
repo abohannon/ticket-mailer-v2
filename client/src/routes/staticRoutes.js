@@ -2,7 +2,7 @@ import Landing from 'containers/Landing';
 import Dashboard from 'containers/Dashboard';
 import Tours from 'containers/Tours';
 import Shows from 'containers/Shows';
-import Orders from 'components/Orders';
+import Orders from 'containers/Orders';
 import UserSettings from 'containers/UserSettings';
 
 const routes = [

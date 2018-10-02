@@ -1,6 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { Input, Button } from 'antd';
+
+const StyledForm = styled.form`
+  width: 30rem;
+`;
+
+const StyledLabel = styled.label`
+  font-size: 1.2rem;
+  font-weight: 700;
+`;
+
+const InputWrapper = styled.div`
+  padding-bottom: 2rem;
+`;
 
 class UserInfoForm extends Component {
   constructor(props) {
@@ -31,21 +45,21 @@ class UserInfoForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div>
-          <label>
+      <StyledForm onSubmit={this.handleSubmit}>
+        <InputWrapper>
+          <StyledLabel>
             Email:
             <Input name="email" value={this.state.email} onChange={this.handleChange} />
-          </label>
-        </div>
-        <div>
-          <label>
+          </StyledLabel>
+        </InputWrapper>
+        <InputWrapper>
+          <StyledLabel>
             Name:
             <Input name="name" value={this.state.name} onChange={this.handleChange} />
-          </label>
-        </div>
+          </StyledLabel>
+        </InputWrapper>
         <Button type="primary" htmlType="submit">Save</Button>
-      </form>
+      </StyledForm>
     );
   }
 }

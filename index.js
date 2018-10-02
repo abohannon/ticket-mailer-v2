@@ -5,11 +5,12 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import authRoutes from './routes/authRoutes';
 import dataRoutes from './routes/dataRoutes';
+import userRoutes from './routes/userRoutes';
 
 mongoose.Promise = Promise;
 
 // DB Setup
-mongoose.connect(process.env.MONGO_URI, () => console.log('MongoDB connected!'));
+mongoose.connect(process.env.MONGO_URI, () => console.log('YEWWWWW MongoDB connected!'));
 
 // App setup
 const app = express();
@@ -19,6 +20,7 @@ app.use(bodyParser.json());
 // Routes
 authRoutes(app);
 dataRoutes(app);
+userRoutes(app);
 
 // Serve static files for production
 if (process.env.NODE_ENV === 'production') {

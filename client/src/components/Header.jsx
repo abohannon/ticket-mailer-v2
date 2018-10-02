@@ -68,16 +68,16 @@ const StyledButton = styled(Button)`
 
 const propTypes = {
   showSearchBar: PropTypes.bool,
-  user: PropTypes.object,
+  currentUser: PropTypes.object,
 };
 
 const Header = (props) => {
-  const { showSearchBar, user } = props;
+  const { showSearchBar, currentUser } = props;
   return (
     <Wrapper>
       <SearchInput show={showSearchBar} />
       <UserDisplay>
-        <Greeting>{`Welcome back, ${user.name}!`}</Greeting>
+        <Greeting>{`Welcome back, ${currentUser.name}!`}</Greeting>
         <HeaderMenu {...props}>
           <StyledButton shape="circle" icon="user" size="default" />
         </HeaderMenu>

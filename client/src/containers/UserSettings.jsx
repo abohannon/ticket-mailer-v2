@@ -8,10 +8,21 @@ import { Card } from 'components/common';
 // Components
 import UserInfoForm from 'components/UserSettings/UserInfoForm';
 
+// Actions
+import { updateUser } from 'actions/userActions';
+
 class UserSettings extends Component {
+  updateUserInfo = (data) => {
+    const { dispatch } = this.props;
+
+    dispatch(updateUser(data));
+  }
+
   render() {
     const userInfoFormProps = {
+      currentUser: this.props.currentUser,
       user: this.props.user,
+      updateUserInfo: this.updateUserInfo,
     };
 
     return (
@@ -33,6 +44,12 @@ class UserSettings extends Component {
   }
 }
 
-const mapStateToProps = ({ authentication: { user } }) => ({ user });
+const mapStateToProps = ({
+  authentication: { currentUser },
+  user,
+}) => ({
+  currentUser,
+  user,
+});
 
 export default connect(mapStateToProps)(UserSettings);

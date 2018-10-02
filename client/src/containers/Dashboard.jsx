@@ -31,13 +31,13 @@ class Dashboard extends Component {
 
   render() {
     const {
-      authentication: { user }, routes,
+      authentication: { currentUser }, routes,
     } = this.props;
 
     return (
       <Wrapper>
         <SideNav />
-        <Main user={user} routes={routes} />
+        <Main currentUser={currentUser} routes={routes} />
       </Wrapper>
     );
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Input, Button } from 'antd';
+import { Input, Button, Popconfirm } from 'antd';
 
 const StyledForm = styled.form`
   width: 30rem;
@@ -17,20 +17,28 @@ const InputWrapper = styled.div`
 `;
 
 class UserInfoForm extends Component {
+  static propTypes = {
+    currentUser: PropTypes.object,
+    updateUserInfo: PropTypes.func,
+  }
+
   constructor(props) {
     super(props);
 
-    const { user } = this.props;
+    const { currentUser } = this.props;
 
     this.state = {
-      name: user.name,
-      email: user.email,
+      name: currentUser.name,
+      email: currentUser.email,
     };
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
+
+    const { updateUserInfo } = this.props;
+
+    updateUserInfo(this.state);
   }
 
   handleChange = (event) => {
@@ -45,7 +53,7 @@ class UserInfoForm extends Component {
 
   render() {
     return (
-      <StyledForm onSubmit={this.handleSubmit}>
+      <StyledForm>
         <InputWrapper>
           <StyledLabel>
             Email:
@@ -58,7 +66,15 @@ class UserInfoForm extends Component {
             <Input name="name" value={this.state.name} onChange={this.handleChange} />
           </StyledLabel>
         </InputWrapper>
-        <Button type="primary" htmlType="submit">Save</Button>
+        <Popconfirm
+          placement="right"
+          title="Are you sure you want to change your user info?"
+          onConfirm={this.handleSubmit}
+          okText="Yep"
+          cancelText="Nope"
+        >
+          <Button type="primary">Save</Button>
+        </Popconfirm>
       </StyledForm>
     );
   }

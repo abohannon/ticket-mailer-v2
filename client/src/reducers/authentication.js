@@ -14,7 +14,7 @@ const INITIAL_STATE = {
   pending: {},
   fulfilled: {},
   rejected: {},
-  user: {},
+  currentUser: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -28,7 +28,7 @@ export default (state = INITIAL_STATE, action) => {
           pending: action,
           fulfilled: {},
           rejected: {},
-          user: {},
+          currentUser: {},
         };
 
         return { ...state, ...newState };
@@ -40,7 +40,7 @@ export default (state = INITIAL_STATE, action) => {
           pending: {},
           fulfilled: {},
           rejected: action,
-          user: {},
+          currentUser: {},
         };
 
         return { ...state, ...newState };
@@ -51,7 +51,7 @@ export default (state = INITIAL_STATE, action) => {
         pending: {},
         fulfilled: action,
         rejected: {},
-        user: payload,
+        currentUser: payload,
       };
 
       return { ...state, ...newState };
@@ -60,7 +60,7 @@ export default (state = INITIAL_STATE, action) => {
       const newState = {
         isAuthenticated: false,
         fulfilled: action,
-        user: {},
+        currentUser: {},
       };
 
       return { ...state, ...newState };

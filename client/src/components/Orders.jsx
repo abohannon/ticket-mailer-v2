@@ -1,8 +1,12 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CARD_TITLE_PRIMARY, CARD_TITLE_SECONDARY } from 'constants';
 
 import { Card, Table } from 'components/common';
+
+// Actions
+import { fetchOrders } from 'actions/shopifyActions';
 
 
 const OrdersTable = (props) => {
@@ -66,6 +70,14 @@ class Orders extends Component {
     activeTab: 'orders',
   }
 
+  componentDidMount() {
+    const { dispatch, location } = this.props;
+
+    const searchQuery = location.search;
+
+    dispatch(fetchOrders(searchQuery));
+  }
+
   onTabChange = (key) => {
     console.log(key);
     this.setState({ activeTab: key });
@@ -104,4 +116,4 @@ class Orders extends Component {
   }
 }
 
-export default Orders;
+export default connect()(Orders);

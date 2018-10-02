@@ -7,6 +7,9 @@ import {
   FETCH_SHOWS_RESOLVED,
   FETCH_SHOWS_PENDING,
   FETCH_SHOWS_REJECTED,
+  FETCH_ORDERS_RESOLVED,
+  FETCH_ORDERS_PENDING,
+  FETCH_ORDERS_REJECTED,
 } from 'actions/types';
 
 import { GET } from 'constants';
@@ -63,6 +66,35 @@ export const fetchShows = searchQuery => async (dispatch) => {
   } catch (err) {
     action = {
       type: FETCH_SHOWS_REJECTED,
+      payload: err,
+    };
+    dispatch(action);
+  }
+};
+
+export const fetchOrders = searchQuery => async (dispatch) => {
+  let action = {
+    type: FETCH_ORDERS_PENDING,
+  };
+  dispatch(action);
+
+  const endpoint = searchQuery ? `${API_HOST}/fetchOrders${searchQuery}` : `${API_HOST}/fetchOrders`;
+  const options = { method: GET };
+
+  try {
+    const response = await fetch(endpoint, options);
+    const json = await response.json();
+    const payload = response.ok ? json : null;
+
+    action = {
+      type: FETCH_ORDERS_RESOLVED,
+      payload,
+    };
+
+    dispatch(action);
+  } catch (err) {
+    action = {
+      type: FETCH_ORDERS_REJECTED,
       payload: err,
     };
     dispatch(action);

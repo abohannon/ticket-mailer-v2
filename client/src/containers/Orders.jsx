@@ -2,69 +2,14 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
-import { CARD_TITLE_PRIMARY, CARD_TITLE_SECONDARY } from 'constants';
+import { CARD_TITLE_PRIMARY } from 'constants';
 
-import { Card, Table } from 'components/common';
+import { Card } from 'components/common';
+import OrdersList from 'components/OrdersList';
+import EmailForm from 'components/EmailForm';
 
 // Actions
 import { fetchOrders } from 'actions/shopifyActions';
-
-
-const OrdersTable = (props) => {
-  const columns = [{
-    title: 'Order #',
-    dataIndex: 'orderNumber',
-  },
-  {
-    title: 'Name',
-    dataIndex: 'name',
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-  },
-  ];
-
-  const renderTableData = () => {
-    const { orders } = props;
-
-    if (orders && orders.length > 0) {
-      return (
-        orders.map((order, index) => ({
-          key: index,
-          orderNumber: order.name,
-          name: `${order.customer.first_name} ${order.customer.last_name}`,
-          email: order.customer.email,
-          status: order.email_sent ? 'Sent' : 'Unsent',
-        }))
-      );
-    }
-  };
-
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-    getCheckboxProps: record => ({
-      disabled: record.name === 'Disabled User', // Column configuration not to be checked
-      name: record.name,
-    }),
-  };
-
-  return (
-    <Table
-      rowSelection={rowSelection}
-      columns={columns}
-      dataSource={renderTableData()}
-      pagination={false}
-      loading={props.loading}
-    />
-  );
-};
 
 class Orders extends Component {
   state = {
@@ -101,8 +46,8 @@ class Orders extends Component {
     const loading = !isEmpty(fetchOrdersPending);
 
     const tabListContent = {
-      orders: <OrdersTable orders={payload} loading={loading} />,
-      email: <p>Edit email form</p>,
+      orders: <OrdersList orders={payload} loading={loading} />,
+      email: <EmailForm />,
     };
 
     return (
@@ -113,7 +58,7 @@ class Orders extends Component {
           tabList={tabList}
           activeTabKey={this.state.activeTab}
           onTabChange={key => this.onTabChange(key)}
-          fullWidth
+          fullWidth={this.state.activeTab === 'orders'}
         >
           {tabListContent[this.state.activeTab]}
         </Card>

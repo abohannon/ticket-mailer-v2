@@ -25,12 +25,16 @@ class Main extends Component {
   }
 
   render() {
-    const { routes, currentUser } = this.props;
+    const { routes, currentUser, handleLogout } = this.props;
     const { showSearchBar } = this.state;
 
     return (
       <Wrapper>
-        <Header currentUser={currentUser} showSearchBar={showSearchBar} />
+        <Header
+          currentUser={currentUser}
+          showSearchBar={showSearchBar}
+          handleLogout={handleLogout}
+        />
         <Spacer />
         <Switch>
           {routes.map((route, i) => (

@@ -7,6 +7,9 @@ import styled from 'styled-components';
 import Main from 'components/Main';
 import SideNav from 'components/SideNav';
 
+// Actions
+import { logoutUser } from 'actions/authenticationActions';
+
 const Wrapper = styled.main`
   display: flex;
   margin: 0 auto;
@@ -20,6 +23,7 @@ class Dashboard extends Component {
     routes: PropTypes.array,
     history: PropTypes.object,
     authentication: PropTypes.object,
+    dispatch: PropTypes.func,
   }
 
   componentDidMount() {
@@ -27,6 +31,11 @@ class Dashboard extends Component {
     if (history.location.pathname === '/dashboard') {
       history.replace('/dashboard/tours', { from: '/dashboard' });
     }
+  }
+
+  handleLogout = () => {
+    const { dispatch } = this.props;
+    dispatch(logoutUser());
   }
 
   render() {
@@ -37,7 +46,11 @@ class Dashboard extends Component {
     return (
       <Wrapper>
         <SideNav />
-        <Main currentUser={currentUser} routes={routes} />
+        <Main
+          currentUser={currentUser}
+          routes={routes}
+          handleLogout={this.handleLogout}
+        />
       </Wrapper>
     );
   }

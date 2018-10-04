@@ -8,9 +8,6 @@ import {
 } from 'antd';
 import { BOX_SHADOW } from 'constants';
 
-// Actions
-import { logoutUser } from 'actions/authenticationActions';
-
 // Components
 import { SearchInput } from 'components/common';
 
@@ -29,7 +26,7 @@ const HeaderMenu = (props) => {
         </Link>
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="1" onClick={() => props.dispatch(logoutUser())}>
+      <Menu.Item key="1" onClick={() => props.handleLogout()}>
         <StyledIcon type="logout" />
         Logout
       </Menu.Item>
@@ -88,4 +85,4 @@ const Header = (props) => {
 
 Header.propTypes = propTypes;
 
-export default connect()(Header);
+export default Header;

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import { CARD_TITLE_PRIMARY } from 'constants';
+import { Button } from 'antd';
 
 import { Card } from 'components/common';
 import OrdersList from 'components/OrdersList';
@@ -44,6 +45,7 @@ class Orders extends Component {
     ];
 
     const loading = !isEmpty(fetchOrdersPending);
+    const sendEmailButton = <Button type="primary">Send Email</Button>;
 
     const tabListContent = {
       orders: <OrdersList orders={payload} loading={loading} />,
@@ -59,6 +61,7 @@ class Orders extends Component {
           activeTabKey={this.state.activeTab}
           onTabChange={key => this.onTabChange(key)}
           fullWidth={this.state.activeTab === 'orders'}
+          extra={this.state.activeTab === 'orders' && sendEmailButton}
         >
           {tabListContent[this.state.activeTab]}
         </Card>

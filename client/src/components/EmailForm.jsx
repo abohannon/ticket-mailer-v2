@@ -112,7 +112,7 @@ class EmailForm extends Component {
             )}
           </FormItem>
           <FormItem wrapperCol={{ span: 12, offset: 8 }}>
-            <Button type="primary" htmlType="submit">
+            <Button htmlType="submit">
               Save Email
             </Button>
           </FormItem>

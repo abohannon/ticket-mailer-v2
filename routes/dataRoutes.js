@@ -4,6 +4,7 @@ import {
   fetchOrders,
   fetchMetafieldsForResource,
   fetchSingleMetafield,
+  saveEmail,
 } from '../controllers/dataController';
 
 export default (app) => {
@@ -13,4 +14,6 @@ export default (app) => {
 
   app.get('/api/fetchMetafieldsForResource', fetchMetafieldsForResource);
   app.get('/api/fetchSingleMetafield', fetchSingleMetafield);
+
+  app.post('/api/saveEmail', saveEmail);
 };

@@ -4,6 +4,7 @@ import {
   addMetafieldsToShows,
   fetchMetafields,
 } from '../services/dataService';
+import Email from '../models/email';
 
 export const fetchTours = async (req, res) => {
   try {
@@ -44,6 +45,24 @@ export const fetchOrders = async (req, res) => {
     }
 
     return res.status(200).json(orders);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+/* Email Content Controllers */
+
+export const saveEmail = async (req, res) => {
+  const { variant_id } = req.body;
+
+  try {
+    const email = await Email.findOneAndUpdate({ variant_id }, req.body, { upsert: true, new: true });
+
+    if (!email) {
+      throw new Error('Error saving email');
+    }
+
+    return res.status(201).json(email);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

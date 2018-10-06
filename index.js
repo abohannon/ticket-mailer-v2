@@ -3,9 +3,9 @@ import http from 'http';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
-import authRoutes from './routes/authRoutes';
-import dataRoutes from './routes/dataRoutes';
-import userRoutes from './routes/userRoutes';
+import authRouter from './routes/authRoutes';
+import dataRouter from './routes/dataRoutes';
+import userRouter from './routes/userRoutes';
 
 mongoose.Promise = Promise;
 
@@ -18,9 +18,9 @@ app.use(morgan('combined'));
 app.use(bodyParser.json());
 
 // Routes
-authRoutes(app);
-dataRoutes(app);
-userRoutes(app);
+app.use('/api', dataRouter);
+app.use('/api', authRouter);
+app.use('/api', userRouter);
 
 // Serve static files for production
 if (process.env.NODE_ENV === 'production') {

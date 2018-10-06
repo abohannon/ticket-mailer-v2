@@ -20,8 +20,18 @@ export const fetchTours = () => async (dispatch) => {
   };
   dispatch(action);
 
-  const endpoint = `${API_HOST}/fetchTours`;
-  const options = { method: GET };
+  const endpoint = `${API_HOST}/data/fetchTours`;
+
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('tm_id_token'),
+  };
+
+  const options = {
+    method: GET,
+    headers,
+  };
 
   try {
     const response = await fetch(endpoint, options);
@@ -49,8 +59,18 @@ export const fetchShows = searchQuery => async (dispatch) => {
   };
   dispatch(action);
 
-  const endpoint = searchQuery ? `${API_HOST}/fetchShows${searchQuery}` : `${API_HOST}/fetchShows`;
-  const options = { method: GET };
+  const endpoint = searchQuery ? `${API_HOST}/data/fetchShows${searchQuery}` : `${API_HOST}/data/fetchShows`;
+
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('tm_id_token'),
+  };
+
+  const options = {
+    method: GET,
+    headers,
+  };
 
   try {
     const response = await fetch(endpoint, options);
@@ -78,8 +98,18 @@ export const fetchOrders = searchQuery => async (dispatch) => {
   };
   dispatch(action);
 
-  const endpoint = searchQuery ? `${API_HOST}/fetchOrders${searchQuery}` : `${API_HOST}/fetchOrders`;
-  const options = { method: GET };
+  const endpoint = searchQuery ? `${API_HOST}/data/fetchOrders${searchQuery}` : `${API_HOST}/data/fetchOrders`;
+
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('tm_id_token'),
+  };
+
+  const options = {
+    method: GET,
+    headers,
+  };
 
   try {
     const response = await fetch(endpoint, options);

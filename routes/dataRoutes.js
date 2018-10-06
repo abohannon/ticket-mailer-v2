@@ -1,3 +1,5 @@
+import express from 'express';
+import passport from 'passport';
 import {
   fetchTours,
   fetchShows,
@@ -6,14 +8,24 @@ import {
   fetchSingleMetafield,
   saveEmail,
 } from '../controllers/dataController';
+import passportService from '../services/passportService';
 
-export default (app) => {
-  app.get('/api/fetchTours', fetchTours);
-  app.get('/api/fetchShows', fetchShows);
-  app.get('/api/fetchOrders', fetchOrders);
+const requireAuth = passport.authenticate('jwt', { session: false });
 
-  app.get('/api/fetchMetafieldsForResource', fetchMetafieldsForResource);
-  app.get('/api/fetchSingleMetafield', fetchSingleMetafield);
+const router = express.Router();
+const dataRouter = express.Router();
 
-  app.post('/api/saveEmail', saveEmail);
-};
+router.use(requireAuth);
+
+router.get('/fetchTours', fetchTours);
+router.get('/fetchShows', fetchShows);
+router.get('/fetchOrders', fetchOrders);
+
+router.get('/fetchMetafieldsForResource', fetchMetafieldsForResource);
+router.get('/fetchSingleMetafield', fetchSingleMetafield);
+
+router.post('/saveEmail', saveEmail);
+
+dataRouter.use('/data', router);
+
+export default dataRouter;

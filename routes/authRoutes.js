@@ -1,3 +1,4 @@
+import express from 'express';
 import passport from 'passport';
 import {
   login, signup, authenticateUser,
@@ -7,8 +8,13 @@ import passportService from '../services/passportService';
 // { session: false } tells passport not to create a cookie
 const requireAuth = passport.authenticate('jwt', { session: false });
 
-export default (app) => {
-  app.post('/api/auth/login', login);
-  app.post('/api/auth/signup', signup);
-  app.get('/api/auth/user', requireAuth, authenticateUser);
-};
+const router = express.Router();
+const authRouter = express.Router();
+
+router.post('/login', login);
+router.post('/signup', signup);
+router.get('/user', requireAuth, authenticateUser);
+
+authRouter.use('/auth', router);
+
+export default authRouter;

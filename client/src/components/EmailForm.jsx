@@ -7,6 +7,32 @@ import {
 } from 'antd';
 
 class EmailForm extends Component {
+  componentDidMount() {
+    if (this.props.email) {
+      const {
+        check_in,
+        start_time,
+        pickup_items,
+        shipping_items,
+        shipping_date,
+        digital_items,
+        digital_delivery_date,
+        event_notes,
+      } = this.props.email;
+
+      this.props.form.setFieldsValue({
+        check_in: moment(check_in),
+        start_time: moment(start_time),
+        pickup_items,
+        shipping_items,
+        shipping_date: moment(shipping_date),
+        digital_items,
+        digital_delivery_date: moment(digital_delivery_date),
+        event_notes,
+      });
+    }
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {

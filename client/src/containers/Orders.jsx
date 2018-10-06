@@ -10,7 +10,7 @@ import OrdersList from 'components/OrdersList';
 import EmailForm from 'components/EmailForm';
 
 // Actions
-import { fetchOrders } from 'actions/shopifyActions';
+import { fetchOrders, fetchEmail } from 'actions/applicationActions';
 
 class Orders extends Component {
   state = {
@@ -22,6 +22,7 @@ class Orders extends Component {
     const searchQuery = location.search;
 
     dispatch(fetchOrders(searchQuery));
+    dispatch(fetchEmail(searchQuery));
   }
 
   onTabChange = (key) => {

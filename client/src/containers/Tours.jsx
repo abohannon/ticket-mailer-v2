@@ -8,7 +8,7 @@ import { formatUrlString } from 'helpers/util';
 import { CARD_TITLE_PRIMARY } from 'constants';
 
 // Actions
-import { fetchTours } from 'actions/shopifyActions';
+import { fetchTours } from 'actions/applicationActions';
 
 class Tours extends Component {
   static propTypes = {

@@ -10,6 +10,10 @@ import {
   FETCH_ORDERS_RESOLVED,
   FETCH_ORDERS_PENDING,
   FETCH_ORDERS_REJECTED,
+  FETCH_EMAIL_RESOLVED,
+  FETCH_EMAIL_PENDING,
+  FETCH_EMAIL_REJECTED,
+
 } from 'actions/types';
 
 import { GET } from 'constants';
@@ -125,6 +129,45 @@ export const fetchOrders = searchQuery => async (dispatch) => {
   } catch (err) {
     action = {
       type: FETCH_ORDERS_REJECTED,
+      payload: err,
+    };
+    dispatch(action);
+  }
+};
+
+export const fetchEmail = searchQuery => async (dispatch) => {
+  let action = {
+    type: FETCH_EMAIL_PENDING,
+  };
+  dispatch(action);
+
+  const endpoint = `${API_HOST}/data/fetchEmail${searchQuery}`;
+
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('tm_id_token'),
+  };
+
+  const options = {
+    method: GET,
+    headers,
+  };
+
+  try {
+    const response = await fetch(endpoint, options);
+    const json = await response.json();
+    const payload = response.ok ? json : null;
+
+    action = {
+      type: FETCH_EMAIL_RESOLVED,
+      payload,
+    };
+
+    dispatch(action);
+  } catch (err) {
+    action = {
+      type: FETCH_EMAIL_REJECTED,
       payload: err,
     };
     dispatch(action);

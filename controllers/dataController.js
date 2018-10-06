@@ -70,15 +70,16 @@ export const saveEmail = async (req, res) => {
 
 export const fetchEmail = async (req, res) => {
   const { variant_id } = req.query;
+  let status = 200;
 
   try {
     const foundEmail = await Email.findOne({ variant_id });
 
     if (!foundEmail) {
-      throw new Error('No email found');
+      status = 204; // successful request, but no content found
     }
 
-    return res.status(200).json(foundEmail);
+    return res.status(status).json(foundEmail);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

@@ -8,6 +8,9 @@ import {
   FETCH_ORDERS_RESOLVED,
   FETCH_ORDERS_PENDING,
   FETCH_ORDERS_REJECTED,
+  FETCH_EMAIL_RESOLVED,
+  FETCH_EMAIL_PENDING,
+  FETCH_EMAIL_REJECTED,
 } from 'actions/types';
 
 const INITIAL_STATE = {
@@ -20,6 +23,9 @@ const INITIAL_STATE = {
   fetchOrdersResolved: {},
   fetchOrdersPending: {},
   fetchOrdersRejected: {},
+  fetchEmailResolved: {},
+  fetchEmailPending: {},
+  fetchEmailRejected: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -95,6 +101,30 @@ export default (state = INITIAL_STATE, action) => {
         fetchOrdersResolved: {},
         fetchOrdersPending: {},
         fetchOrdersRejected: action,
+      };
+      return { ...state, ...newState };
+    }
+    case FETCH_EMAIL_RESOLVED: {
+      const newState = {
+        fetchEmailResolved: action,
+        fetchEmailPending: {},
+        fetchEmailRejected: {},
+      };
+      return { ...state, ...newState };
+    }
+    case FETCH_EMAIL_PENDING: {
+      const newState = {
+        fetchEmailResolved: {},
+        fetchEmailPending: action,
+        fetchEmailRejected: {},
+      };
+      return { ...state, ...newState };
+    }
+    case FETCH_EMAIL_REJECTED: {
+      const newState = {
+        fetchEmailResolved: {},
+        fetchEmailPending: {},
+        fetchEmailRejected: action,
       };
       return { ...state, ...newState };
     }

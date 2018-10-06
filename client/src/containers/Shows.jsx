@@ -9,7 +9,7 @@ import { CARD_TITLE_PRIMARY } from 'constants';
 import { formatUrlString } from 'helpers/util';
 
 // Actions
-import { fetchShows } from 'actions/shopifyActions';
+import { fetchShows } from 'actions/applicationActions';
 
 class Shows extends Component {
   static propTypes = {

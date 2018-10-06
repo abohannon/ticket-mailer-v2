@@ -68,6 +68,22 @@ export const saveEmail = async (req, res) => {
   }
 };
 
+export const fetchEmail = async (req, res) => {
+  const { variant_id } = req.query;
+
+  try {
+    const foundEmail = await Email.findOne({ variant_id });
+
+    if (!foundEmail) {
+      throw new Error('No email found');
+    }
+
+    return res.status(200).json(foundEmail);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
 /*  Metafield Controllers */
 
 export const fetchMetafieldsForResource = async (req, res) => {

@@ -7,6 +7,7 @@ import {
   fetchMetafieldsForResource,
   fetchSingleMetafield,
   saveEmail,
+  fetchEmail,
 } from '../controllers/dataController';
 import passportService from '../services/passportService';
 
@@ -25,6 +26,7 @@ router.get('/fetchMetafieldsForResource', fetchMetafieldsForResource);
 router.get('/fetchSingleMetafield', fetchSingleMetafield);
 
 router.post('/saveEmail', saveEmail);
+router.get('/fetchEmail', fetchEmail);
 
 dataRouter.use('/data', router);
 

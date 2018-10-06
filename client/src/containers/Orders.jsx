@@ -10,7 +10,7 @@ import OrdersList from 'components/OrdersList';
 import EmailForm from 'components/EmailForm';
 
 // Actions
-import { fetchOrders, fetchEmail } from 'actions/applicationActions';
+import { fetchOrders, fetchEmail, saveEmail } from 'actions/applicationActions';
 
 class Orders extends Component {
   state = {
@@ -27,6 +27,14 @@ class Orders extends Component {
 
   onTabChange = (key) => {
     this.setState({ activeTab: key });
+  }
+
+  saveEmailContent = (data) => {
+    const { dispatch, location } = this.props;
+
+    const mergedData = { ...data, variant_id: location.state.variantId };
+
+    dispatch(saveEmail(mergedData));
   }
 
   render() {
@@ -53,7 +61,7 @@ class Orders extends Component {
 
     const tabListContent = {
       orders: <OrdersList orders={orders} loading={loading} />,
-      email: <EmailForm email={email} />,
+      email: <EmailForm email={email} onSave={this.saveEmailContent} />,
     };
 
     return (

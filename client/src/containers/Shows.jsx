@@ -71,6 +71,7 @@ class Shows extends Component {
                 to={{
                   pathname: `/dashboard/orders/${formatUrlString(record.show)}/${formatUrlString(bundle.title)}`,
                   search: `?variant_id=${bundle.variant_id}`,
+                  state: { variantId: bundle.variant_id },
                 }}
                 key={bundle.title}
               >

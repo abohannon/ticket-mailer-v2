@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const emailSchema = new Schema({
-  variant_id: String,
+  variant_id: Number,
   check_in: Date,
   start_time: Date,
   pickup_items: String,

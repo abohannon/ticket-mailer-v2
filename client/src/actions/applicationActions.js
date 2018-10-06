@@ -13,10 +13,12 @@ import {
   FETCH_EMAIL_RESOLVED,
   FETCH_EMAIL_PENDING,
   FETCH_EMAIL_REJECTED,
-
+  SAVE_EMAIL_RESOLVED,
+  SAVE_EMAIL_PENDING,
+  SAVE_EMAIL_REJECTED,
 } from 'actions/types';
 
-import { GET } from 'constants';
+import { GET, POST } from 'constants';
 
 export const fetchTours = () => async (dispatch) => {
   let action = {
@@ -168,6 +170,46 @@ export const fetchEmail = searchQuery => async (dispatch) => {
   } catch (err) {
     action = {
       type: FETCH_EMAIL_REJECTED,
+      payload: err,
+    };
+    dispatch(action);
+  }
+};
+
+export const saveEmail = data => async (dispatch) => {
+  let action = {
+    type: SAVE_EMAIL_PENDING,
+  };
+  dispatch(action);
+
+  const endpoint = `${API_HOST}/data/saveEmail`;
+
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('tm_id_token'),
+  };
+
+  const options = {
+    method: POST,
+    headers,
+    body: JSON.stringify(data),
+  };
+
+  try {
+    const response = await fetch(endpoint, options);
+    const json = await response.json();
+    const payload = response.ok ? json : null;
+
+    action = {
+      type: SAVE_EMAIL_RESOLVED,
+      payload,
+    };
+
+    dispatch(action);
+  } catch (err) {
+    action = {
+      type: SAVE_EMAIL_REJECTED,
       payload: err,
     };
     dispatch(action);

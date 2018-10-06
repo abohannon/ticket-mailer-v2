@@ -16,6 +16,7 @@ class EmailForm extends Component {
     digital_items: PropTypes.string,
     digital_delivery_date: PropTypes.string,
     event_notes: PropTypes.string,
+    onSave: PropTypes.func,
   }
 
   componentDidMount() {
@@ -48,9 +49,23 @@ class EmailForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
+
+    const { form, onSave } = this.props;
+
+    form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Form values', values);
+        const emailData = {
+          check_in: values.check_in.format(),
+          start_time: values.start_time.format(),
+          pickup_items: values.pickup_items,
+          shipping_items: values.shipping_items,
+          shipping_date: values.shipping_date.format(),
+          digital_items: values.digital_items,
+          digital_delivery_date: values.digital_delivery_date.format(),
+          event_notes: values.event_notes,
+        };
+
+        onSave(emailData);
       }
     });
   }

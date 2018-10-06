@@ -7,8 +7,21 @@ import {
 } from 'antd';
 
 class EmailForm extends Component {
+  static propTypes = {
+    check_in: PropTypes.string,
+    start_time: PropTypes.string,
+    pickup_items: PropTypes.string,
+    shipping_items: PropTypes.string,
+    shipping_date: PropTypes.string,
+    digital_items: PropTypes.string,
+    digital_delivery_date: PropTypes.string,
+    event_notes: PropTypes.string,
+  }
+
   componentDidMount() {
-    if (this.props.email) {
+    const { email, form } = this.props;
+
+    if (!email.error) {
       const {
         check_in,
         start_time,
@@ -18,9 +31,9 @@ class EmailForm extends Component {
         digital_items,
         digital_delivery_date,
         event_notes,
-      } = this.props.email;
+      } = email;
 
-      this.props.form.setFieldsValue({
+      form.setFieldsValue({
         check_in: moment(check_in),
         start_time: moment(start_time),
         pickup_items,

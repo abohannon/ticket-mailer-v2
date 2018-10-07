@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import moment from 'moment';
 import {
   Form, Input, TimePicker, DatePicker, Col, Button,
@@ -28,7 +27,7 @@ class EmailForm extends Component {
   componentDidMount() {
     const { email, form } = this.props;
 
-    if (!email.error) {
+    if (email && !email.error) {
       const {
         check_in,
         start_time,
@@ -59,12 +58,24 @@ class EmailForm extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.saveSuccess && !prevProps.saveSuccess) {
-      this.setState({ message: 'Email saved successfully.' });
+      this.showMessage('Email saved successfully.');
     }
 
     if (this.props.saveError && !prevProps.saveError) {
-      this.setState({ message: 'Error saving email.' });
+      this.showMessage('Error saving email.');
     }
+  }
+
+  componentWillMount() {
+    clearTimeout(this.timer);
+  }
+
+  showMessage = (message) => {
+    this.setState({ message });
+
+    this.timer = setTimeout(() => {
+      this.setState({ message: '' });
+    }, 5000);
   }
 
   handleSubmit = (event) => {

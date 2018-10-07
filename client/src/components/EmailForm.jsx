@@ -17,6 +17,12 @@ class EmailForm extends Component {
     digital_delivery_date: PropTypes.string,
     event_notes: PropTypes.string,
     onSave: PropTypes.func,
+    emailSaved: PropTypes.bool,
+  }
+
+  state = {
+    message: '',
+    dirty: false,
   }
 
   componentDidMount() {
@@ -47,6 +53,20 @@ class EmailForm extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.setState({ message: '' });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.saveSuccess && !prevProps.saveSuccess) {
+      this.setState({ message: 'Email saved successfully.' });
+    }
+
+    if (this.props.saveError && !prevProps.saveError) {
+      this.setState({ message: 'Error saving email.' });
+    }
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
 
@@ -66,8 +86,16 @@ class EmailForm extends Component {
         };
 
         onSave(emailData);
+
+        this.setState({ dirty: false });
       }
     });
+  }
+
+  onChange = () => {
+    if (!this.state.dirty) {
+      this.setState({ dirty: true }, () => console.log(this.state.dirty));
+    }
   }
 
   render() {
@@ -95,6 +123,7 @@ class EmailForm extends Component {
               <TimePicker
                 use12Hours
                 format="h:mm a"
+                onChange={this.onChange}
               />,
             )}
           </FormItem>
@@ -106,6 +135,7 @@ class EmailForm extends Component {
               <TimePicker
                 use12Hours
                 format="h:mm a"
+                onChange={this.onChange}
               />,
             )}
           </FormItem>
@@ -114,7 +144,7 @@ class EmailForm extends Component {
             label="Items for pickup"
           >
             {getFieldDecorator('pickup_items')(
-              <Input />,
+              <Input onChange={this.onChange} />,
             )}
           </FormItem>
           <FormItem
@@ -124,7 +154,7 @@ class EmailForm extends Component {
             <Col span={16}>
               <FormItem>
                 {getFieldDecorator('shipping_items')(
-                  <Input />,
+                  <Input onChange={this.onChange} />,
                 )}
               </FormItem>
             </Col>
@@ -132,7 +162,7 @@ class EmailForm extends Component {
             <Col span={6}>
               <FormItem>
                 {getFieldDecorator('shipping_date')(
-                  <DatePicker />,
+                  <DatePicker onChange={this.onChange} />,
                 )}
               </FormItem>
             </Col>
@@ -144,7 +174,7 @@ class EmailForm extends Component {
             <Col span={16}>
               <FormItem>
                 {getFieldDecorator('digital_items')(
-                  <Input />,
+                  <Input onChange={this.onChange} />,
                 )}
               </FormItem>
             </Col>
@@ -152,7 +182,7 @@ class EmailForm extends Component {
             <Col span={6}>
               <FormItem>
                 {getFieldDecorator('digital_delivery_date')(
-                  <DatePicker />,
+                  <DatePicker onChange={this.onChange} />,
                 )}
               </FormItem>
             </Col>
@@ -162,14 +192,21 @@ class EmailForm extends Component {
             label="Event Notes"
           >
             {getFieldDecorator('event_notes')(
-              <Input.TextArea rows={4} />,
+              <Input.TextArea rows={4} onChange={this.onChange} />,
             )}
           </FormItem>
-          <FormItem wrapperCol={{ span: 12, offset: 8 }}>
-            <Button htmlType="submit">
+          <Col span={4} offset={8}>
+            <FormItem>
+              <Button htmlType="submit" disabled={!this.state.dirty}>
               Save Email
-            </Button>
-          </FormItem>
+              </Button>
+            </FormItem>
+          </Col>
+          <Col span={6}>
+            <FormItem>
+              { this.state.message }
+            </FormItem>
+          </Col>
         </Form>
       </div>
     );

@@ -42,6 +42,8 @@ class Orders extends Component {
       fetchOrdersPending,
       fetchOrdersResolved,
       fetchEmailResolved,
+      saveEmailResolved,
+      saveEmailRejected,
     } = this.props;
 
     const tabList = [{
@@ -57,11 +59,20 @@ class Orders extends Component {
     const orders = fetchOrdersResolved.payload;
     const email = fetchEmailResolved.payload;
     const loading = !isEmpty(fetchOrdersPending);
+    const emailSaved = !isEmpty(saveEmailResolved);
+    const emailSaveError = !isEmpty(saveEmailRejected);
     const sendEmailButton = <Button type="primary">Send Email</Button>;
 
     const tabListContent = {
       orders: <OrdersList orders={orders} loading={loading} />,
-      email: <EmailForm email={email} onSave={this.saveEmailContent} />,
+      email: (
+        <EmailForm
+          email={email}
+          onSave={this.saveEmailContent}
+          saveSuccess={emailSaved}
+          saveError={emailSaveError}
+        />
+      ),
     };
 
     return (
@@ -88,12 +99,16 @@ const mapStateToProps = ({
     fetchOrdersPending,
     fetchOrdersRejected,
     fetchEmailResolved,
+    saveEmailResolved,
+    saveEmailRejected,
   },
 }) => ({
   fetchOrdersResolved,
   fetchOrdersPending,
   fetchOrdersRejected,
   fetchEmailResolved,
+  saveEmailResolved,
+  saveEmailRejected,
 });
 
 export default connect(mapStateToProps)(Orders);

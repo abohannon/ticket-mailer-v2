@@ -22,10 +22,10 @@ class Shows extends Component {
 
   componentDidMount() {
     const { dispatch, location, toggleSearchBar } = this.props;
-    const searchQuery = location.search;
+    this.searchQuery = location.search;
 
     toggleSearchBar();
-    dispatch(fetchShows(searchQuery));
+    dispatch(fetchShows(this.searchQuery));
   }
 
   componentWillUnmount() {
@@ -88,9 +88,11 @@ class Shows extends Component {
       },
     ];
 
+    const title = this.searchQuery ? 'Current Shows' : 'All Shows';
+
     return (
       <Card
-        title="Current Shows"
+        title={title}
         headStyle={CARD_TITLE_PRIMARY}
         fullWidth
       >

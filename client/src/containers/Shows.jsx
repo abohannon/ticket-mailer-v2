@@ -43,6 +43,9 @@ class Shows extends Component {
         bundles: show.variants.map(variant => ({
           title: variant.title,
           variant_id: variant.id,
+          variant_title: variant.title,
+          show_title: show.title,
+          artist_name: show.vendor,
           email_sent: variant.email_sent,
         })),
       }));
@@ -71,7 +74,12 @@ class Shows extends Component {
                 to={{
                   pathname: `/dashboard/orders/${formatUrlString(record.show)}/${formatUrlString(bundle.title)}`,
                   search: `?variant_id=${bundle.variant_id}`,
-                  state: { variantId: bundle.variant_id },
+                  state: {
+                    variantId: bundle.variant_id,
+                    variantTitle: bundle.variant_title,
+                    showTitle: bundle.show_title,
+                    artistName: bundle.artist_name,
+                  },
                 }}
                 key={bundle.title}
               >

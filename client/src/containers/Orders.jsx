@@ -59,7 +59,9 @@ class Orders extends Component {
   }
 
   sendEmail = (orders) => {
-    const { fetchEmailResolved } = this.props;
+    const { fetchEmailResolved, location } = this.props;
+
+    const { artistName, showTitle, variantTitle } = location.state;
 
     if (fetchEmailResolved.payload.error) {
       return console.log('You haven\'t saved an email yet.');
@@ -68,6 +70,9 @@ class Orders extends Component {
     const emailData = {
       content: fetchEmailResolved.payload,
       orders,
+      artistName,
+      showTitle,
+      variantTitle,
     };
 
     console.log(emailData);

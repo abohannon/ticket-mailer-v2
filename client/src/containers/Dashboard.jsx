@@ -14,7 +14,7 @@ const Wrapper = styled.main`
   display: flex;
   margin: 0 auto;
   max-width: 134rem;
-  padding: 0 2rem 0 2rem;
+  padding: 0 4rem 0 4rem;
   box-sizing: border-box;
 `;
 

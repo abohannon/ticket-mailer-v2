@@ -10,7 +10,7 @@ import { Spacer } from 'components/common';
 // Styles
 const Wrapper = styled.nav`
   min-width: 26rem;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 0;
   font-size: 1.4rem;
 `;
 

@@ -45,7 +45,11 @@ class Orders extends Component {
   saveEmailContent = (data) => {
     const { dispatch, location } = this.props;
 
-    const mergedData = { ...data, variant_id: location.state.variantId };
+    const mergedData = {
+      ...data,
+      variant_id: location.state.variantId,
+      searchQuery: location.search,
+    };
 
     dispatch(saveEmail(mergedData));
   }
@@ -55,14 +59,14 @@ class Orders extends Component {
   }
 
   sendEmail = (orders) => {
-    const { fetchEmailResolved, location } = this.props;
+    const { fetchEmailResolved } = this.props;
 
     if (fetchEmailResolved.payload.error) {
       return console.log('You haven\'t saved an email yet.');
     }
 
     const emailData = {
-      variant_id: location.state.variantId,
+      content: fetchEmailResolved.payload,
       orders,
     };
 

@@ -209,7 +209,9 @@ export const saveEmail = data => async (dispatch) => {
       payload,
     };
 
-    dispatch(action);
+    await dispatch(action);
+
+    dispatch(fetchEmail(data.searchQuery));
   } catch (err) {
     action = {
       type: SAVE_EMAIL_REJECTED,

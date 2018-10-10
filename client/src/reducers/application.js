@@ -14,6 +14,9 @@ import {
   SAVE_EMAIL_RESOLVED,
   SAVE_EMAIL_PENDING,
   SAVE_EMAIL_REJECTED,
+  SEND_EMAIL_RESOLVED,
+  SEND_EMAIL_PENDING,
+  SEND_EMAIL_REJECTED,
 } from 'actions/types';
 
 const INITIAL_STATE = {
@@ -32,6 +35,9 @@ const INITIAL_STATE = {
   saveEmailResolved: {},
   saveEmailPending: {},
   saveEmailRejected: {},
+  sendEmailResolved: {},
+  sendEmailPending: {},
+  sendEmailRejected: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -155,6 +161,30 @@ export default (state = INITIAL_STATE, action) => {
         saveEmailResolved: {},
         saveEmailPending: {},
         saveEmailRejected: action,
+      };
+      return { ...state, ...newState };
+    }
+    case SEND_EMAIL_RESOLVED: {
+      const newState = {
+        sendEmailResolved: action,
+        sendEmailPending: {},
+        sendEmailRejected: {},
+      };
+      return { ...state, ...newState };
+    }
+    case SEND_EMAIL_PENDING: {
+      const newState = {
+        sendEmailResolved: {},
+        sendEmailPending: action,
+        sendEmailRejected: {},
+      };
+      return { ...state, ...newState };
+    }
+    case SEND_EMAIL_REJECTED: {
+      const newState = {
+        sendEmailResolved: {},
+        sendEmailPending: {},
+        sendEmailRejected: action,
       };
       return { ...state, ...newState };
     }

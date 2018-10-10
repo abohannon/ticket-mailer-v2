@@ -10,9 +10,21 @@ import OrdersList from 'components/OrdersList';
 import EmailForm from 'components/EmailForm';
 
 // Actions
-import { fetchOrders, fetchEmail, saveEmail } from 'actions/applicationActions';
+import {
+  fetchOrders, fetchEmail, saveEmail, sendEmail,
+} from 'actions/applicationActions';
 
 class Orders extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func,
+    location: PropTypes.object,
+    fetchEmailResolved: PropTypes.object,
+    fetchOrdersPending: PropTypes.object,
+    fetchOrdersResolved: PropTypes.object,
+    saveEmailResolved: PropTypes.object,
+    saveEmailRejected: PropTypes.object,
+  }
+
   state = {
     activeTab: 'orders',
     selectedOrders: [],
@@ -42,6 +54,21 @@ class Orders extends Component {
     this.setState({ selectedOrders });
   }
 
+  sendEmail = (orders) => {
+    const { fetchEmailResolved, location } = this.props;
+
+    if (fetchEmailResolved.payload.error) {
+      return console.log('You haven\'t saved an email yet.');
+    }
+
+    const emailData = {
+      variant_id: location.state.variantId,
+      orders,
+    };
+
+    console.log(emailData);
+  }
+
   render() {
     const {
       fetchOrdersPending,
@@ -67,7 +94,16 @@ class Orders extends Component {
     const emailSaved = !isEmpty(saveEmailResolved);
     const emailSaveError = !isEmpty(saveEmailRejected);
     const disabled = this.state.selectedOrders.length < 1;
-    const sendEmailButton = <Button type="primary" disabled={disabled}>Send Email</Button>;
+
+    const sendEmailButton = (
+      <Button
+        type="primary"
+        disabled={disabled}
+        onClick={() => this.sendEmail(this.state.selectedOrders)}
+      >
+        Send Email
+      </Button>
+    );
 
     const tabListContent = {
       orders: (

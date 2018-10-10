@@ -16,6 +16,9 @@ import {
   SAVE_EMAIL_RESOLVED,
   SAVE_EMAIL_PENDING,
   SAVE_EMAIL_REJECTED,
+  SEND_EMAIL_RESOLVED,
+  SEND_EMAIL_PENDING,
+  SEND_EMAIL_REJECTED,
 } from 'actions/types';
 
 import { GET, POST } from 'constants';
@@ -210,6 +213,46 @@ export const saveEmail = data => async (dispatch) => {
   } catch (err) {
     action = {
       type: SAVE_EMAIL_REJECTED,
+      payload: err,
+    };
+    dispatch(action);
+  }
+};
+
+export const sendEmail = emailData => async (dispatch) => {
+  let action = {
+    type: SEND_EMAIL_PENDING,
+  };
+  dispatch(action);
+
+  const endpoint = `${API_HOST}/data/sendEmail`;
+
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('tm_id_token'),
+  };
+
+  const options = {
+    method: POST,
+    headers,
+    body: JSON.stringify(emailData),
+  };
+
+  try {
+    const response = await fetch(endpoint, options);
+    const json = await response.json();
+    const payload = response.ok ? json : null;
+
+    action = {
+      type: SEND_EMAIL_RESOLVED,
+      payload,
+    };
+
+    dispatch(action);
+  } catch (err) {
+    action = {
+      type: SEND_EMAIL_REJECTED,
       payload: err,
     };
     dispatch(action);

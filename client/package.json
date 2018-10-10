@@ -28,7 +28,7 @@
     "dev": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "build:dev": "webpack --config webpack.dev.js",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest --verbose"
   },
   "author": "Adam Bohannon",
   "license": "ISC",
@@ -55,6 +55,7 @@
     "react-dom": "^16.4.2",
     "react-hot-loader": "^4.3.4",
     "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",

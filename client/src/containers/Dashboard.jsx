@@ -44,7 +44,7 @@ class Dashboard extends Component {
     } = this.props;
 
     return (
-      <Wrapper>
+      <Wrapper className="wrapper-dashboard">
         <SideNav />
         <Main
           currentUser={currentUser}

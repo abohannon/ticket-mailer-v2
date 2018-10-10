@@ -15,6 +15,7 @@ import { fetchOrders, fetchEmail, saveEmail } from 'actions/applicationActions';
 class Orders extends Component {
   state = {
     activeTab: 'orders',
+    selectedOrders: [],
   }
 
   componentDidMount() {
@@ -35,6 +36,10 @@ class Orders extends Component {
     const mergedData = { ...data, variant_id: location.state.variantId };
 
     dispatch(saveEmail(mergedData));
+  }
+
+  updateSelectedOrders = (selectedOrders) => {
+    this.setState({ selectedOrders });
   }
 
   render() {
@@ -61,10 +66,17 @@ class Orders extends Component {
     const loading = !isEmpty(fetchOrdersPending);
     const emailSaved = !isEmpty(saveEmailResolved);
     const emailSaveError = !isEmpty(saveEmailRejected);
-    const sendEmailButton = <Button type="primary">Send Email</Button>;
+    const disabled = this.state.selectedOrders.length < 1;
+    const sendEmailButton = <Button type="primary" disabled={disabled}>Send Email</Button>;
 
     const tabListContent = {
-      orders: <OrdersList orders={orders} loading={loading} />,
+      orders: (
+        <OrdersList
+          orders={orders}
+          loading={loading}
+          onUpdate={this.updateSelectedOrders}
+        />
+      ),
       email: (
         <EmailForm
           email={email}

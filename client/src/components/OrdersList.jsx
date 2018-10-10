@@ -2,6 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'components/common';
 
+const propTypes = {
+  onUpdate: PropTypes.func,
+  loading: PropTypes.bool,
+  orders: PropTypes.array,
+};
+
 const OrdersList = (props) => {
   const columns = [{
     title: 'Order #',
@@ -18,8 +24,7 @@ const OrdersList = (props) => {
   {
     title: 'Status',
     dataIndex: 'status',
-  },
-  ];
+  }];
 
   const renderTableData = () => {
     const { orders } = props;
@@ -39,7 +44,7 @@ const OrdersList = (props) => {
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      props.onUpdate(selectedRows);
     },
     getCheckboxProps: record => ({
       disabled: record.name === 'Disabled User', // Column configuration not to be checked
@@ -57,5 +62,7 @@ const OrdersList = (props) => {
     />
   );
 };
+
+OrdersList.propTypes = propTypes;
 
 export default OrdersList;

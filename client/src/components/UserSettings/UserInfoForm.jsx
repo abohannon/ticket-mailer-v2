@@ -73,7 +73,7 @@ class UserInfoForm extends Component {
           okText="Yep"
           cancelText="Nope"
         >
-          <Button type="primary">Save</Button>
+          <Button type="primary">Update</Button>
         </Popconfirm>
       </StyledForm>
     );

@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { CARD_TITLE_PRIMARY, CARD_TITLE_SECONDARY } from 'constants';
 
-import { Card } from 'components/common';
+import { Card, Spacer } from 'components/common';
 
 // Components
 import UserInfoForm from 'components/UserSettings/UserInfoForm';
+import TeamRoles from 'components/UserSettings/TeamRoles';
 
 // Actions
 import { updateUser } from 'actions/userActions';
@@ -33,11 +34,12 @@ class UserSettings extends Component {
         >
           <UserInfoForm {...userInfoFormProps} />
         </Card>
+        <Spacer />
         <Card
-          title="User roles"
+          title="Team roles"
           headStyle={CARD_TITLE_SECONDARY}
         >
-          User roles
+          <TeamRoles />
         </Card>
       </div>
     );

@@ -2,9 +2,51 @@ import {
   UPDATE_USER_RESOLVED,
   UPDATE_USER_PENDING,
   UPDATE_USER_REJECTED,
+  FETCH_USERS_RESOLVED,
+  FETCH_USERS_PENDING,
+  FETCH_USERS_REJECTED,
 } from 'actions/types';
 
-import { POST } from 'constants';
+import { GET, POST } from 'constants';
+
+export const fetchUsers = () => async (dispatch) => {
+  let action = {
+    type: FETCH_USERS_PENDING,
+  };
+  dispatch(action);
+
+  const endpoint = `${API_HOST}/user/fetchUsers`;
+
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('tm_id_token'),
+  };
+
+  const options = {
+    method: GET,
+    headers,
+  };
+
+  try {
+    const response = await fetch(endpoint, options);
+    const json = await response.json();
+    const payload = response.ok ? json : null;
+
+    action = {
+      type: FETCH_USERS_RESOLVED,
+      payload,
+    };
+
+    dispatch(action);
+  } catch (err) {
+    action = {
+      type: FETCH_USERS_REJECTED,
+      payload: err,
+    };
+    dispatch(action);
+  }
+};
 
 export const updateUser = updatedUserData => async (dispatch) => {
   let action = {

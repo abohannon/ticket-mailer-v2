@@ -10,19 +10,26 @@ import UserInfoForm from 'components/UserSettings/UserInfoForm';
 import TeamRoles from 'components/UserSettings/TeamRoles';
 
 // Actions
-import { updateUser } from 'actions/userActions';
+import { updateUser, fetchUsers } from 'actions/userActions';
 
 class UserSettings extends Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(fetchUsers());
+  }
+
   updateUserInfo = (data) => {
     const { dispatch } = this.props;
-
     dispatch(updateUser(data));
   }
 
   render() {
+    console.log(this.props);
+    const { currentUser, user } = this.props;
+
     const userInfoFormProps = {
-      currentUser: this.props.currentUser,
-      user: this.props.user,
+      currentUser,
+      user,
       updateUserInfo: this.updateUserInfo,
     };
 
@@ -39,7 +46,7 @@ class UserSettings extends Component {
           title="Team roles"
           headStyle={CARD_TITLE_SECONDARY}
         >
-          <TeamRoles />
+          <TeamRoles isAdmin={currentUser.admin} users={user.fetchUsersResolved} />
         </Card>
       </div>
     );

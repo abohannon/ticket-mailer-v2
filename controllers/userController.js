@@ -1,6 +1,18 @@
 import User from '../models/user';
 import { sendUpdatedUserEmail } from '../services/userService';
 
+export const deleteUser = async (req, res) => {
+  try {
+    const { userId } = req.query;
+    // TODO: COnnect to client
+    const response = await User.deleteOne({ _id: userId }).exec();
+
+    return res.status(200).json(response);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
 export const fetchUsers = async (req, res) => {
   try {
     const fields = 'name admin email';

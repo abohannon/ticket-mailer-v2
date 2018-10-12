@@ -3,6 +3,7 @@ import passport from 'passport';
 import {
   updateUser,
   verifyEmail,
+  fetchUsers,
 } from '../controllers/userController';
 import passportService from '../services/passportService';
 
@@ -14,6 +15,8 @@ const userRouter = express.Router();
 
 router.post('/updateUser', requireAuth, updateUser);
 router.post('/verifyEmail', verifyEmail);
+
+router.get('/fetchUsers', requireAuth, fetchUsers);
 
 userRouter.use('/user', router);
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash/isEmpty';
 import { CARD_TITLE_PRIMARY, CARD_TITLE_SECONDARY } from 'constants';
 
 import { Card, Spacer } from 'components/common';
@@ -10,7 +11,7 @@ import UserInfoForm from 'components/UserSettings/UserInfoForm';
 import TeamRoles from 'components/UserSettings/TeamRoles';
 
 // Actions
-import { updateUser, fetchUsers } from 'actions/userActions';
+import { updateUser, fetchUsers, deleteUser } from 'actions/userActions';
 
 class UserSettings extends Component {
   componentDidMount() {
@@ -18,19 +19,39 @@ class UserSettings extends Component {
     dispatch(fetchUsers());
   }
 
+  componentDidUpdate(prevProps) {
+    const { user, dispatch } = this.props;
+
+    if (!isEmpty(prevProps.user.deleteUserPending) && isEmpty(user.deleteUserPending)) {
+      if (!isEmpty(user.deleteUserResolved)) {
+        dispatch(fetchUsers());
+      }
+    }
+  }
+
   updateUserInfo = (data) => {
     const { dispatch } = this.props;
     dispatch(updateUser(data));
   }
 
+  deleteUser = async (userId) => {
+    const { dispatch } = this.props;
+    dispatch(deleteUser(userId));
+  }
+
   render() {
-    console.log(this.props);
     const { currentUser, user } = this.props;
 
     const userInfoFormProps = {
       currentUser,
       user,
       updateUserInfo: this.updateUserInfo,
+    };
+
+    const teamRolesProps = {
+      isAdmin: currentUser.admin,
+      users: user.fetchUsersResolved,
+      deleteUser: this.deleteUser,
     };
 
     return (
@@ -46,7 +67,7 @@ class UserSettings extends Component {
           title="Team roles"
           headStyle={CARD_TITLE_SECONDARY}
         >
-          <TeamRoles isAdmin={currentUser.admin} users={user.fetchUsersResolved} />
+          <TeamRoles {...teamRolesProps} />
         </Card>
       </div>
     );

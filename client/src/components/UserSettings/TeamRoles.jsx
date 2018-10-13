@@ -14,9 +14,10 @@ class TeamRoles extends Component {
     removeAdminModalVisible: false,
     deleteUserModalVisible: false,
     makeAdminModalVisible: false,
+    selectedUser: {},
   }
 
-  setModalVisible = (status, type) => {
+  setModalVisible = (status, type, user) => {
     switch (type) {
       case 'removeAdmin':
         this.setState({ removeAdminModalVisible: status });
@@ -32,18 +33,23 @@ class TeamRoles extends Component {
     }
   }
 
-  renderAdminActions = () => ([
-    <a href="#" onClick={() => this.setModalVisible(true, 'removeAdmin')}>Remove admin</a>,
-    <a href="#" onClick={() => this.setModalVisible(true, 'deleteUser')}>Delete user</a>,
+  selectUser = (selectedUser, modal) => {
+    this.setState({ selectedUser }, () => this.setModalVisible(true, modal));
+  }
+
+  renderAdminActions = user => ([
+    <a href="#" onClick={() => this.selectUser(user, 'removeAdmin')}>Remove admin</a>,
+    <a href="#" onClick={() => this.selectUser(user, 'deleteUser')}>Delete user</a>,
   ])
 
-  renderEditorActions = () => ([
-    <a href="#" onClick={() => this.setModalVisible(true, 'makeAdmin')}>Make admin</a>,
-    <a href="#" onClick={() => this.setModalVisible(true, 'deleteUser')}>Delete user</a>,
+  renderEditorActions = user => ([
+    <a href="#" onClick={() => this.selectUser(user, 'makeAdmin')}>Make admin</a>,
+    <a href="#" onClick={() => this.selectUser(user, 'deleteUser')}>Delete user</a>,
   ])
 
   render() {
-    const { isAdmin, users } = this.props;
+    const { isAdmin, users, deleteUser } = this.props;
+    const { selectedUser: { userId } } = this.state;
 
     const adminData = [];
     const editorData = [];
@@ -51,10 +57,16 @@ class TeamRoles extends Component {
     if (users.payload) {
       users.payload.forEach((user) => {
         if (user.admin) {
-          return adminData.push(user.name);
+          return adminData.push({
+            name: user.name,
+            userId: user._id,
+          });
         }
 
-        return editorData.push(user.name);
+        return editorData.push({
+          name: user.name,
+          userId: user._id,
+        });
       });
     }
 
@@ -65,7 +77,9 @@ class TeamRoles extends Component {
           header={<div style={{ fontWeight: 700 }}>Admin</div>}
 
           dataSource={adminData}
-          renderItem={item => (<List.Item actions={isAdmin && this.renderAdminActions()}>{item}</List.Item>)}
+          renderItem={item => (
+            <List.Item actions={isAdmin && this.renderAdminActions(item)}>{item.name}</List.Item>
+          )}
         />
         <Spacer />
         <List
@@ -73,7 +87,9 @@ class TeamRoles extends Component {
           header={<div style={{ fontWeight: 700 }}>Editor</div>}
 
           dataSource={editorData}
-          renderItem={item => (<List.Item actions={isAdmin && this.renderEditorActions()}>{item}</List.Item>)}
+          renderItem={item => (
+            <List.Item actions={isAdmin && this.renderEditorActions(item)}>{item.name}</List.Item>
+          )}
         />
         <Modal
           title="Remove admin"
@@ -82,6 +98,7 @@ class TeamRoles extends Component {
           onOk={() => this.setModalVisible(false, 'removeAdmin')}
           onCancel={() => this.setModalVisible(false, 'removeAdmin')}
           okText="Confirm"
+          cancelText="Close"
         >
           Are you sure you want to remove this user's admin privileges?
         </Modal>
@@ -89,9 +106,10 @@ class TeamRoles extends Component {
           title="Delete user"
           centered
           visible={this.state.deleteUserModalVisible}
-          onOk={() => this.setModalVisible(false, 'deleteUser')}
+          onOk={() => deleteUser(userId, this.setModalVisible(false, 'deleteUser'))}
           onCancel={() => this.setModalVisible(false, 'deleteUser')}
           okText="Confirm"
+          cancelText="Close"
         >
           Are you sure you want to delete this user from Ticket Mailer?
         </Modal>
@@ -102,6 +120,7 @@ class TeamRoles extends Component {
           onOk={() => this.setModalVisible(false, 'makeAdmin')}
           onCancel={() => this.setModalVisible(false, 'makeAdmin')}
           okText="Confirm"
+          cancelText="Close"
         >
           Are you sure you want to promote this user to admin?
         </Modal>

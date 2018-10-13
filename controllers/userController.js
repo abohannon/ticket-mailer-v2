@@ -4,10 +4,14 @@ import { sendUpdatedUserEmail } from '../services/userService';
 export const deleteUser = async (req, res) => {
   try {
     const { userId } = req.query;
-    // TODO: COnnect to client
+
     const response = await User.deleteOne({ _id: userId }).exec();
 
-    return res.status(200).json(response);
+    if (!response) {
+      return res.status(404).json({ message: 'No user found' });
+    }
+
+    return res.status(200).json({ message: 'User successfully deleted' });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

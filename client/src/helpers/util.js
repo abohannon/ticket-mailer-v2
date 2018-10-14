@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 export const fetchHelper = async (endpoint, options) => {
   const response = await fetch(endpoint, options);
   const json = await response.json();

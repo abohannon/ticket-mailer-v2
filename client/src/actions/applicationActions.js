@@ -1,5 +1,3 @@
-import fetch from 'isomorphic-fetch';
-
 import {
   FETCH_TOURS_RESOLVED,
   FETCH_TOURS_PENDING,

@@ -12,6 +12,8 @@ import {
 
 import { GET, POST, DELETE } from 'constants';
 
+import { fetchHelper } from 'helpers/util';
+
 export const deleteUser = userId => async (dispatch) => {
   let action = {
     type: DELETE_USER_PENDING,
@@ -32,9 +34,7 @@ export const deleteUser = userId => async (dispatch) => {
   };
 
   try {
-    const response = await fetch(endpoint, options);
-    const json = await response.json();
-    const payload = response.ok ? json : null;
+    const payload = fetchHelper(endpoint, options);
 
     action = {
       type: DELETE_USER_RESOLVED,
@@ -71,9 +71,7 @@ export const fetchUsers = () => async (dispatch) => {
   };
 
   try {
-    const response = await fetch(endpoint, options);
-    const json = await response.json();
-    const payload = response.ok ? json : null;
+    const payload = await fetchHelper(endpoint, options);
 
     action = {
       type: FETCH_USERS_RESOLVED,
@@ -111,9 +109,7 @@ export const updateUser = updatedUserData => async (dispatch) => {
   };
 
   try {
-    const response = await fetch(endpoint, options);
-    const json = await response.json();
-    const payload = response.ok ? json : null;
+    const payload = fetchHelper(endpoint, options);
 
     action = {
       type: UPDATE_USER_RESOLVED,

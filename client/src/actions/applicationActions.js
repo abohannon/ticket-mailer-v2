@@ -23,6 +23,8 @@ import {
 
 import { GET, POST } from 'constants';
 
+import { fetchHelper } from 'helpers/util';
+
 export const fetchTours = () => async (dispatch) => {
   let action = {
     type: FETCH_TOURS_PENDING,
@@ -43,9 +45,7 @@ export const fetchTours = () => async (dispatch) => {
   };
 
   try {
-    const response = await fetch(endpoint, options);
-    const json = await response.json();
-    const payload = response.ok ? json : null;
+    const payload = await fetchHelper(endpoint, options);
 
     action = {
       type: FETCH_TOURS_RESOLVED,
@@ -82,9 +82,7 @@ export const fetchShows = searchQuery => async (dispatch) => {
   };
 
   try {
-    const response = await fetch(endpoint, options);
-    const json = await response.json();
-    const payload = response.ok ? json : null;
+    const payload = await fetchHelper(endpoint, options);
 
     action = {
       type: FETCH_SHOWS_RESOLVED,
@@ -121,9 +119,7 @@ export const fetchOrders = searchQuery => async (dispatch) => {
   };
 
   try {
-    const response = await fetch(endpoint, options);
-    const json = await response.json();
-    const payload = response.ok ? json : null;
+    const payload = await fetchHelper(endpoint, options);
 
     action = {
       type: FETCH_ORDERS_RESOLVED,
@@ -160,9 +156,7 @@ export const fetchEmail = searchQuery => async (dispatch) => {
   };
 
   try {
-    const response = await fetch(endpoint, options);
-    const json = await response.json();
-    const payload = response.ok ? json : null;
+    const payload = await fetchHelper(endpoint, options);
 
     action = {
       type: FETCH_EMAIL_RESOLVED,
@@ -200,9 +194,7 @@ export const saveEmail = data => async (dispatch) => {
   };
 
   try {
-    const response = await fetch(endpoint, options);
-    const json = await response.json();
-    const payload = response.ok ? json : null;
+    const payload = await fetchHelper(endpoint, options);
 
     action = {
       type: SAVE_EMAIL_RESOLVED,
@@ -240,9 +232,7 @@ export const sendEmail = emailData => async (dispatch) => {
   };
 
   try {
-    const response = await fetch(endpoint, options);
-    const json = await response.json();
-    const payload = response.ok ? json : null;
+    const payload = await fetchHelper(endpoint, options);
 
     action = {
       type: SEND_EMAIL_RESOLVED,

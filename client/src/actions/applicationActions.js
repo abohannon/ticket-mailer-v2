@@ -47,7 +47,7 @@ export const fetchTours = () => async (dispatch) => {
 
     action = {
       type: FETCH_TOURS_RESOLVED,
-      payload,
+      payload: payload || [],
     };
 
     dispatch(action);

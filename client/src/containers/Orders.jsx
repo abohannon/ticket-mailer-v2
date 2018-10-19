@@ -10,9 +10,8 @@ import OrdersList from 'components/OrdersList';
 import EmailForm from 'components/EmailForm';
 
 // Actions
-import {
-  fetchOrders, fetchEmail, saveEmail, sendEmail,
-} from 'actions/applicationActions';
+import { fetchOrders } from 'actions/applicationActions';
+import { fetchEmail, saveEmail, sendEmail } from 'actions/emailActions';
 
 class Orders extends Component {
   static propTypes = {
@@ -146,6 +145,8 @@ const mapStateToProps = ({
     fetchOrdersResolved,
     fetchOrdersPending,
     fetchOrdersRejected,
+  },
+  email: {
     fetchEmailResolved,
     saveEmailResolved,
     saveEmailRejected,

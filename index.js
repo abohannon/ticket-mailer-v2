@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import authRouter from './routes/authRoutes';
 import dataRouter from './routes/dataRoutes';
 import userRouter from './routes/userRoutes';
+import emailRouter from './routes/emailRoutes';
 
 mongoose.Promise = Promise;
 
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 app.use('/api', dataRouter);
 app.use('/api', authRouter);
 app.use('/api', userRouter);
+app.use('/api', emailRouter);
 
 // Serve static files for production
 if (process.env.NODE_ENV === 'production') {

@@ -2,36 +2,107 @@ import {
   UPDATE_USER_RESOLVED,
   UPDATE_USER_PENDING,
   UPDATE_USER_REJECTED,
+  FETCH_USERS_RESOLVED,
+  FETCH_USERS_PENDING,
+  FETCH_USERS_REJECTED,
+  DELETE_USER_RESOLVED,
+  DELETE_USER_PENDING,
+  DELETE_USER_REJECTED,
 } from 'actions/types';
 
 const INITIAL_STATE = {
   updateUserResolved: {},
   updateUserPending: {},
   updateUserRejected: {},
+  fetchUsersResolved: {},
+  fetchUsersPending: {},
+  fetchUsersRejected: {},
+  deleteUserResolved: {},
+  deleteUserPending: {},
+  deleteUserRejected: {},
 };
 
 export default (state = INITIAL_STATE, action) => {
   const { status, type, payload } = action;
 
   switch (type) {
-    case UPDATE_USER_RESOLVED:
-      return {
+    case UPDATE_USER_RESOLVED: {
+      const newState = {
         updateUserResolved: action,
         updateUserPending: {},
         updateUserRejected: {},
       };
-    case UPDATE_USER_PENDING:
-      return {
+      return { ...state, ...newState };
+    }
+    case UPDATE_USER_PENDING: {
+      const newState = {
         updateUserResolved: {},
         updateUserPending: action,
         updateUserRejected: {},
       };
-    case UPDATE_USER_REJECTED:
-      return {
+      return { ...state, ...newState };
+    }
+    case UPDATE_USER_REJECTED: {
+      const newState = {
         updateUserResolved: {},
         updateUserPending: {},
         updateUserRejected: action,
       };
+      return { ...state, ...newState };
+    }
+    case FETCH_USERS_RESOLVED: {
+      const newState = {
+        fetchUsersResolved: action,
+        fetchUsersPending: {},
+        fetchUsersRejected: {},
+      };
+
+      return { ...state, ...newState };
+    }
+    case FETCH_USERS_PENDING: {
+      const newState = {
+        fetchUsersResolved: {},
+        fetchUsersPending: action,
+        fetchUsersRejected: {},
+      };
+
+      return { ...state, ...newState };
+    }
+    case FETCH_USERS_REJECTED: {
+      const newState = {
+        fetchUsersResolved: {},
+        fetchUsersPending: {},
+        fetchUsersRejected: action,
+      };
+
+      return { ...state, ...newState };
+    }
+    case DELETE_USER_RESOLVED: {
+      const newState = {
+        deleteUserResolved: action,
+        deleteUserPending: {},
+        deleteUserRejected: {},
+      };
+
+      return { ...state, ...newState };
+    }
+    case DELETE_USER_PENDING: {
+      const newState = {
+        deleteUserResolved: {},
+        deleteUserPending: action,
+        deleteUserRejected: {},
+      };
+
+      return { ...state, ...newState };
+    }
+    case DELETE_USER_REJECTED: {
+      const newState = {
+        deleteUserResolved: {},
+        deleteUserPending: {},
+        deleteUserRejected: action,
+      };
+      return { ...state, ...newState };
+    }
     default:
       return state;
   }

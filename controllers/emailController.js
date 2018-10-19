@@ -1,6 +1,12 @@
 import Email from '../models/email';
 import sgMail from '../services/sendgridService';
-import generatePersonalizations from '../services/emailService';
+import { generatePersonalizations } from '../services/emailService';
+
+export const parseEmailWebhooks = (req, res) => {
+  const { events } = req.body;
+
+  console.log(req.body);
+};
 
 export const sendEmail = async (req, res) => {
   const {

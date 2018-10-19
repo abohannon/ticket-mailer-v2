@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Badge, Tooltip } from 'antd';
 import { Table } from 'components/common';
 
 const propTypes = {
@@ -26,6 +27,24 @@ const OrdersList = (props) => {
     dataIndex: 'status',
   }];
 
+  const renderStatusMessage = (status) => {
+    const { email_sent, email_error } = status;
+
+    if (email_sent) {
+      return <Badge status="success" text="Sent" />;
+    }
+
+    if (email_error) {
+      return (
+        <Tooltip title={email_error.message}>
+          <Badge status="error" text="Error" />
+        </Tooltip>
+      );
+    }
+
+    return <Badge status="default" text="Unsent" />;
+  };
+
   const renderTableData = () => {
     const { orders } = props;
 
@@ -36,7 +55,7 @@ const OrdersList = (props) => {
           orderNumber: order.name,
           name: `${order.customer.first_name} ${order.customer.last_name}`,
           email: order.customer.email,
-          status: order.email_sent ? 'Sent' : 'Unsent',
+          status: renderStatusMessage(order),
         }))
       );
     }

@@ -13,20 +13,45 @@ export const sendEmail = async (req, res) => {
     content, orders, showTitle, variantTitle, artistName,
   } = req.body;
 
+  const {
+    check_in,
+    digital_delivery_date,
+    digital_items,
+    event_notes,
+    pickup_items,
+    shipping_date,
+    shipping_items,
+    start_time,
+  } = content;
+
   try {
     const personalizations = await generatePersonalizations(orders);
-
+    // TODO: Some substitutions/template variables aren't working e.g. subject. Need to fix.
     const message = {
       personalizations,
       from: 'no-reply@showstubs.com',
       subject: `Your SHOWstubs Ticket for ${showTitle}`,
-      html: '<h1>Testing</h1>',
+      template_id: 'd-3027cf5726c041139347607731e6de9d',
+      dynamic_template_data: {
+        bundle_title: variantTitle,
+        artist: artistName,
+        showTitle,
+        check_in,
+        start_time,
+        event_notes,
+        pickup_items,
+        shipping_items,
+        shipping_date,
+        digital_items,
+        digital_delivery_date,
+      },
     };
 
     const response = await sgMail.sendMultiple(message);
     return res.status(200).json(response);
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    console.log(err.toString());
+    return res.status(500).json({ error: err.message, sendGrid_error: err.response });
   }
 };
 

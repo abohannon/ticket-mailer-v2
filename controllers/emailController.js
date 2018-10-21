@@ -1,3 +1,4 @@
+import moment from 'moment';
 import Email from '../models/email';
 import sgMail from '../services/sendgridService';
 import { generatePersonalizations } from '../services/emailService';
@@ -26,24 +27,24 @@ export const sendEmail = async (req, res) => {
 
   try {
     const personalizations = await generatePersonalizations(orders);
-    // TODO: Some substitutions/template variables aren't working e.g. subject. Need to fix.
+
     const message = {
       personalizations,
-      from: 'no-reply@showstubs.com',
-      subject: `Your SHOWstubs Ticket for ${showTitle}`,
+      from: { email: 'no-reply@showstubs.com', name: 'SHOWstubs' },
       template_id: 'd-3027cf5726c041139347607731e6de9d',
       dynamic_template_data: {
+        subject: `Your SHOWstubs Ticket for ${showTitle}`,
         bundle_title: variantTitle,
         artist: artistName,
-        showTitle,
-        check_in,
-        start_time,
+        show_title: showTitle,
+        check_in: moment(check_in).format('h:m a'),
+        start_time: moment(start_time).format('h:m a'),
         event_notes,
         pickup_items,
         shipping_items,
-        shipping_date,
+        shipping_date: moment(shipping_date).format('M/D/Y'),
         digital_items,
-        digital_delivery_date,
+        digital_delivery_date: moment(digital_delivery_date).format('M/D/Y'),
       },
     };
 

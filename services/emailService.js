@@ -1,11 +1,13 @@
+// Generate recipient-specific variables.
 export const generatePersonalizations = orders => new Promise((resolve, reject) => {
   if (!orders) return reject(new Error('Invalid input'));
 
   const personalizations = orders.map(order => ({
     to: order.email,
-    substitutions: {
+    dynamic_template_data: {
       name: order.name,
-      orderNumber: order.orderNumber,
+      order_number: order.orderNumber,
+      bundle_qty: order.quantity,
     },
   }));
 

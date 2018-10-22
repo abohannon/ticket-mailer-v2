@@ -2,7 +2,9 @@ import moment from 'moment';
 import Email from '../models/email';
 import sgMail from '../services/sendgridService';
 import { generatePersonalizations } from '../services/emailService';
+import { fetchMetafields, searchMetafields, createMetafield } from '../services/dataService';
 
+// TODO: WIP
 export const parseEmailWebhooks = (req, res) => {
   const { events } = req.body;
 
@@ -23,6 +25,7 @@ export const sendEmail = async (req, res) => {
     shipping_date,
     shipping_items,
     start_time,
+    variant_id,
   } = content;
 
   try {
@@ -49,6 +52,25 @@ export const sendEmail = async (req, res) => {
     };
 
     const response = await sgMail.sendMultiple(message);
+
+    if (response[0].statusCode !== 202) throw new Error('Problem sending email. Did not receive 202 response.');
+
+    const variantMetafields = await fetchMetafields('variant', variant_id);
+    const priorEmailSentMetafield = searchMetafields(variantMetafields, 'key', 'email_sent');
+
+    if (priorEmailSentMetafield.length < 1) {
+      const metafieldData = {
+        key: 'email_sent',
+        value: 'true',
+        value_type: 'string',
+        namespace: 'email',
+        owner_resource: 'variant',
+        owner_id: variant_id,
+      };
+
+      await createMetafield(metafieldData);
+    }
+
     return res.status(200).json(response);
   } catch (err) {
     console.log(err.toString());

@@ -56,6 +56,7 @@ const OrdersList = (props) => {
           name: `${order.customer.first_name} ${order.customer.last_name}`,
           email: order.customer.email,
           status: renderStatusMessage(order),
+          id: order.id,
         }))
       );
     }
@@ -63,7 +64,13 @@ const OrdersList = (props) => {
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
-      props.onUpdate(selectedRows);
+      const filteredRowData = selectedRows.map((row) => {
+        const { key, status, ...rest } = row;
+
+        return rest;
+      });
+
+      props.onUpdate(filteredRowData);
     },
     getCheckboxProps: record => ({
       disabled: record.name === 'Disabled User', // Column configuration not to be checked

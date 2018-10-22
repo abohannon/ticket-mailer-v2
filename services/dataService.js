@@ -1,5 +1,11 @@
 import shopify from './shopifyService';
 
+export const searchMetafields = (metafieldsList, key, value) => {
+  if (!key || !value) throw new Error('Must provide a key and value.');
+
+  return metafieldsList.filter(metafield => metafield[key] === value);
+};
+
 export const createMetafield = async (data) => {
   const {
     key,
@@ -20,6 +26,8 @@ export const createMetafield = async (data) => {
       owner_id,
     });
 
+    if (!result || Object.keys(result).length < 1) throw new Error('Error creating metafield');
+
     return { status: 'success', data: result };
   } catch (err) {
     return { status: 'error', error: err };
@@ -37,7 +45,7 @@ export const fetchMetafields = async (owner_resource, owner_id) => {
   return metafields;
 };
 
-export const filterMetafields = obj => obj.reduce((acc, item) => {
+export const filterMetafields = arr => arr.reduce((acc, item) => {
   acc[item.key] = item.value;
   return acc;
 }, {});

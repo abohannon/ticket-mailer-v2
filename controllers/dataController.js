@@ -1,5 +1,4 @@
 import shopify from '../services/shopifyService';
-import sgMail from '../services/sendgridService';
 import {
   filterOrdersByVariantId,
   addMetafieldsToShows,
@@ -41,6 +40,7 @@ export const fetchOrders = async (req, res) => {
     // if a variant_id query is passed, filter the orders for that variant
     if (Object.keys(req.query).includes('variant_id')) {
       const variantOrders = filterOrdersByVariantId(orders, variant_id);
+
       return res.status(200).json(variantOrders);
     }
 

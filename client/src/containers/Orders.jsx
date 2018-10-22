@@ -27,6 +27,7 @@ class Orders extends Component {
   state = {
     activeTab: 'orders',
     selectedOrders: [],
+    message: '',
   }
 
   componentDidMount() {
@@ -58,11 +59,12 @@ class Orders extends Component {
   }
 
   sendEmail = (orders) => {
-    const { fetchEmailResolved, location } = this.props;
+    const { fetchEmailResolved, location, dispatch } = this.props;
 
     const { artistName, showTitle, variantTitle } = location.state;
 
     if (fetchEmailResolved.payload.error) {
+      this.setState({ message: 'You haven\'t saved an email yet.' });
       return console.log('You haven\'t saved an email yet.');
     }
 
@@ -74,7 +76,7 @@ class Orders extends Component {
       variantTitle,
     };
 
-    console.log(emailData);
+    dispatch(sendEmail(emailData));
   }
 
   render() {

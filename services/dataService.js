@@ -69,7 +69,7 @@ export const fetchMetafields = async (owner_resource, owner_id) => {
   return metafields;
 };
 
-export const filterMetafields = arr => arr.reduce((acc, item) => {
+export const parseMetafields = arr => arr.reduce((acc, item) => {
   acc[item.key] = item.value;
   return acc;
 }, {});
@@ -82,29 +82,41 @@ export const mergeMetafields = (metafields, object) => {
   }
 };
 
-export const addMetafieldsToShows = showsList => Promise.all(showsList.map(async (show) => {
+export const addMetafieldsToShows = shows => Promise.all(shows.map(async (show) => {
   await Promise.all(show.variants.map(async (variant) => {
     const metafields = await fetchMetafields('variant', variant.id);
-    const filtered = filterMetafields(metafields);
+    const parsed = parseMetafields(metafields);
 
-    if (Object.keys(filtered).length > 0) {
-      mergeMetafields(filtered, variant);
+    if (Object.keys(parsed).length > 0) {
+      mergeMetafields(parsed, variant);
     }
   }));
+
   return show;
 }));
 
-// TODO: Implement in data controller
+export const addMetafieldsToOrders = orders => Promise.all(orders.map(async (order) => {
+  const metafields = await fetchMetafields('order', order.id);
+  const parsed = parseMetafields(metafields);
+
+  if (Object.keys(parsed).length > 0) {
+    mergeMetafields(parsed, order);
+  }
+
+  return order;
+}));
+
+// TODO: WIP Need to add logic for email_failed when webhooks are setup
 export const updateMetafieldsForOrders = async (orders, key, value) => Promise.all(orders.map(async (order) => {
   const metafields = await fetchMetafields('order', order.id);
 
-  await Promise.all(metafields.map(async (metafield) => {
-    if (!metafield.key) {
-      const response = await createMetafield(emailSentMetafield('order', order.id));
+  if (metafields.length < 1) {
+    const response = await createMetafield(emailSentMetafield('order', order.id));
 
-      if (response.status !== 'success') {
-        throw new Error(`Problem creating metafield for order id: ${order.id}`);
-      }
-    }
-  }));
+    if (response.status !== 'success') throw new Error(`Error updating metafields for order ${order.id}`);
+
+    return response;
+  }
+
+  return null;
 }));

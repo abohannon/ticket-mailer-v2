@@ -2,7 +2,9 @@ import moment from 'moment';
 import Email from '../models/email';
 import sgMail from '../services/sendgridService';
 import { generatePersonalizations } from '../services/emailService';
-import { fetchMetafields, searchMetafields, createMetafield } from '../services/dataService';
+import {
+  fetchMetafields, searchMetafields, createMetafield, updateMetafieldsForOrders,
+} from '../services/dataService';
 
 // TODO: WIP
 export const parseEmailWebhooks = (req, res) => {
@@ -70,6 +72,8 @@ export const sendEmail = async (req, res) => {
 
       await createMetafield(metafieldData);
     }
+
+    await updateMetafieldsForOrders(orders);
 
     return res.status(200).json(response);
   } catch (err) {

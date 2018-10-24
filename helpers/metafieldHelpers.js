@@ -16,3 +16,11 @@ export const emailFailedMetafield = (resource, id, value) => ({
   owner_id: id,
 });
 
+export const generateStringMetafield = data => ({
+  key: data.key,
+  value: data.value,
+  value_type: 'string',
+  namespace: 'email',
+  owner_resource: data.resource,
+  owner_id: data.id,
+});

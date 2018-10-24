@@ -2,6 +2,7 @@ import shopify from '../services/shopifyService';
 import {
   filterOrdersByVariantId,
   addMetafieldsToShows,
+  addMetafieldsToOrders,
   fetchMetafields,
 } from '../services/dataService';
 
@@ -37,9 +38,11 @@ export const fetchOrders = async (req, res) => {
 
     const orders = await shopify.order.list();
 
+    const modifiedOrdersList = await addMetafieldsToOrders(orders);
+
     // if a variant_id query is passed, filter the orders for that variant
     if (Object.keys(req.query).includes('variant_id')) {
-      const variantOrders = filterOrdersByVariantId(orders, variant_id);
+      const variantOrders = filterOrdersByVariantId(modifiedOrdersList, variant_id);
 
       return res.status(200).json(variantOrders);
     }

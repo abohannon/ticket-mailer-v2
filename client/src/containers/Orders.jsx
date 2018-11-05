@@ -27,6 +27,7 @@ class Orders extends Component {
   state = {
     activeTab: 'orders',
     selectedOrders: [],
+    selectedRowKeys: [],
     message: '',
   }
 
@@ -42,23 +43,28 @@ class Orders extends Component {
     this.setState({ activeTab: key });
   }
 
-  saveEmailContent = (data) => {
+  saveEmailContent = async (data) => {
     const { dispatch, location } = this.props;
+    const searchQuery = location.search;
 
     const mergedData = {
       ...data,
       variant_id: location.state.variantId,
-      searchQuery: location.search,
+      searchQuery,
     };
 
-    dispatch(saveEmail(mergedData));
+    await dispatch(saveEmail(mergedData));
+    dispatch(fetchEmail(searchQuery));
   }
 
-  updateSelectedOrders = (selectedOrders) => {
-    this.setState({ selectedOrders });
+  updateSelectedOrders = (selectedOrders, selectedRowKeys) => {
+    this.setState({
+      selectedOrders,
+      selectedRowKeys,
+    });
   }
 
-  sendEmail = (orders) => {
+  handleEmail = (orders) => {
     const { fetchEmailResolved, location, dispatch } = this.props;
 
     const { artistName, showTitle, variantTitle } = location.state;
@@ -109,7 +115,7 @@ class Orders extends Component {
       <Button
         type="primary"
         disabled={disabled}
-        onClick={() => this.sendEmail(this.state.selectedOrders)}
+        onClick={() => this.handleEmail(this.state.selectedOrders)}
       >
         Send Email
       </Button>
@@ -121,6 +127,7 @@ class Orders extends Component {
           orders={orders}
           loading={loading}
           onUpdate={this.updateSelectedOrders}
+          selectedRowKeys={this.state.selectedRowKeys}
         />
       ),
       email: (

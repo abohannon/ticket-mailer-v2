@@ -1,33 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Badge, Tooltip } from 'antd';
 import { Table } from 'components/common';
 
-const propTypes = {
-  onUpdate: PropTypes.func,
-  loading: PropTypes.bool,
-  orders: PropTypes.array,
-};
+class OrdersList extends Component {
+  static propTypes = {
+    onUpdate: PropTypes.func,
+    loading: PropTypes.bool,
+    orders: PropTypes.array,
+    selectedRowKeys: PropTypes.array,
+  }
 
-const OrdersList = (props) => {
-  const columns = [{
-    title: 'Order #',
-    dataIndex: 'orderNumber',
-  },
-  {
-    title: 'Name',
-    dataIndex: 'name',
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-  }];
-
-  const renderStatusMessage = (status) => {
+  renderStatusMessage = (status) => {
     const { email_sent, email_error } = status;
 
     if (email_sent) {
@@ -45,8 +29,8 @@ const OrdersList = (props) => {
     return <Badge status="default" text="Unsent" />;
   };
 
-  const renderTableData = () => {
-    const { orders } = props;
+  renderTableData = () => {
+    const { orders } = this.props;
 
     if (orders && orders.length > 0) {
       return (
@@ -55,40 +39,66 @@ const OrdersList = (props) => {
           orderNumber: order.name,
           name: `${order.customer.first_name} ${order.customer.last_name}`,
           email: order.customer.email,
-          status: renderStatusMessage(order),
+          status: this.renderStatusMessage(order),
           id: order.id,
         }))
       );
     }
+
+    return null;
   };
 
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      const filteredRowData = selectedRows.map((row) => {
-        const { key, status, ...rest } = row;
+  onSelectChange = (selectedRowKeys, selectedRows) => {
+    const { onUpdate } = this.props;
 
-        return rest;
-      });
+    const filteredRowData = selectedRows.map((row) => {
+      const { key, status, ...rest } = row;
 
-      props.onUpdate(filteredRowData);
+      return rest;
+    });
+
+    onUpdate(filteredRowData, selectedRowKeys);
+  }
+
+  render() {
+    const { loading, selectedRowKeys } = this.props;
+
+    const columns = [{
+      title: 'Order #',
+      dataIndex: 'orderNumber',
     },
-    getCheckboxProps: record => ({
-      disabled: record.name === 'Disabled User', // Column configuration not to be checked
-      name: record.name,
-    }),
-  };
+    {
+      title: 'Name',
+      dataIndex: 'name',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+    }];
 
-  return (
-    <Table
-      rowSelection={rowSelection}
-      columns={columns}
-      dataSource={renderTableData()}
-      pagination={false}
-      loading={props.loading}
-    />
-  );
-};
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
+      getCheckboxProps: record => ({
+        disabled: record.name === 'Disabled User', // Column configuration not to be checked
+        name: record.name,
+      }),
+    };
 
-OrdersList.propTypes = propTypes;
+    return (
+      <Table
+        rowSelection={rowSelection}
+        columns={columns}
+        dataSource={this.renderTableData()}
+        pagination={false}
+        loading={loading}
+      />
+    );
+  }
+}
 
 export default OrdersList;

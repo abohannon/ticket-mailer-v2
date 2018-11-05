@@ -36,7 +36,7 @@ class OrdersList extends Component {
       return (
         orders.map((order, index) => ({
           key: index,
-          orderNumber: order.name,
+          orderNumber: <a href={`${SHOPIFY_STORE_URL}/admin/orders/${order.id}`} target="_blank">{order.name}</a>,
           name: `${order.customer.first_name} ${order.customer.last_name}`,
           email: order.customer.email,
           status: this.renderStatusMessage(order),

@@ -21,6 +21,7 @@ module.exports = merge(common, {
     new webpack.DefinePlugin({
       NODE_ENV: JSON.stringify('development'),
       API_HOST: JSON.stringify('http://localhost:3000/api'),
+      SHOPIFY_STORE_URL: JSON.stringify('https://ticketmailerdev.myshopify.com'),
     }),
   ],
 });

@@ -1,21 +1,33 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Switch } from 'react-router-dom';
 import styled from 'styled-components';
+import RouteHandler from 'routes/RouteHandler';
 
 // Components
-import Main from 'components/Main';
 import SideNav from 'components/SideNav';
+import Header from 'components/Header';
+import { Spacer } from 'components/common';
 
 // Actions
 import { logoutUser } from 'actions/authenticationActions';
 
-const Wrapper = styled.main`
+const Wrapper = styled.div`
   display: flex;
   margin: 0 auto;
   max-width: 134rem;
   padding: 0 4rem 0 4rem;
   box-sizing: border-box;
+`;
+
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  min-width: 76rem;
+  max-width: 108rem;
+  width: 100%;
+  padding-top: 2rem;
 `;
 
 class Dashboard extends Component {
@@ -24,6 +36,10 @@ class Dashboard extends Component {
     history: PropTypes.object,
     authentication: PropTypes.object,
     dispatch: PropTypes.func,
+  }
+
+  state = {
+    showSearchBar: false,
   }
 
   componentDidMount() {
@@ -38,7 +54,13 @@ class Dashboard extends Component {
     dispatch(logoutUser());
   }
 
+  toggleSearchBar = () => {
+    this.setState(prevState => ({ showSearchBar: !prevState.showSearchBar }));
+  }
+
   render() {
+    const { showSearchBar } = this.state;
+
     const {
       authentication: { currentUser }, routes,
     } = this.props;
@@ -46,11 +68,23 @@ class Dashboard extends Component {
     return (
       <Wrapper className="wrapper-dashboard">
         <SideNav />
-        <Main
-          currentUser={currentUser}
-          routes={routes}
-          handleLogout={this.handleLogout}
-        />
+        <Main>
+          <Header
+            currentUser={currentUser}
+            showSearchBar={showSearchBar}
+            handleLogout={this.handleLogout}
+          />
+          <Spacer />
+          <Switch>
+            {routes.map((route, i) => (
+              <RouteHandler
+                key={`dashboard-${i}`}
+                toggleSearchBar={this.toggleSearchBar}
+                {...route}
+              />
+            ))}
+          </Switch>
+        </Main>
       </Wrapper>
     );
   }

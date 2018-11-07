@@ -12,6 +12,7 @@ import { Spacer } from 'components/common';
 
 // Actions
 import { logoutUser } from 'actions/authenticationActions';
+import { search } from 'actions/applicationActions';
 
 const Wrapper = styled.div`
   display: flex;
@@ -58,6 +59,11 @@ class Dashboard extends Component {
     this.setState(prevState => ({ showSearchBar: !prevState.showSearchBar }));
   }
 
+  handleSearch = (value) => {
+    const { dispatch } = this.props;
+    dispatch(search(value));
+  }
+
   render() {
     const { showSearchBar } = this.state;
 
@@ -73,6 +79,7 @@ class Dashboard extends Component {
             currentUser={currentUser}
             showSearchBar={showSearchBar}
             handleLogout={this.handleLogout}
+            handleSearch={this.handleSearch}
           />
           <Spacer />
           <Switch>

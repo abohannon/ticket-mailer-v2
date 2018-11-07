@@ -30,7 +30,13 @@ export default (state = INITIAL_STATE, action) => {
 
   switch (type) {
     case SEARCH: {
-      const filteredShows = state.fetchShowsResolved.payload.filter(show => show.title.includes(payload));
+      let filteredShows;
+      // TODO: Think more about this
+      if (payload === '') {
+        filteredShows = [];
+      } else {
+        filteredShows = state.fetchShowsResolved.payload.filter(show => show.title.includes(payload));
+      }
 
       return { ...state, searchValue: payload, filteredShows };
     }

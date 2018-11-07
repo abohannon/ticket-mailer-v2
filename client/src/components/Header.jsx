@@ -66,17 +66,14 @@ const StyledButton = styled(Button)`
 const propTypes = {
   showSearchBar: PropTypes.bool,
   currentUser: PropTypes.object,
-};
-
-const search = (value) => {
-  console.log(value);
+  handleSearch: PropTypes.func,
 };
 
 const Header = (props) => {
-  const { showSearchBar, currentUser } = props;
+  const { showSearchBar, currentUser, handleSearch } = props;
   return (
     <Wrapper>
-      <SearchInput show={showSearchBar} onChange={search} />
+      <SearchInput show={showSearchBar} onSearch={handleSearch} />
       <UserDisplay>
         <Greeting>{`Welcome back, ${currentUser.name}!`}</Greeting>
         <HeaderMenu {...props}>

@@ -15,6 +15,7 @@ const StyledSearch = styled(Search)`
 const propTypes = {
   show: PropTypes.bool,
   style: PropTypes.object,
+  onChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -23,15 +24,16 @@ const defaultProps = {
 };
 
 export const SearchInput = (props) => {
-  const { show, style } = props;
+  const { show, style, onChange } = props;
 
   if (!show) return null;
 
   return (
     <StyledSearch
       placeholder="Search"
-      onSearch={value => console.log(value)}
+      onSearch={value => onChange(value)}
       style={style}
+      enterButton
     />
   );
 };

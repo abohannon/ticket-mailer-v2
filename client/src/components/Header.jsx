@@ -68,11 +68,15 @@ const propTypes = {
   currentUser: PropTypes.object,
 };
 
+const search = (value) => {
+  console.log(value);
+};
+
 const Header = (props) => {
   const { showSearchBar, currentUser } = props;
   return (
     <Wrapper>
-      <SearchInput show={showSearchBar} />
+      <SearchInput show={showSearchBar} onChange={search} />
       <UserDisplay>
         <Greeting>{`Welcome back, ${currentUser.name}!`}</Greeting>
         <HeaderMenu {...props}>

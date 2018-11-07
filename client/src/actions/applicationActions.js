@@ -8,11 +8,21 @@ import {
   FETCH_ORDERS_RESOLVED,
   FETCH_ORDERS_PENDING,
   FETCH_ORDERS_REJECTED,
+  SEARCH,
 } from 'actions/types';
 
 import { GET } from 'constants';
 
 import { fetchHelper } from 'helpers/util';
+
+export const search = value => async (dispatch) => {
+  const action = {
+    type: SEARCH,
+    payload: value,
+  };
+
+  dispatch(action);
+};
 
 export const fetchTours = () => async (dispatch) => {
   let action = {

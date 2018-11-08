@@ -9,7 +9,8 @@ import { CARD_TITLE_PRIMARY } from 'constants';
 import { formatUrlString } from 'helpers/util';
 
 // Actions
-import { fetchShows } from 'actions/applicationActions';
+import { fetchShows, search } from 'actions/applicationActions';
+import { SEARCH_SHOWS, CLEAR_SEARCH } from 'actions/types';
 
 class Shows extends Component {
   static propTypes = {
@@ -24,7 +25,10 @@ class Shows extends Component {
     const { dispatch, location, toggleSearchBar } = this.props;
     this.searchQuery = location.search;
 
-    toggleSearchBar();
+    toggleSearchBar(SEARCH_SHOWS);
+
+    // clear search results if any are held in redux
+    dispatch(search(CLEAR_SEARCH));
     dispatch(fetchShows(this.searchQuery));
   }
 
@@ -33,23 +37,30 @@ class Shows extends Component {
     toggleSearchBar();
   }
 
+  parseShows = shows => shows.map((show, index) => ({
+    key: index,
+    show: show.title,
+    bundles: show.variants.map(variant => ({
+      title: variant.title,
+      variant_id: variant.id,
+      variant_title: variant.title,
+      show_title: show.title,
+      artist_name: show.vendor,
+      email_sent: variant.email_sent,
+    })),
+  }))
+
   renderTableData = () => {
-    const { fetchShowsResolved } = this.props;
+    const { fetchShowsResolved, searchResults } = this.props;
+
+    if (!isEmpty(searchResults)) {
+      return this.parseShows(searchResults);
+    }
 
     if (!isEmpty(fetchShowsResolved)) {
-      return fetchShowsResolved.payload.map((show, index) => ({
-        key: index,
-        show: show.title,
-        bundles: show.variants.map(variant => ({
-          title: variant.title,
-          variant_id: variant.id,
-          variant_title: variant.title,
-          show_title: show.title,
-          artist_name: show.vendor,
-          email_sent: variant.email_sent,
-        })),
-      }));
+      return this.parseShows(fetchShowsResolved.payload);
     }
+
     return [];
   };
 
@@ -120,10 +131,12 @@ const mapStateToProps = ({
   application: {
     fetchShowsPending,
     fetchShowsResolved,
+    searchResults,
   },
 }) => ({
   fetchShowsPending,
   fetchShowsResolved,
+  searchResults,
 });
 
 export default connect(mapStateToProps)(Shows);

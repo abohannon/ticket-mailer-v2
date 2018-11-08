@@ -10,8 +10,10 @@ import OrdersList from 'components/OrdersList';
 import EmailForm from 'components/EmailForm';
 
 // Actions
-import { fetchOrders } from 'actions/applicationActions';
+import { fetchOrders, search } from 'actions/applicationActions';
 import { fetchEmail, saveEmail, sendEmail } from 'actions/emailActions';
+
+import { SEARCH_ORDERS, CLEAR_SEARCH } from 'actions/types';
 
 class Orders extends Component {
   static propTypes = {
@@ -22,6 +24,7 @@ class Orders extends Component {
     fetchOrdersResolved: PropTypes.object,
     saveEmailResolved: PropTypes.object,
     saveEmailRejected: PropTypes.object,
+    toggleSearchBar: PropTypes.func,
   }
 
   state = {
@@ -32,11 +35,20 @@ class Orders extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, location } = this.props;
+    const { dispatch, location, toggleSearchBar } = this.props;
     const searchQuery = location.search;
 
+    toggleSearchBar(SEARCH_ORDERS);
+    // TODO: FIX CLEAR_SEARCH error
+    // clear search results if any are held in redux
+    dispatch(search(CLEAR_SEARCH));
     dispatch(fetchOrders(searchQuery));
     dispatch(fetchEmail(searchQuery));
+  }
+
+  componentWillUnmount() {
+    const { toggleSearchBar } = this.props;
+    toggleSearchBar();
   }
 
   onTabChange = (key) => {
@@ -92,6 +104,7 @@ class Orders extends Component {
       fetchEmailResolved,
       saveEmailResolved,
       saveEmailRejected,
+      searchResults,
     } = this.props;
 
     const tabList = [{
@@ -104,7 +117,7 @@ class Orders extends Component {
     },
     ];
 
-    const orders = fetchOrdersResolved.payload;
+    const orders = !isEmpty(searchResults) ? searchResults : fetchOrdersResolved.payload;
     const email = fetchEmailResolved.payload;
     const loading = !isEmpty(fetchOrdersPending);
     const emailSaved = !isEmpty(saveEmailResolved);
@@ -163,6 +176,7 @@ const mapStateToProps = ({
     fetchOrdersResolved,
     fetchOrdersPending,
     fetchOrdersRejected,
+    searchResults,
   },
   email: {
     fetchEmailResolved,
@@ -176,6 +190,7 @@ const mapStateToProps = ({
   fetchEmailResolved,
   saveEmailResolved,
   saveEmailRejected,
+  searchResults,
 });
 
 export default connect(mapStateToProps)(Orders);

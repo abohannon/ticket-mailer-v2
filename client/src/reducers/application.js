@@ -8,7 +8,9 @@ import {
   FETCH_ORDERS_RESOLVED,
   FETCH_ORDERS_PENDING,
   FETCH_ORDERS_REJECTED,
-  SEARCH,
+  SEARCH_SHOWS,
+  SEARCH_ORDERS,
+  CLEAR_SEARCH,
 } from 'actions/types';
 
 const INITIAL_STATE = {
@@ -21,7 +23,7 @@ const INITIAL_STATE = {
   fetchOrdersResolved: {},
   fetchOrdersPending: {},
   fetchOrdersRejected: {},
-  filteredShows: [],
+  searchResults: [],
   searchValue: '',
 };
 
@@ -29,17 +31,6 @@ export default (state = INITIAL_STATE, action) => {
   const { status, type, payload } = action;
 
   switch (type) {
-    case SEARCH: {
-      let filteredShows;
-      // TODO: Think more about this
-      if (payload === '') {
-        filteredShows = [];
-      } else {
-        filteredShows = state.fetchShowsResolved.payload.filter(show => show.title.includes(payload));
-      }
-
-      return { ...state, searchValue: payload, filteredShows };
-    }
     case FETCH_TOURS_RESOLVED: {
       const newState = {
         fetchToursResolved: action,
@@ -111,6 +102,38 @@ export default (state = INITIAL_STATE, action) => {
         fetchOrdersRejected: action,
       };
       return { ...state, ...newState };
+    }
+    case SEARCH_SHOWS: {
+      let searchResults;
+
+      if (payload === '') {
+        searchResults = [];
+      } else {
+        searchResults = state.fetchShowsResolved.payload.filter(show => show.title.toLowerCase().includes(payload.toLowerCase()));
+      }
+
+      return { ...state, searchValue: payload, searchResults };
+    }
+    case SEARCH_ORDERS: {
+      let searchResults;
+
+      if (payload === '') {
+        searchResults = [];
+      } else {
+        searchResults = state.fetchOrdersResolved.payload.filter((order) => {
+          const { first_name, last_name } = order.customer;
+          const fullName = `${first_name} ${last_name}`;
+
+          return order.email.toLowerCase().includes(payload.toLowerCase())
+        || order.name.toLowerCase().includes(payload.toLowerCase())
+        || fullName.toLowerCase().includes(payload.toLowerCase());
+        });
+      }
+
+      return { ...state, searchValue: payload, searchResults };
+    }
+    case CLEAR_SEARCH: {
+      return { ...state, searchValue: '', searchResults: [] };
     }
     default:
       return state;

@@ -41,6 +41,7 @@ class Dashboard extends Component {
 
   state = {
     showSearchBar: false,
+    searchType: '',
   }
 
   componentDidMount() {
@@ -55,13 +56,18 @@ class Dashboard extends Component {
     dispatch(logoutUser());
   }
 
-  toggleSearchBar = () => {
-    this.setState(prevState => ({ showSearchBar: !prevState.showSearchBar }));
+  toggleSearchBar = (searchType) => {
+    this.setState(prevState => ({
+      showSearchBar: !prevState.showSearchBar,
+      searchType,
+    }));
   }
 
   handleSearch = (value) => {
+    const { searchType } = this.state;
     const { dispatch } = this.props;
-    dispatch(search(value));
+
+    dispatch(search(searchType, value));
   }
 
   render() {

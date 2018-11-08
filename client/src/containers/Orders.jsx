@@ -25,6 +25,7 @@ class Orders extends Component {
     saveEmailResolved: PropTypes.object,
     saveEmailRejected: PropTypes.object,
     toggleSearchBar: PropTypes.func,
+    searchResultsOrders: PropTypes.array,
   }
 
   state = {
@@ -39,8 +40,7 @@ class Orders extends Component {
     const searchQuery = location.search;
 
     toggleSearchBar(SEARCH_ORDERS);
-    // TODO: FIX CLEAR_SEARCH error
-    // clear search results if any are held in redux
+
     dispatch(search(CLEAR_SEARCH));
     dispatch(fetchOrders(searchQuery));
     dispatch(fetchEmail(searchQuery));
@@ -48,6 +48,7 @@ class Orders extends Component {
 
   componentWillUnmount() {
     const { toggleSearchBar } = this.props;
+
     toggleSearchBar();
   }
 
@@ -104,7 +105,7 @@ class Orders extends Component {
       fetchEmailResolved,
       saveEmailResolved,
       saveEmailRejected,
-      searchResults,
+      searchResultsOrders,
     } = this.props;
 
     const tabList = [{
@@ -117,7 +118,7 @@ class Orders extends Component {
     },
     ];
 
-    const orders = !isEmpty(searchResults) ? searchResults : fetchOrdersResolved.payload;
+    const orders = !isEmpty(searchResultsOrders) ? searchResultsOrders : fetchOrdersResolved.payload;
     const email = fetchEmailResolved.payload;
     const loading = !isEmpty(fetchOrdersPending);
     const emailSaved = !isEmpty(saveEmailResolved);
@@ -137,7 +138,7 @@ class Orders extends Component {
     const tabListContent = {
       orders: (
         <OrdersList
-          orders={orders}
+          orders={orders || []}
           loading={loading}
           onUpdate={this.updateSelectedOrders}
           selectedRowKeys={this.state.selectedRowKeys}
@@ -176,7 +177,7 @@ const mapStateToProps = ({
     fetchOrdersResolved,
     fetchOrdersPending,
     fetchOrdersRejected,
-    searchResults,
+    searchResultsOrders,
   },
   email: {
     fetchEmailResolved,
@@ -190,7 +191,7 @@ const mapStateToProps = ({
   fetchEmailResolved,
   saveEmailResolved,
   saveEmailRejected,
-  searchResults,
+  searchResultsOrders,
 });
 
 export default connect(mapStateToProps)(Orders);

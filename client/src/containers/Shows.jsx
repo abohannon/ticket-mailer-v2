@@ -19,6 +19,7 @@ class Shows extends Component {
     dispatch: PropTypes.func,
     location: PropTypes.object,
     toggleSearchBar: PropTypes.func,
+    searchResultsShows: PropTypes.array,
   }
 
   componentDidMount() {
@@ -27,13 +28,13 @@ class Shows extends Component {
 
     toggleSearchBar(SEARCH_SHOWS);
 
-    // clear search results if any are held in redux
     dispatch(search(CLEAR_SEARCH));
     dispatch(fetchShows(this.searchQuery));
   }
 
   componentWillUnmount() {
     const { toggleSearchBar } = this.props;
+
     toggleSearchBar();
   }
 
@@ -51,10 +52,10 @@ class Shows extends Component {
   }))
 
   renderTableData = () => {
-    const { fetchShowsResolved, searchResults } = this.props;
+    const { fetchShowsResolved, searchResultsShows } = this.props;
 
-    if (!isEmpty(searchResults)) {
-      return this.parseShows(searchResults);
+    if (!isEmpty(searchResultsShows)) {
+      return this.parseShows(searchResultsShows);
     }
 
     if (!isEmpty(fetchShowsResolved)) {
@@ -131,12 +132,12 @@ const mapStateToProps = ({
   application: {
     fetchShowsPending,
     fetchShowsResolved,
-    searchResults,
+    searchResultsShows,
   },
 }) => ({
   fetchShowsPending,
   fetchShowsResolved,
-  searchResults,
+  searchResultsShows,
 });
 
 export default connect(mapStateToProps)(Shows);

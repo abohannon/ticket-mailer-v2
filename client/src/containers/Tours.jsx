@@ -17,6 +17,8 @@ class Tours extends Component {
     fetchToursPending: PropTypes.object,
     fetchToursResolved: PropTypes.object,
     dispatch: PropTypes.func,
+    toggleSearchBar: PropTypes.func,
+    searchResultsTours: PropTypes.array,
   }
 
   componentDidMount() {
@@ -34,15 +36,20 @@ class Tours extends Component {
     toggleSearchBar();
   }
 
+  parseTours = source => source.map((tour, index) => ({
+    key: index,
+    tour: tour.title,
+    tour_id: tour.collection_id,
+  }))
+
   tableData = () => {
-    const { fetchToursResolved } = this.props;
+    const { fetchToursResolved, searchResultsTours } = this.props;
+    if (!isEmpty(searchResultsTours)) {
+      return this.parseTours(searchResultsTours);
+    }
 
     if (!isEmpty(fetchToursResolved)) {
-      return fetchToursResolved.payload.map((tour, index) => ({
-        key: index,
-        tour: tour.title,
-        tour_id: tour.collection_id,
-      }));
+      return this.parseTours(fetchToursResolved.payload);
     }
     return [];
   };
@@ -92,10 +99,12 @@ const mapStateToProps = ({
   application: {
     fetchToursPending,
     fetchToursResolved,
+    searchResultsTours,
   },
 }) => ({
   fetchToursPending,
   fetchToursResolved,
+  searchResultsTours,
 });
 
 export default connect(mapStateToProps)(Tours);

@@ -23,5 +23,6 @@ module.exports = merge(common, {
       API_HOST: JSON.stringify('http://localhost:3000/api'),
       SHOPIFY_STORE_URL: JSON.stringify('https://ticketmailerdev.myshopify.com'),
     }),
+    new webpack.SourceMapDevToolPlugin({}),
   ],
 });

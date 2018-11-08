@@ -12,6 +12,7 @@ import { Spacer } from 'components/common';
 
 // Actions
 import { logoutUser } from 'actions/authenticationActions';
+import { search } from 'actions/applicationActions';
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,6 +41,7 @@ class Dashboard extends Component {
 
   state = {
     showSearchBar: false,
+    searchType: '',
   }
 
   componentDidMount() {
@@ -54,8 +56,18 @@ class Dashboard extends Component {
     dispatch(logoutUser());
   }
 
-  toggleSearchBar = () => {
-    this.setState(prevState => ({ showSearchBar: !prevState.showSearchBar }));
+  toggleSearchBar = (searchType) => {
+    this.setState(prevState => ({
+      showSearchBar: !prevState.showSearchBar,
+      searchType,
+    }));
+  }
+
+  handleSearch = (value) => {
+    const { searchType } = this.state;
+    const { dispatch } = this.props;
+
+    dispatch(search(searchType, value));
   }
 
   render() {
@@ -73,6 +85,7 @@ class Dashboard extends Component {
             currentUser={currentUser}
             showSearchBar={showSearchBar}
             handleLogout={this.handleLogout}
+            handleSearch={this.handleSearch}
           />
           <Spacer />
           <Switch>

@@ -14,6 +14,15 @@ import { GET } from 'constants';
 
 import { fetchHelper } from 'helpers/util';
 
+export const search = (type, value) => async (dispatch) => {
+  const action = {
+    type,
+    payload: value,
+  };
+
+  dispatch(action);
+};
+
 export const fetchTours = () => async (dispatch) => {
   let action = {
     type: FETCH_TOURS_PENDING,

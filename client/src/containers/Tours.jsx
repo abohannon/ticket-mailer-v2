@@ -8,7 +8,9 @@ import { formatUrlString } from 'helpers/util';
 import { CARD_TITLE_PRIMARY } from 'constants';
 
 // Actions
-import { fetchTours } from 'actions/applicationActions';
+import { fetchTours, search } from 'actions/applicationActions';
+
+import { SEARCH_TOURS, CLEAR_SEARCH } from 'actions/types';
 
 class Tours extends Component {
   static propTypes = {
@@ -18,8 +20,18 @@ class Tours extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { dispatch, toggleSearchBar } = this.props;
+
+    toggleSearchBar(SEARCH_TOURS);
+
+    // clear search results if any are held in redux
+    dispatch(search(CLEAR_SEARCH));
     dispatch(fetchTours());
+  }
+
+  componentWillUnmount() {
+    const { toggleSearchBar } = this.props;
+    toggleSearchBar();
   }
 
   tableData = () => {

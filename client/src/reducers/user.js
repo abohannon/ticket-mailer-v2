@@ -8,7 +8,7 @@ import {
   DELETE_USER_RESOLVED,
   DELETE_USER_PENDING,
   DELETE_USER_REJECTED,
-} from 'actions/types';
+} from 'actions/types'
 
 const INITIAL_STATE = {
   updateUserResolved: {},
@@ -20,10 +20,10 @@ const INITIAL_STATE = {
   deleteUserResolved: {},
   deleteUserPending: {},
   deleteUserRejected: {},
-};
+}
 
 export default (state = INITIAL_STATE, action) => {
-  const { status, type, payload } = action;
+  const { status, type, payload } = action
 
   switch (type) {
     case UPDATE_USER_RESOLVED: {
@@ -31,79 +31,79 @@ export default (state = INITIAL_STATE, action) => {
         updateUserResolved: action,
         updateUserPending: {},
         updateUserRejected: {},
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     case UPDATE_USER_PENDING: {
       const newState = {
         updateUserResolved: {},
         updateUserPending: action,
         updateUserRejected: {},
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     case UPDATE_USER_REJECTED: {
       const newState = {
         updateUserResolved: {},
         updateUserPending: {},
         updateUserRejected: action,
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     case FETCH_USERS_RESOLVED: {
       const newState = {
         fetchUsersResolved: action,
         fetchUsersPending: {},
         fetchUsersRejected: {},
-      };
+      }
 
-      return { ...state, ...newState };
+      return { ...state, ...newState }
     }
     case FETCH_USERS_PENDING: {
       const newState = {
         fetchUsersResolved: {},
         fetchUsersPending: action,
         fetchUsersRejected: {},
-      };
+      }
 
-      return { ...state, ...newState };
+      return { ...state, ...newState }
     }
     case FETCH_USERS_REJECTED: {
       const newState = {
         fetchUsersResolved: {},
         fetchUsersPending: {},
         fetchUsersRejected: action,
-      };
+      }
 
-      return { ...state, ...newState };
+      return { ...state, ...newState }
     }
     case DELETE_USER_RESOLVED: {
       const newState = {
         deleteUserResolved: action,
         deleteUserPending: {},
         deleteUserRejected: {},
-      };
+      }
 
-      return { ...state, ...newState };
+      return { ...state, ...newState }
     }
     case DELETE_USER_PENDING: {
       const newState = {
         deleteUserResolved: {},
         deleteUserPending: action,
         deleteUserRejected: {},
-      };
+      }
 
-      return { ...state, ...newState };
+      return { ...state, ...newState }
     }
     case DELETE_USER_REJECTED: {
       const newState = {
         deleteUserResolved: {},
         deleteUserPending: {},
         deleteUserRejected: action,
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     default:
-      return state;
+      return state
   }
-};
+}

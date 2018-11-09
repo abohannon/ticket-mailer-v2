@@ -1,14 +1,19 @@
-import Landing from 'containers/Landing';
-import Dashboard from 'containers/Dashboard';
-import Tours from 'containers/Tours';
-import Shows from 'containers/Shows';
-import Orders from 'containers/Orders';
-import UserSettings from 'containers/UserSettings';
+import Landing from 'containers/Landing'
+import Dashboard from 'containers/Dashboard'
+import Tours from 'containers/Tours'
+import Shows from 'containers/Shows'
+import Orders from 'containers/Orders'
+import UserSettings from 'containers/UserSettings'
 
 const routes = [
   {
     exact: true,
     path: '/',
+    component: Landing,
+  },
+  {
+    exact: true,
+    path: '/signup',
     component: Landing,
   },
   {
@@ -42,6 +47,6 @@ const routes = [
       },
     ],
   },
-];
+]
 
-export default routes;
+export default routes

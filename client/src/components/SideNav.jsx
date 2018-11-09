@@ -1,33 +1,33 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Icon } from 'antd';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { Icon } from 'antd'
 
 // Components
-import { Menu, MenuItem } from 'components/Menu';
-import { Spacer } from 'components/common';
+import { Menu, MenuItem } from 'components/Menu'
+import { Spacer } from 'components/common'
 
 // Styles
 const Wrapper = styled.nav`
   min-width: 26rem;
   padding: 2rem 2rem 2rem 0;
   font-size: 1.4rem;
-`;
+`
 
 const StyledIcon = styled(Icon)`
   margin-right: 1rem; 
   font-size: 1.8rem;
-`;
+`
 
 const Header = styled.div`
   display: flex;
-`;
+`
 
 const Title = styled.h3`
   text-transform: uppercase;
   letter-spacing: .2rem;
   margin: 0;
-`;
+`
 
 class Sidebar extends Component {
   static propTypes = {
@@ -57,8 +57,8 @@ class Sidebar extends Component {
           <Spacer />
         </Menu>
       </Wrapper>
-    );
+    )
   }
 }
 
-export default Sidebar;
+export default Sidebar

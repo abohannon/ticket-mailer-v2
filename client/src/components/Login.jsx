@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React, { Component } from 'react'
+import styled from 'styled-components'
 import {
   Card, Form, Icon, Input, Button, Checkbox,
-} from 'antd';
+} from 'antd'
 
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 const StyledCard = styled(Card)`
   display: flex;
-  max-width: 300px;
-  width: 100%;
-`;
+  width: 300px;
+`
 
 const Title = styled.h1`
   color: white;
@@ -19,26 +18,26 @@ const Title = styled.h1`
   letter-spacing: .3rem;
   font-weight: 200;
   margin-bottom: 1rem;
-`;
+`
 
 class Login extends Component {
   componentDidMount() {
-    this.props.form.validateFields();
+    this.props.form.validateFields()
   }
 
   hasErrors = fieldsError => Object.keys(fieldsError).some(field => fieldsError[field])
 
   handleSubmit = (event) => {
-    event.preventDefault();
-    const { handleLogin, form } = this.props;
+    event.preventDefault()
+    const { handleLogin, form } = this.props
 
     form.validateFields((err, values) => {
       if (err) {
-        console.log(err);
+        console.log(err)
       }
 
-      handleLogin(values);
-    });
+      handleLogin(values)
+    })
   };
 
   render() {
@@ -46,7 +45,7 @@ class Login extends Component {
       bodyStyle: {
         width: '100%',
       },
-    };
+    }
 
     const {
       form: {
@@ -55,10 +54,10 @@ class Login extends Component {
         getFieldError,
         isFieldTouched,
       },
-    } = this.props;
+    } = this.props
 
-    const emailError = isFieldTouched('email') && getFieldError('email');
-    const passwordError = isFieldTouched('password') && getFieldError('password');
+    const emailError = isFieldTouched('email') && getFieldError('email')
+    const passwordError = isFieldTouched('password') && getFieldError('password')
 
     return (
       <div>
@@ -113,8 +112,8 @@ class Login extends Component {
           </Form>
         </StyledCard>
       </div>
-    );
+    )
   }
 }
 
-export default Form.create()(Login);
+export default Form.create()(Login)

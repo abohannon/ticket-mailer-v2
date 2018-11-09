@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Badge, Tooltip } from 'antd';
-import { Table } from 'components/common';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { Badge, Tooltip } from 'antd'
+import { Table } from 'components/common'
 
 class OrdersList extends Component {
   static propTypes = {
@@ -12,10 +12,10 @@ class OrdersList extends Component {
   }
 
   renderStatusMessage = (status) => {
-    const { email_sent, email_error } = status;
+    const { email_sent, email_error } = status
 
     if (email_sent) {
-      return <Badge status="success" text="Sent" />;
+      return <Badge status="success" text="Sent" />
     }
 
     if (email_error) {
@@ -23,14 +23,14 @@ class OrdersList extends Component {
         <Tooltip title={email_error.message}>
           <Badge status="error" text="Error" />
         </Tooltip>
-      );
+      )
     }
 
-    return <Badge status="default" text="Unsent" />;
+    return <Badge status="default" text="Unsent" />
   };
 
   renderTableData = () => {
-    const { orders } = this.props;
+    const { orders } = this.props
 
     if (orders && orders.length > 0) {
       return (
@@ -42,26 +42,26 @@ class OrdersList extends Component {
           status: this.renderStatusMessage(order),
           id: order.id,
         }))
-      );
+      )
     }
 
-    return null;
+    return null
   };
 
   onSelectChange = (selectedRowKeys, selectedRows) => {
-    const { onUpdate } = this.props;
+    const { onUpdate } = this.props
 
     const filteredRowData = selectedRows.map((row) => {
-      const { key, status, ...rest } = row;
+      const { key, status, ...rest } = row
 
-      return rest;
-    });
+      return rest
+    })
 
-    onUpdate(filteredRowData, selectedRowKeys);
+    onUpdate(filteredRowData, selectedRowKeys)
   }
 
   render() {
-    const { loading, selectedRowKeys } = this.props;
+    const { loading, selectedRowKeys } = this.props
 
     const columns = [{
       title: 'Order #',
@@ -78,7 +78,7 @@ class OrdersList extends Component {
     {
       title: 'Status',
       dataIndex: 'status',
-    }];
+    }]
 
     const rowSelection = {
       selectedRowKeys,
@@ -87,7 +87,7 @@ class OrdersList extends Component {
         disabled: record.name === 'Disabled User', // Column configuration not to be checked
         name: record.name,
       }),
-    };
+    }
 
     return (
       <Table
@@ -97,8 +97,8 @@ class OrdersList extends Component {
         pagination={false}
         loading={loading}
       />
-    );
+    )
   }
 }
 
-export default OrdersList;
+export default OrdersList

@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
-import { Link } from 'react-router-dom';
-import { Card, Table } from 'components/common';
-import { formatUrlString } from 'helpers/util';
-import { CARD_TITLE_PRIMARY } from 'constants';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import isEmpty from 'lodash/isEmpty'
+import { Link } from 'react-router-dom'
+import { Card, Table } from 'components/common'
+import { formatUrlString } from 'helpers/util'
+import { CARD_TITLE_PRIMARY } from 'constants'
 
 // Actions
-import { fetchTours, search } from 'actions/applicationActions';
+import { fetchTours, search } from 'actions/applicationActions'
 
-import { SEARCH_TOURS, CLEAR_SEARCH } from 'actions/types';
+import { SEARCH_TOURS, CLEAR_SEARCH } from 'actions/types'
 
 class Tours extends Component {
   static propTypes = {
@@ -22,18 +22,18 @@ class Tours extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, toggleSearchBar } = this.props;
+    const { dispatch, toggleSearchBar } = this.props
 
-    toggleSearchBar(SEARCH_TOURS);
+    toggleSearchBar(SEARCH_TOURS)
 
     // clear search results if any are held in redux
-    dispatch(search(CLEAR_SEARCH));
-    dispatch(fetchTours());
+    dispatch(search(CLEAR_SEARCH))
+    dispatch(fetchTours())
   }
 
   componentWillUnmount() {
-    const { toggleSearchBar } = this.props;
-    toggleSearchBar();
+    const { toggleSearchBar } = this.props
+    toggleSearchBar()
   }
 
   parseTours = source => source.map((tour, index) => ({
@@ -43,21 +43,21 @@ class Tours extends Component {
   }))
 
   tableData = () => {
-    const { fetchToursResolved, searchResultsTours } = this.props;
+    const { fetchToursResolved, searchResultsTours } = this.props
     if (!isEmpty(searchResultsTours)) {
-      return this.parseTours(searchResultsTours);
+      return this.parseTours(searchResultsTours)
     }
 
     if (!isEmpty(fetchToursResolved)) {
-      return this.parseTours(fetchToursResolved.payload);
+      return this.parseTours(fetchToursResolved.payload)
     }
-    return [];
+    return []
   };
 
   render() {
-    const { fetchToursPending } = this.props;
+    const { fetchToursPending } = this.props
 
-    const loading = !isEmpty(fetchToursPending);
+    const loading = !isEmpty(fetchToursPending)
 
     const columns = [
       {
@@ -74,7 +74,7 @@ class Tours extends Component {
           </Link>
         ),
       },
-    ];
+    ]
 
     return (
       <Card
@@ -91,7 +91,7 @@ class Tours extends Component {
           loading={loading}
         />
       </Card>
-    );
+    )
   }
 }
 
@@ -105,6 +105,6 @@ const mapStateToProps = ({
   fetchToursPending,
   fetchToursResolved,
   searchResultsTours,
-});
+})
 
-export default connect(mapStateToProps)(Tours);
+export default connect(mapStateToProps)(Tours)

@@ -1,58 +1,58 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
-import { CARD_TITLE_PRIMARY, CARD_TITLE_SECONDARY } from 'constants';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import isEmpty from 'lodash/isEmpty'
+import { CARD_TITLE_PRIMARY, CARD_TITLE_SECONDARY } from 'constants'
 
-import { Card, Spacer } from 'components/common';
+import { Card, Spacer } from 'components/common'
 
 // Components
-import UserInfoForm from 'components/UserSettings/UserInfoForm';
-import TeamRoles from 'components/UserSettings/TeamRoles';
+import UserInfoForm from 'components/UserSettings/UserInfoForm'
+import TeamRoles from 'components/UserSettings/TeamRoles'
 
 // Actions
-import { updateUser, fetchUsers, deleteUser } from 'actions/userActions';
+import { updateUser, fetchUsers, deleteUser } from 'actions/userActions'
 
 class UserSettings extends Component {
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchUsers());
+    const { dispatch } = this.props
+    dispatch(fetchUsers())
   }
 
   componentDidUpdate(prevProps) {
-    const { user, dispatch } = this.props;
+    const { user, dispatch } = this.props
 
     if (!isEmpty(prevProps.user.deleteUserPending) && isEmpty(user.deleteUserPending)) {
       if (!isEmpty(user.deleteUserResolved)) {
-        dispatch(fetchUsers());
+        dispatch(fetchUsers())
       }
     }
   }
 
   updateUserInfo = (data) => {
-    const { dispatch } = this.props;
-    dispatch(updateUser(data));
+    const { dispatch } = this.props
+    dispatch(updateUser(data))
   }
 
   deleteUser = async (userId) => {
-    const { dispatch } = this.props;
-    dispatch(deleteUser(userId));
+    const { dispatch } = this.props
+    dispatch(deleteUser(userId))
   }
 
   render() {
-    const { currentUser, user } = this.props;
+    const { currentUser, user } = this.props
 
     const userInfoFormProps = {
       currentUser,
       user,
       updateUserInfo: this.updateUserInfo,
-    };
+    }
 
     const teamRolesProps = {
       isAdmin: currentUser.admin,
       users: user.fetchUsersResolved,
       deleteUser: this.deleteUser,
-    };
+    }
 
     return (
       <div>
@@ -70,7 +70,7 @@ class UserSettings extends Component {
           <TeamRoles {...teamRolesProps} />
         </Card>
       </div>
-    );
+    )
   }
 }
 
@@ -80,6 +80,6 @@ const mapStateToProps = ({
 }) => ({
   currentUser,
   user,
-});
+})
 
-export default connect(mapStateToProps)(UserSettings);
+export default connect(mapStateToProps)(UserSettings)

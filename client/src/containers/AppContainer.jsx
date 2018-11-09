@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { hot } from 'react-hot-loader';
+import React, { Component } from 'react'
+import { hot } from 'react-hot-loader'
 
 // Components
-import Routes from 'routes/Routes';
+import Routes from 'routes/Routes'
 
 class AppContainer extends Component {
   render() {
@@ -10,8 +10,8 @@ class AppContainer extends Component {
       <div className="app-container">
         <Routes />
       </div>
-    );
+    )
   }
 }
 
-export default hot(module)(AppContainer);
+export default hot(module)(AppContainer)

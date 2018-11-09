@@ -1,8 +1,8 @@
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const common = require('./webpack.common.js');
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const path = require('path')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
   mode: 'development',
@@ -25,4 +25,4 @@ module.exports = merge(common, {
       SHOPIFY_STORE_URL: JSON.stringify('https://ticketmailerdev.myshopify.com'),
     }),
   ],
-});
+})

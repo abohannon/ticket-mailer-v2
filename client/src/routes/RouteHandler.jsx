@@ -1,9 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
+import React from 'react'
+import { connect } from 'react-redux'
+import { Route, Redirect } from 'react-router-dom'
 
 const PrivateRoute = (route) => {
-  const { routes, ...rest } = route;
+  const { routes, ...rest } = route
 
   return (
     <Route
@@ -20,8 +20,8 @@ const PrivateRoute = (route) => {
         ))
       }
     />
-  );
-};
+  )
+}
 
 const RouteHandler = route => (route.protected
   ? <PrivateRoute {...route} />
@@ -30,10 +30,10 @@ const RouteHandler = route => (route.protected
       path={route.path}
       render={props => <route.component {...props} {...route} routes={route.routes} />}
     />
-  ));
+  ))
 
 const mapStateToProps = ({ authentication }) => ({
   isAuthenticated: authentication.isAuthenticated,
-});
+})
 
-export default connect(mapStateToProps)(RouteHandler);
+export default connect(mapStateToProps)(RouteHandler)

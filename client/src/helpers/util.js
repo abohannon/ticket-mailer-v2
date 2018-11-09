@@ -1,11 +1,11 @@
-import fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch'
 
 export const fetchHelper = async (endpoint, options) => {
-  const response = await fetch(endpoint, options);
-  const json = await response.json();
-  const payload = response.ok ? json : null;
+  const response = await fetch(endpoint, options)
+  const json = await response.json()
+  const payload = response.ok ? json : null
 
-  return payload;
-};
+  return payload
+}
 
-export const formatUrlString = string => string.replace(/\W+/g, '-').toLowerCase();
+export const formatUrlString = string => string.replace(/\W+/g, '-').toLowerCase()

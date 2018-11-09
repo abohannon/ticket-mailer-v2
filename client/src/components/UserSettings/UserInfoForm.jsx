@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Input, Button, Popconfirm } from 'antd';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { Input, Button, Popconfirm } from 'antd'
 
 const StyledForm = styled.form`
   width: 30rem;
-`;
+`
 
 const StyledLabel = styled.label`
   font-size: 1.2rem;
   font-weight: 700;
-`;
+`
 
 const InputWrapper = styled.div`
   padding-bottom: 2rem;
-`;
+`
 
 class UserInfoForm extends Component {
   static propTypes = {
@@ -23,32 +23,32 @@ class UserInfoForm extends Component {
   }
 
   constructor(props) {
-    super(props);
+    super(props)
 
-    const { currentUser } = this.props;
+    const { currentUser } = this.props
 
     this.state = {
       name: currentUser.name,
       email: currentUser.email,
-    };
+    }
   }
 
   handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    const { updateUserInfo } = this.props;
+    const { updateUserInfo } = this.props
 
-    updateUserInfo(this.state);
+    updateUserInfo(this.state)
   }
 
   handleChange = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    const { target: { name, value } } = event;
+    const { target: { name, value } } = event
 
     this.setState({
       [name]: value,
-    });
+    })
   }
 
   render() {
@@ -76,8 +76,8 @@ class UserInfoForm extends Component {
           <Button type="primary">Update</Button>
         </Popconfirm>
       </StyledForm>
-    );
+    )
   }
 }
 
-export default UserInfoForm;
+export default UserInfoForm

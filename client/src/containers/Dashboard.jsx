@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Switch } from 'react-router-dom';
-import styled from 'styled-components';
-import RouteHandler from 'routes/RouteHandler';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Switch } from 'react-router-dom'
+import styled from 'styled-components'
+import RouteHandler from 'routes/RouteHandler'
 
 // Components
-import SideNav from 'components/SideNav';
-import Header from 'components/Header';
-import { Spacer } from 'components/common';
+import SideNav from 'components/SideNav'
+import Header from 'components/Header'
+import { Spacer } from 'components/common'
 
 // Actions
-import { logoutUser } from 'actions/authenticationActions';
-import { search } from 'actions/applicationActions';
+import { logoutUser } from 'actions/authenticationActions'
+import { search } from 'actions/applicationActions'
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   max-width: 134rem;
   padding: 0 4rem 0 4rem;
   box-sizing: border-box;
-`;
+`
 
 const Main = styled.main`
   display: flex;
@@ -29,7 +29,7 @@ const Main = styled.main`
   max-width: 108rem;
   width: 100%;
   padding-top: 2rem;
-`;
+`
 
 class Dashboard extends Component {
   static propTypes = {
@@ -45,37 +45,37 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    const { history } = this.props;
+    const { history } = this.props
     if (history.location.pathname === '/dashboard') {
-      history.replace('/dashboard/tours', { from: '/dashboard' });
+      history.replace('/dashboard/tours', { from: '/dashboard' })
     }
   }
 
   handleLogout = () => {
-    const { dispatch } = this.props;
-    dispatch(logoutUser());
+    const { dispatch } = this.props
+    dispatch(logoutUser())
   }
 
   toggleSearchBar = (searchType) => {
     this.setState(prevState => ({
       showSearchBar: !prevState.showSearchBar,
       searchType,
-    }));
+    }))
   }
 
   handleSearch = (value) => {
-    const { searchType } = this.state;
-    const { dispatch } = this.props;
+    const { searchType } = this.state
+    const { dispatch } = this.props
 
-    dispatch(search(searchType, value));
+    dispatch(search(searchType, value))
   }
 
   render() {
-    const { showSearchBar } = this.state;
+    const { showSearchBar } = this.state
 
     const {
       authentication: { currentUser }, routes,
-    } = this.props;
+    } = this.props
 
     return (
       <Wrapper className="wrapper-dashboard">
@@ -99,10 +99,10 @@ class Dashboard extends Component {
           </Switch>
         </Main>
       </Wrapper>
-    );
+    )
   }
 }
 
-const mapStateToProps = ({ authentication }) => ({ authentication });
+const mapStateToProps = ({ authentication }) => ({ authentication })
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(Dashboard)

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import moment from 'moment'
 import {
   Form, Input, TimePicker, DatePicker, Col, Button,
-} from 'antd';
+} from 'antd'
 
 class EmailForm extends Component {
   static propTypes = {
@@ -25,7 +25,7 @@ class EmailForm extends Component {
   }
 
   componentDidMount() {
-    const { email, form } = this.props;
+    const { email, form } = this.props
 
     if (email && !email.error) {
       const {
@@ -37,7 +37,7 @@ class EmailForm extends Component {
         digital_items,
         digital_delivery_date,
         event_notes,
-      } = email;
+      } = email
 
       form.setFieldsValue({
         check_in: moment(check_in),
@@ -48,40 +48,40 @@ class EmailForm extends Component {
         digital_items,
         digital_delivery_date: moment(digital_delivery_date),
         event_notes,
-      });
+      })
     }
   }
 
   componentWillUnmount() {
-    this.setState({ message: '' });
+    this.setState({ message: '' })
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.saveSuccess && !prevProps.saveSuccess) {
-      this.showMessage('Email saved successfully.');
+      this.showMessage('Email saved successfully.')
     }
 
     if (this.props.saveError && !prevProps.saveError) {
-      this.showMessage('Error saving email.');
+      this.showMessage('Error saving email.')
     }
   }
 
   componentWillMount() {
-    clearTimeout(this.timer);
+    clearTimeout(this.timer)
   }
 
   showMessage = (message) => {
-    this.setState({ message });
+    this.setState({ message })
 
     this.timer = setTimeout(() => {
-      this.setState({ message: '' });
-    }, 5000);
+      this.setState({ message: '' })
+    }, 5000)
   }
 
   handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
 
-    const { form, onSave } = this.props;
+    const { form, onSave } = this.props
 
     form.validateFieldsAndScroll((err, values) => {
       if (!err) {
@@ -94,18 +94,18 @@ class EmailForm extends Component {
           digital_items: values.digital_items,
           digital_delivery_date: values.digital_delivery_date.format(),
           event_notes: values.event_notes,
-        };
+        }
 
-        onSave(emailData);
+        onSave(emailData)
 
-        this.setState({ dirty: false });
+        this.setState({ dirty: false })
       }
-    });
+    })
   }
 
   onChange = () => {
     if (!this.state.dirty) {
-      this.setState({ dirty: true }, () => console.log(this.state.dirty));
+      this.setState({ dirty: true }, () => console.log(this.state.dirty))
     }
   }
 
@@ -117,11 +117,11 @@ class EmailForm extends Component {
       wrapperCol: {
         sm: { span: 12 },
       },
-    };
+    }
 
-    const FormItem = Form.Item;
+    const FormItem = Form.Item
 
-    const { form: { getFieldDecorator } } = this.props;
+    const { form: { getFieldDecorator } } = this.props
 
     return (
       <div>
@@ -220,8 +220,8 @@ class EmailForm extends Component {
           </Col>
         </Form>
       </div>
-    );
+    )
   }
 }
 
-export default Form.create()(EmailForm);
+export default Form.create()(EmailForm)

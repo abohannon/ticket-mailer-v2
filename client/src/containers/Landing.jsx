@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-import isEmpty from 'lodash/isEmpty';
-import { AUTH_USER } from 'actions/types';
-import { BLUE, LIGHT_BLUE } from 'constants';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Route, Switch } from 'react-router-dom'
+import styled from 'styled-components'
+import isEmpty from 'lodash/isEmpty'
+import { AUTH_USER } from 'actions/types'
+import { BLUE, LIGHT_BLUE } from 'constants'
 
 // Components
-import Login from 'components/Login';
+import Login from 'components/Login'
+import Signup from 'components/Signup'
 
 // Actions
-import { loginUser, authenticateUser } from 'actions/authenticationActions';
+import { loginUser, authenticateUser } from 'actions/authenticationActions'
 
 const Wrapper = styled.div`
   box-sizing: border-box;
@@ -22,7 +24,7 @@ const Wrapper = styled.div`
   margin: 0;
   background: ${BLUE};
   background: linear-gradient(142deg, ${BLUE} 0%, ${LIGHT_BLUE} 100%);
-`;
+`
 
 export class Landing extends Component {
   static propTypes = {
@@ -36,43 +38,50 @@ export class Landing extends Component {
       authentication: { isAuthenticated },
       history,
       dispatch,
-    } = this.props;
+    } = this.props
 
     if (isAuthenticated) {
-      history.push('/dashboard');
+      history.push('/dashboard')
     }
 
-    const token = localStorage.getItem('id_token');
+    const token = localStorage.getItem('id_token')
 
     if (token && !isAuthenticated) {
-      dispatch(authenticateUser(token));
+      dispatch(authenticateUser(token))
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { authentication: { isAuthenticated }, history } = this.props;
+    const { authentication: { isAuthenticated }, history } = this.props
 
     if (!prevProps.isAuthenticated && isAuthenticated) {
-      history.push('/dashboard');
+      history.push('/dashboard')
     }
   }
 
   render() {
-    const { dispatch, authentication } = this.props;
+    const { dispatch, authentication } = this.props
 
     if (authentication && !isEmpty(authentication.pending)
       && authentication.pending.type === AUTH_USER) {
-      return null;
+      return null
     }
 
     return (
       <Wrapper className="wrapper-landing">
-        <Login handleLogin={loginData => dispatch(loginUser(loginData))} />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            component={() => (<Login handleLogin={loginData => dispatch(loginUser(loginData))} />)}
+          />
+          <Route path="/signup" component={() => <Signup />} />
+        </Switch>
       </Wrapper>
-    );
+    )
   }
 }
 
-const mapStateToProps = ({ authentication }) => ({ authentication });
+const mapStateToProps = ({ authentication }) => ({ authentication })
 
-export default connect(mapStateToProps)(Landing);
+export default connect(mapStateToProps)(Landing)

@@ -24,4 +24,4 @@ export const config = [
     path: '/',
     icon: 'logout',
   },
-];
+]

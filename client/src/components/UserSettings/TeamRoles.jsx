@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { List } from 'antd';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { List } from 'antd'
 
-import { Spacer, Modal } from 'components/common';
+import { Spacer, Modal } from 'components/common'
 
 class TeamRoles extends Component {
   static propTypes = {
@@ -20,21 +20,21 @@ class TeamRoles extends Component {
   setModalVisible = (status, type, user) => {
     switch (type) {
       case 'removeAdmin':
-        this.setState({ removeAdminModalVisible: status });
-        break;
+        this.setState({ removeAdminModalVisible: status })
+        break
       case 'deleteUser':
-        this.setState({ deleteUserModalVisible: status });
-        break;
+        this.setState({ deleteUserModalVisible: status })
+        break
       case 'makeAdmin':
-        this.setState({ makeAdminModalVisible: status });
-        break;
+        this.setState({ makeAdminModalVisible: status })
+        break
       default:
-        return null;
+        return null
     }
   }
 
   selectUser = (selectedUser, modal) => {
-    this.setState({ selectedUser }, () => this.setModalVisible(true, modal));
+    this.setState({ selectedUser }, () => this.setModalVisible(true, modal))
   }
 
   renderAdminActions = user => ([
@@ -48,11 +48,11 @@ class TeamRoles extends Component {
   ])
 
   render() {
-    const { isAdmin, users, deleteUser } = this.props;
-    const { selectedUser: { userId } } = this.state;
+    const { isAdmin, users, deleteUser } = this.props
+    const { selectedUser: { userId } } = this.state
 
-    const adminData = [];
-    const editorData = [];
+    const adminData = []
+    const editorData = []
 
     if (users.payload) {
       users.payload.forEach((user) => {
@@ -60,14 +60,14 @@ class TeamRoles extends Component {
           return adminData.push({
             name: user.name,
             userId: user._id,
-          });
+          })
         }
 
         return editorData.push({
           name: user.name,
           userId: user._id,
-        });
-      });
+        })
+      })
     }
 
     return (
@@ -125,8 +125,8 @@ class TeamRoles extends Component {
           Are you sure you want to promote this user to admin?
         </Modal>
       </div>
-    );
+    )
   }
 }
 
-export default TeamRoles;
+export default TeamRoles

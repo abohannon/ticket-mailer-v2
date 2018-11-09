@@ -1,19 +1,19 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import isEmpty from 'lodash/isEmpty';
-import { CARD_TITLE_PRIMARY } from 'constants';
-import { Button } from 'antd';
+import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import isEmpty from 'lodash/isEmpty'
+import { CARD_TITLE_PRIMARY } from 'constants'
+import { Button } from 'antd'
 
-import { Card } from 'components/common';
-import OrdersList from 'components/OrdersList';
-import EmailForm from 'components/EmailForm';
+import { Card } from 'components/common'
+import OrdersList from 'components/OrdersList'
+import EmailForm from 'components/EmailForm'
 
 // Actions
-import { fetchOrders, search } from 'actions/applicationActions';
-import { fetchEmail, saveEmail, sendEmail } from 'actions/emailActions';
+import { fetchOrders, search } from 'actions/applicationActions'
+import { fetchEmail, saveEmail, sendEmail } from 'actions/emailActions'
 
-import { SEARCH_ORDERS, CLEAR_SEARCH } from 'actions/types';
+import { SEARCH_ORDERS, CLEAR_SEARCH } from 'actions/types'
 
 class Orders extends Component {
   static propTypes = {
@@ -36,55 +36,55 @@ class Orders extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, location, toggleSearchBar } = this.props;
-    const searchQuery = location.search;
+    const { dispatch, location, toggleSearchBar } = this.props
+    const searchQuery = location.search
 
-    toggleSearchBar(SEARCH_ORDERS);
+    toggleSearchBar(SEARCH_ORDERS)
 
-    dispatch(search(CLEAR_SEARCH));
-    dispatch(fetchOrders(searchQuery));
-    dispatch(fetchEmail(searchQuery));
+    dispatch(search(CLEAR_SEARCH))
+    dispatch(fetchOrders(searchQuery))
+    dispatch(fetchEmail(searchQuery))
   }
 
   componentWillUnmount() {
-    const { toggleSearchBar } = this.props;
+    const { toggleSearchBar } = this.props
 
-    toggleSearchBar();
+    toggleSearchBar()
   }
 
   onTabChange = (key) => {
-    this.setState({ activeTab: key });
+    this.setState({ activeTab: key })
   }
 
   saveEmailContent = async (data) => {
-    const { dispatch, location } = this.props;
-    const searchQuery = location.search;
+    const { dispatch, location } = this.props
+    const searchQuery = location.search
 
     const mergedData = {
       ...data,
       variant_id: location.state.variantId,
       searchQuery,
-    };
+    }
 
-    await dispatch(saveEmail(mergedData));
-    dispatch(fetchEmail(searchQuery));
+    await dispatch(saveEmail(mergedData))
+    dispatch(fetchEmail(searchQuery))
   }
 
   updateSelectedOrders = (selectedOrders, selectedRowKeys) => {
     this.setState({
       selectedOrders,
       selectedRowKeys,
-    });
+    })
   }
 
   handleEmail = (orders) => {
-    const { fetchEmailResolved, location, dispatch } = this.props;
+    const { fetchEmailResolved, location, dispatch } = this.props
 
-    const { artistName, showTitle, variantTitle } = location.state;
+    const { artistName, showTitle, variantTitle } = location.state
 
     if (fetchEmailResolved.payload.error) {
-      this.setState({ message: 'You haven\'t saved an email yet.' });
-      return console.log('You haven\'t saved an email yet.');
+      this.setState({ message: 'You haven\'t saved an email yet.' })
+      return console.log('You haven\'t saved an email yet.')
     }
 
     const emailData = {
@@ -93,9 +93,9 @@ class Orders extends Component {
       artistName,
       showTitle,
       variantTitle,
-    };
+    }
 
-    dispatch(sendEmail(emailData));
+    dispatch(sendEmail(emailData))
   }
 
   render() {
@@ -106,7 +106,7 @@ class Orders extends Component {
       saveEmailResolved,
       saveEmailRejected,
       searchResultsOrders,
-    } = this.props;
+    } = this.props
 
     const tabList = [{
       key: 'orders',
@@ -116,14 +116,14 @@ class Orders extends Component {
       key: 'email',
       tab: 'Edit email',
     },
-    ];
+    ]
 
-    const orders = !isEmpty(searchResultsOrders) ? searchResultsOrders : fetchOrdersResolved.payload;
-    const email = fetchEmailResolved.payload;
-    const loading = !isEmpty(fetchOrdersPending);
-    const emailSaved = !isEmpty(saveEmailResolved);
-    const emailSaveError = !isEmpty(saveEmailRejected);
-    const disabled = this.state.selectedOrders.length < 1;
+    const orders = !isEmpty(searchResultsOrders) ? searchResultsOrders : fetchOrdersResolved.payload
+    const email = fetchEmailResolved.payload
+    const loading = !isEmpty(fetchOrdersPending)
+    const emailSaved = !isEmpty(saveEmailResolved)
+    const emailSaveError = !isEmpty(saveEmailRejected)
+    const disabled = this.state.selectedOrders.length < 1
 
     const sendEmailButton = (
       <Button
@@ -133,7 +133,7 @@ class Orders extends Component {
       >
         Send Email
       </Button>
-    );
+    )
 
     const tabListContent = {
       orders: (
@@ -152,7 +152,7 @@ class Orders extends Component {
           saveError={emailSaveError}
         />
       ),
-    };
+    }
 
     return (
       <Fragment>
@@ -168,7 +168,7 @@ class Orders extends Component {
           {tabListContent[this.state.activeTab]}
         </Card>
       </Fragment>
-    );
+    )
   }
 }
 
@@ -192,6 +192,6 @@ const mapStateToProps = ({
   saveEmailResolved,
   saveEmailRejected,
   searchResultsOrders,
-});
+})
 
-export default connect(mapStateToProps)(Orders);
+export default connect(mapStateToProps)(Orders)

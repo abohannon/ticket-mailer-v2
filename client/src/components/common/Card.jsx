@@ -1,6 +1,6 @@
-import React from 'react';
-import { Card as AntCard } from 'antd';
-import { BOX_SHADOW } from 'constants';
+import React from 'react'
+import { Card as AntCard } from 'antd'
+import { BOX_SHADOW } from 'constants'
 
 
 export const Card = (props) => {
@@ -11,7 +11,7 @@ export const Card = (props) => {
     children,
     fullWidth,
     ...rest
-  } = props;
+  } = props
 
   const cardProps = {
     style: { boxShadow: BOX_SHADOW, ...style },
@@ -25,11 +25,11 @@ export const Card = (props) => {
       ...headStyle,
     },
     ...rest,
-  };
+  }
 
   return (
     <AntCard {...cardProps}>
       {children}
     </AntCard>
-  );
-};
+  )
+}

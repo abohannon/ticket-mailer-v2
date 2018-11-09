@@ -8,128 +8,128 @@ import {
   FETCH_ORDERS_RESOLVED,
   FETCH_ORDERS_PENDING,
   FETCH_ORDERS_REJECTED,
-} from 'actions/types';
+} from 'actions/types'
 
-import { GET } from 'constants';
+import { GET } from 'constants'
 
-import { fetchHelper } from 'helpers/util';
+import { fetchHelper } from 'helpers/util'
 
 export const search = (type, value) => async (dispatch) => {
   const action = {
     type,
     payload: value,
-  };
+  }
 
-  dispatch(action);
-};
+  dispatch(action)
+}
 
 export const fetchTours = () => async (dispatch) => {
   let action = {
     type: FETCH_TOURS_PENDING,
-  };
-  dispatch(action);
+  }
+  dispatch(action)
 
-  const endpoint = `${API_HOST}/data/fetchTours`;
+  const endpoint = `${API_HOST}/data/fetchTours`
 
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     authorization: localStorage.getItem('tm_id_token'),
-  };
+  }
 
   const options = {
     method: GET,
     headers,
-  };
+  }
 
   try {
-    const payload = await fetchHelper(endpoint, options);
+    const payload = await fetchHelper(endpoint, options)
 
     action = {
       type: FETCH_TOURS_RESOLVED,
       payload: payload || [],
-    };
+    }
 
-    dispatch(action);
+    dispatch(action)
   } catch (err) {
     action = {
       type: FETCH_TOURS_REJECTED,
       payload: err,
-    };
-    dispatch(action);
+    }
+    dispatch(action)
   }
-};
+}
 
 export const fetchShows = searchQuery => async (dispatch) => {
   let action = {
     type: FETCH_SHOWS_PENDING,
-  };
-  dispatch(action);
+  }
+  dispatch(action)
 
-  const endpoint = searchQuery ? `${API_HOST}/data/fetchShows${searchQuery}` : `${API_HOST}/data/fetchShows`;
+  const endpoint = searchQuery ? `${API_HOST}/data/fetchShows${searchQuery}` : `${API_HOST}/data/fetchShows`
 
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     authorization: localStorage.getItem('tm_id_token'),
-  };
+  }
 
   const options = {
     method: GET,
     headers,
-  };
+  }
 
   try {
-    const payload = await fetchHelper(endpoint, options);
+    const payload = await fetchHelper(endpoint, options)
 
     action = {
       type: FETCH_SHOWS_RESOLVED,
       payload,
-    };
+    }
 
-    dispatch(action);
+    dispatch(action)
   } catch (err) {
     action = {
       type: FETCH_SHOWS_REJECTED,
       payload: err,
-    };
-    dispatch(action);
+    }
+    dispatch(action)
   }
-};
+}
 
 export const fetchOrders = searchQuery => async (dispatch) => {
   let action = {
     type: FETCH_ORDERS_PENDING,
-  };
-  dispatch(action);
+  }
+  dispatch(action)
 
-  const endpoint = searchQuery ? `${API_HOST}/data/fetchOrders${searchQuery}` : `${API_HOST}/data/fetchOrders`;
+  const endpoint = searchQuery ? `${API_HOST}/data/fetchOrders${searchQuery}` : `${API_HOST}/data/fetchOrders`
 
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     authorization: localStorage.getItem('tm_id_token'),
-  };
+  }
 
   const options = {
     method: GET,
     headers,
-  };
+  }
 
   try {
-    const payload = await fetchHelper(endpoint, options);
+    const payload = await fetchHelper(endpoint, options)
 
     action = {
       type: FETCH_ORDERS_RESOLVED,
       payload,
-    };
+    }
 
-    dispatch(action);
+    dispatch(action)
   } catch (err) {
     action = {
       type: FETCH_ORDERS_REJECTED,
       payload: err,
-    };
-    dispatch(action);
+    }
+    dispatch(action)
   }
-};
+}

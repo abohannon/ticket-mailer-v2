@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Switch } from 'react-router-dom';
+import React, { Component } from 'react'
+import { Switch } from 'react-router-dom'
 
-import RouteHandler from './RouteHandler';
+import RouteHandler from './RouteHandler'
 
-import staticRoutes from './staticRoutes';
+import staticRoutes from './staticRoutes'
 
 class Routes extends Component {
   render() {
@@ -11,8 +11,8 @@ class Routes extends Component {
       <Switch>
         {staticRoutes.map((route, i) => <RouteHandler key={i} {...route} />)}
       </Switch>
-    );
+    )
   }
 }
 
-export default Routes;
+export default Routes

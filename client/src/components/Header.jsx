@@ -1,20 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 import {
   Button, Menu, Dropdown, Icon,
-} from 'antd';
-import { BOX_SHADOW } from 'constants';
+} from 'antd'
+import { BOX_SHADOW } from 'constants'
 
 // Components
-import { SearchInput } from 'components/common';
+import { SearchInput } from 'components/common'
 
 const StyledIcon = styled(Icon)`
   margin-right: 1rem; 
   font-size: 1.5rem;
-`;
+`
 
 const HeaderMenu = (props) => {
   const menu = (
@@ -31,46 +31,46 @@ const HeaderMenu = (props) => {
         Logout
       </Menu.Item>
     </Menu>
-  );
+  )
 
   return (
     <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
       {props.children}
     </Dropdown>
-  );
-};
+  )
+}
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
   height: 3rem;
   top: 0;
-`;
+`
 
 const UserDisplay = styled.div`
   display: flex;
   margin-left: auto;
   align-items: center;
-`;
+`
 
 const Greeting = styled.div`
   font-size: 1.4rem;
   font-weight: 500;
   margin-right: 2rem;
-`;
+`
 
 const StyledButton = styled(Button)`
   box-shadow: ${BOX_SHADOW};
-`;
+`
 
 const propTypes = {
   showSearchBar: PropTypes.bool,
   currentUser: PropTypes.object,
   handleSearch: PropTypes.func,
-};
+}
 
 const Header = (props) => {
-  const { showSearchBar, currentUser, handleSearch } = props;
+  const { showSearchBar, currentUser, handleSearch } = props
   return (
     <Wrapper>
       <SearchInput show={showSearchBar} onSearch={handleSearch} />
@@ -81,9 +81,9 @@ const Header = (props) => {
         </HeaderMenu>
       </UserDisplay>
     </Wrapper>
-  );
-};
+  )
+}
 
-Header.propTypes = propTypes;
+Header.propTypes = propTypes
 
-export default Header;
+export default Header

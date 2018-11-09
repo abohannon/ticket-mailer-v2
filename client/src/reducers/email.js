@@ -8,7 +8,7 @@ import {
   SEND_EMAIL_RESOLVED,
   SEND_EMAIL_PENDING,
   SEND_EMAIL_REJECTED,
-} from 'actions/types';
+} from 'actions/types'
 
 const INITIAL_STATE = {
   fetchEmailResolved: {},
@@ -20,10 +20,10 @@ const INITIAL_STATE = {
   sendEmailResolved: {},
   sendEmailPending: {},
   sendEmailRejected: {},
-};
+}
 
 export default (state = INITIAL_STATE, action) => {
-  const { status, type, payload } = action;
+  const { status, type, payload } = action
 
   switch (type) {
     case FETCH_EMAIL_RESOLVED: {
@@ -31,74 +31,74 @@ export default (state = INITIAL_STATE, action) => {
         fetchEmailResolved: action,
         fetchEmailPending: {},
         fetchEmailRejected: {},
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     case FETCH_EMAIL_PENDING: {
       const newState = {
         fetchEmailResolved: {},
         fetchEmailPending: action,
         fetchEmailRejected: {},
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     case FETCH_EMAIL_REJECTED: {
       const newState = {
         fetchEmailResolved: {},
         fetchEmailPending: {},
         fetchEmailRejected: action,
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     case SAVE_EMAIL_RESOLVED: {
       const newState = {
         saveEmailResolved: action,
         saveEmailPending: {},
         saveEmailRejected: {},
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     case SAVE_EMAIL_PENDING: {
       const newState = {
         saveEmailResolved: {},
         saveEmailPending: action,
         saveEmailRejected: {},
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     case SAVE_EMAIL_REJECTED: {
       const newState = {
         saveEmailResolved: {},
         saveEmailPending: {},
         saveEmailRejected: action,
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     case SEND_EMAIL_RESOLVED: {
       const newState = {
         sendEmailResolved: action,
         sendEmailPending: {},
         sendEmailRejected: {},
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     case SEND_EMAIL_PENDING: {
       const newState = {
         sendEmailResolved: {},
         sendEmailPending: action,
         sendEmailRejected: {},
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     case SEND_EMAIL_REJECTED: {
       const newState = {
         sendEmailResolved: {},
         sendEmailPending: {},
         sendEmailRejected: action,
-      };
-      return { ...state, ...newState };
+      }
+      return { ...state, ...newState }
     }
     default:
-      return state;
+      return state
   }
-};
+}

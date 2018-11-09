@@ -2,12 +2,12 @@ import {
   LOGIN_USER,
   LOGOUT_USER,
   AUTH_USER,
-} from 'actions/types';
+} from 'actions/types'
 
 import {
   PENDING,
   REJECTED,
-} from 'constants';
+} from 'constants'
 
 const INITIAL_STATE = {
   isAuthenticated: false,
@@ -15,10 +15,10 @@ const INITIAL_STATE = {
   fulfilled: {},
   rejected: {},
   currentUser: {},
-};
+}
 
 export default (state = INITIAL_STATE, action) => {
-  const { status, type, payload } = action;
+  const { status, type, payload } = action
 
   switch (type) {
     case LOGIN_USER:
@@ -29,9 +29,9 @@ export default (state = INITIAL_STATE, action) => {
           fulfilled: {},
           rejected: {},
           currentUser: {},
-        };
+        }
 
-        return { ...state, ...newState };
+        return { ...state, ...newState }
       }
 
       if (status === REJECTED) {
@@ -41,9 +41,9 @@ export default (state = INITIAL_STATE, action) => {
           fulfilled: {},
           rejected: action,
           currentUser: {},
-        };
+        }
 
-        return { ...state, ...newState };
+        return { ...state, ...newState }
       }
 
       const newState = {
@@ -52,20 +52,20 @@ export default (state = INITIAL_STATE, action) => {
         fulfilled: action,
         rejected: {},
         currentUser: payload,
-      };
+      }
 
-      return { ...state, ...newState };
+      return { ...state, ...newState }
     }
     case LOGOUT_USER: {
       const newState = {
         isAuthenticated: false,
         fulfilled: action,
         currentUser: {},
-      };
+      }
 
-      return { ...state, ...newState };
+      return { ...state, ...newState }
     }
     default:
-      return state;
+      return state
   }
-};
+}

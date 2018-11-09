@@ -48,7 +48,7 @@ export const signup = (req, res, next) => {
   const { email, password, name } = req.body;
 
   if (!email || !password || !name) {
-    return res.status(422).json({ error: 'You must provide an email, password, and name.' });
+    return res.status(400).json({ error: 'You must provide an email, password, and name.' });
   }
 
   // See if a user with the given email exists
@@ -57,7 +57,7 @@ export const signup = (req, res, next) => {
 
     // If a user with email does exist, return an error
     if (existingUser) {
-      return res.status(422).send({ error: 'Email already in use.' });
+      return res.status(400).json({ error: 'Email already in use.' });
     }
 
     // If a user with email does NOT exist, create and save user record

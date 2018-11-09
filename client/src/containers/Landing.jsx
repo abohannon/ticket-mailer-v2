@@ -12,7 +12,7 @@ import Login from 'components/Login'
 import Signup from 'components/Signup'
 
 // Actions
-import { loginUser, authenticateUser } from 'actions/authenticationActions'
+import { loginUser, authenticateUser, signupUser } from 'actions/authenticationActions'
 
 const Wrapper = styled.div`
   box-sizing: border-box;
@@ -75,7 +75,15 @@ export class Landing extends Component {
             path="/"
             component={() => (<Login handleLogin={loginData => dispatch(loginUser(loginData))} />)}
           />
-          <Route path="/signup" component={() => <Signup />} />
+          <Route
+            path="/signup"
+            component={() => (
+              <Signup
+                handleSignup={userData => dispatch(signupUser(userData))}
+                {...authentication}
+              />
+            )}
+          />
         </Switch>
       </Wrapper>
     )

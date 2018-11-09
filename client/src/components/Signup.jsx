@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import isEmpty from 'lodash/isEmpty'
 import {
   Card, Form, Icon, Input, Button,
 } from 'antd'
@@ -27,9 +28,26 @@ const createStyles = () => ({
 })
 
 class Signup extends Component {
+  state = {
+    errorMessage: '',
+  }
+
   componentDidMount() {
     const { form } = this.props
     form.validateFields()
+  }
+
+  componentDidUpdate() {
+    const { errorMessage } = this.state
+    const { rejected } = this.props
+
+    if (!isEmpty(rejected)) {
+      if (errorMessage !== rejected.payload.error) {
+        this.setState({
+          errorMessage: rejected.payload.error,
+        })
+      }
+    }
   }
 
   hasErrors = fieldsError => Object.keys(fieldsError).some(field => fieldsError[field])
@@ -43,7 +61,15 @@ class Signup extends Component {
         console.log(err)
       }
 
-      handleSignup(values)
+      if (values.password !== values.confirmPassword) {
+        return this.setState({
+          errorMessage: 'Passwords don\'t match.',
+        })
+      }
+
+      const { confirmPassword, ...rest } = values
+
+      handleSignup(rest)
     })
   };
 
@@ -95,7 +121,7 @@ class Signup extends Component {
       },
     }
 
-    const nameError = isFieldTouched('firstName') && getFieldError('firstName')
+    const nameError = isFieldTouched('name') && getFieldError('name')
     const emailError = isFieldTouched('email') && getFieldError('email')
     const passwordError = isFieldTouched('password') && getFieldError('password')
     const confirmError = isFieldTouched('confirmPassword') && getFieldError('confirmPassword')
@@ -109,7 +135,7 @@ class Signup extends Component {
               validateStatus={nameError ? 'error' : ''}
               help={nameError || ''}
             >
-              {getFieldDecorator('firstName', {
+              {getFieldDecorator('name', {
                 rules: [{ required: true, message: 'Please enter your first name.' }],
               })(
                 <Input
@@ -181,6 +207,7 @@ class Signup extends Component {
               >
               Create Account
               </Button>
+              {this.state.errorMessage}
             </FormItem>
           </Form>
         </StyledCard>

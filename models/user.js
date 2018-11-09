@@ -11,6 +11,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   name: { type: String, required: true },
   admin: { type: Boolean, default: false },
+  verified: { type: Boolean, default: false },
 });
 
 // On Save Hook, encrypt password

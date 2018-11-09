@@ -2,6 +2,7 @@ import {
   LOGIN_USER,
   LOGOUT_USER,
   AUTH_USER,
+  SIGNUP_USER,
 } from 'actions/types'
 
 import {
@@ -61,6 +62,35 @@ export default (state = INITIAL_STATE, action) => {
         isAuthenticated: false,
         fulfilled: action,
         currentUser: {},
+      }
+
+      return { ...state, ...newState }
+    }
+    case SIGNUP_USER: {
+      if (status === PENDING) {
+        const newState = {
+          pending: action,
+          fulfilled: {},
+          rejected: {},
+        }
+
+        return { ...state, ...newState }
+      }
+
+      if (status === REJECTED) {
+        const newState = {
+          pending: {},
+          fulfilled: {},
+          rejected: action,
+        }
+
+        return { ...state, ...newState }
+      }
+
+      const newState = {
+        pending: {},
+        fulfilled: action,
+        rejected: {},
       }
 
       return { ...state, ...newState }

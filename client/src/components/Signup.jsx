@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import isEmpty from 'lodash/isEmpty'
 import {
-  Card, Form, Icon, Input, Button,
+  Card, Form, Icon, Input, Button, Alert,
 } from 'antd'
+import { Spacer } from 'components/common'
+
+import { SIGNUP_USER } from 'actions/types'
 
 const FormItem = Form.Item
 
@@ -30,6 +33,7 @@ const createStyles = () => ({
 class Signup extends Component {
   state = {
     errorMessage: '',
+    showAlert: false,
   }
 
   componentDidMount() {
@@ -38,14 +42,20 @@ class Signup extends Component {
   }
 
   componentDidUpdate() {
-    const { errorMessage } = this.state
-    const { rejected } = this.props
+    const { errorMessage, showAlert } = this.state
+    const { rejected, fulfilled } = this.props
 
     if (!isEmpty(rejected)) {
       if (errorMessage !== rejected.payload.error) {
         this.setState({
           errorMessage: rejected.payload.error,
         })
+      }
+    }
+
+    if (!isEmpty(fulfilled)) {
+      if ((fulfilled.type === SIGNUP_USER) && !showAlert) {
+        this.setState({ showAlert: true })
       }
     }
   }
@@ -101,6 +111,22 @@ class Signup extends Component {
     } else {
       callback()
     }
+  }
+
+  renderAlert = () => {
+    const { showAlert } = this.state
+
+    if (showAlert) {
+      return (
+        <Alert
+          message="Verification email sent."
+          type="success"
+          closable
+        />
+      )
+    }
+
+    return null
   }
 
   render() {
@@ -211,6 +237,8 @@ class Signup extends Component {
             </FormItem>
           </Form>
         </StyledCard>
+        <Spacer />
+        {this.renderAlert()}
       </div>
     )
   }

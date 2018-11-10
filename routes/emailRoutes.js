@@ -3,7 +3,7 @@ import passport from 'passport';
 import {
   saveEmail,
   fetchEmail,
-  sendEmail,
+  sendTicketEmail,
   parseEmailWebhooks,
 } from '../controllers/emailController';
 import passportService from '../services/passportService';
@@ -15,7 +15,7 @@ const emailRouter = express.Router();
 
 router.post('/saveEmail', requireAuth, saveEmail);
 router.get('/fetchEmail', requireAuth, fetchEmail);
-router.post('/sendEmail', requireAuth, sendEmail);
+router.post('/sendEmail', requireAuth, sendTicketEmail);
 router.post('/webhooks', parseEmailWebhooks);
 
 emailRouter.use('/email', router);

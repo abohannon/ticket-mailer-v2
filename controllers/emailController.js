@@ -1,7 +1,10 @@
 import moment from 'moment';
 import Email from '../models/email';
 import sgMail from '../services/sendgridService';
-import { generatePersonalizations } from '../services/emailService';
+import {
+  generatePersonalizations,
+  sendSingleEmail,
+} from '../services/emailService';
 import {
   fetchMetafields, searchMetafields, createMetafield, updateMetafieldsForOrders,
 } from '../services/dataService';
@@ -13,7 +16,7 @@ export const parseEmailWebhooks = (req, res) => {
   console.log(req.body);
 };
 
-export const sendEmail = async (req, res) => {
+export const sendTicketEmail = async (req, res) => {
   const {
     content, orders, showTitle, variantTitle, artistName,
   } = req.body;

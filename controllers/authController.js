@@ -1,6 +1,7 @@
 import passport from 'passport';
 import jwt from 'jwt-simple';
 import User from '../models/user';
+import { sendAccountVerificationEmail } from '../services/emailService';
 
 
 const tokenForUser = (user) => {
@@ -67,11 +68,28 @@ export const signup = (req, res, next) => {
       name,
     });
 
-    user.save((saveErr) => {
-      if (saveErr) return next(saveErr);
+    user.save()
+      .then((newUser) => {
+        if (!newUser) throw new Error('Error saving new user');
 
-      // Respond to request indicating user was created
-      return res.status(200).json({ token: tokenForUser(user) });
-    });
+        const timestamp = new Date().getTime();
+        const exp = timestamp + (60 * 60 * 24 * 1000);
+
+        const token = jwt.encode(
+          {
+            sub: newUser.id,
+            iat: timestamp,
+            exp,
+          },
+          process.env.JWT_SECRET,
+        );
+
+        sendAccountVerificationEmail(email, token);
+
+        return res.status(200).json(newUser);
+      })
+      .catch((saveErr) => {
+        throw new Error(saveErr, 'Error saving new user');
+      });
   });
 };

@@ -47,7 +47,7 @@ class Signup extends Component {
     const { rejected, fulfilled } = this.props
 
     if (!isEmpty(rejected)) {
-      if (errorMessage !== rejected.payload.error) {
+      if (rejected.payload && errorMessage !== rejected.payload.error) {
         this.setState({
           errorMessage: rejected.payload.error,
         })

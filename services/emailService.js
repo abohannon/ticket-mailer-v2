@@ -25,7 +25,8 @@ export const sendSingleEmail = async (message) => {
 };
 
 export const sendAccountVerificationEmail = async (email, token) => {
-  const verificationLink = `${process.env.HOST_URL}/verifyEmail/${token}`;
+  const verificationLink = `${process.env.HOST_URL}/api/auth/verifyEmail?token=${token}`;
+  console.log(verificationLink);
 
   const message = {
     to: email,
@@ -35,7 +36,6 @@ export const sendAccountVerificationEmail = async (email, token) => {
   };
 
   const response = await sendSingleEmail(message);
-  console.log(response);
 
   return response;
 };

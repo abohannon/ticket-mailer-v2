@@ -3,7 +3,6 @@ import Email from '../models/email';
 import sgMail from '../services/sendgridService';
 import {
   generatePersonalizations,
-  sendSingleEmail,
 } from '../services/emailService';
 import {
   fetchMetafields, searchMetafields, createMetafield, updateMetafieldsForOrders,

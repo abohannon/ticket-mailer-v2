@@ -13,7 +13,7 @@ import {
   LOGOUT_USER,
   AUTH_USER,
   SIGNUP_USER,
-} from 'actions/types'
+} from './types'
 
 export const loginUser = body => async (dispatch) => {
   let action = {

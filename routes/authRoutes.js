@@ -1,7 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import {
-  login, signup, authenticateUser,
+  login, signup, authenticateUser, verifyEmail,
 } from '../controllers/authController';
 import passportService from '../services/passportService';
 
@@ -13,7 +13,9 @@ const authRouter = express.Router();
 
 router.post('/login', login);
 router.post('/signup', signup);
+
 router.get('/user', requireAuth, authenticateUser);
+router.get('/verifyEmail', verifyEmail);
 
 authRouter.use('/auth', router);
 

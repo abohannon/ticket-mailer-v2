@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import isEmpty from 'lodash/isEmpty'
 import {
@@ -236,6 +237,12 @@ class Signup extends Component {
               {this.state.errorMessage}
             </FormItem>
           </Form>
+          <Spacer />
+          <div style={{ textAlign: 'center' }}>
+            Have an account?
+            {' '}
+            <Link to="/">Login here.</Link>
+          </div>
         </StyledCard>
         <Spacer />
         {this.renderAlert()}

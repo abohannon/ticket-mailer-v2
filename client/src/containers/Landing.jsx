@@ -12,7 +12,11 @@ import Login from 'components/Login'
 import Signup from 'components/Signup'
 
 // Actions
-import { loginUser, authenticateUser, signupUser } from 'actions/authenticationActions'
+import {
+  loginUser,
+  authenticateUser,
+  signupUser,
+} from 'actions/authenticationActions'
 
 const Wrapper = styled.div`
   box-sizing: border-box;

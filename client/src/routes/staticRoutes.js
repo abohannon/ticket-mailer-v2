@@ -4,6 +4,7 @@ import Tours from 'containers/Tours'
 import Shows from 'containers/Shows'
 import Orders from 'containers/Orders'
 import UserSettings from 'containers/UserSettings'
+import VerifyEmail from 'containers/VerifyEmail'
 
 const routes = [
   {
@@ -15,6 +16,11 @@ const routes = [
     exact: true,
     path: '/signup',
     component: Landing,
+  },
+  {
+    exact: true,
+    path: '/verifyEmail',
+    component: VerifyEmail,
   },
   {
     protected: true,

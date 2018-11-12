@@ -2,8 +2,7 @@ import fetch from 'isomorphic-fetch'
 
 export const fetchHelper = async (endpoint, options) => {
   const response = await fetch(endpoint, options)
-  const json = await response.json()
-  const payload = response.ok ? json : null
+  const payload = await response.json()
 
   return payload
 }

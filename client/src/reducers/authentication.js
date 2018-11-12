@@ -3,6 +3,9 @@ import {
   LOGOUT_USER,
   AUTH_USER,
   SIGNUP_USER,
+  VERIFY_EMAIL_RESOLVED,
+  VERIFY_EMAIL_PENDING,
+  VERIFY_EMAIL_REJECTED,
 } from 'actions/types'
 
 import {
@@ -16,6 +19,9 @@ const INITIAL_STATE = {
   fulfilled: {},
   rejected: {},
   currentUser: {},
+  verifyEmailResolved: {},
+  verifyEmailPending: {},
+  verifyEmailRejected: {},
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -93,6 +99,30 @@ export default (state = INITIAL_STATE, action) => {
         rejected: {},
       }
 
+      return { ...state, ...newState }
+    }
+    case VERIFY_EMAIL_RESOLVED: {
+      const newState = {
+        verifyEmailResolved: action,
+        verifyEmailPending: {},
+        verifyEmailRejected: {},
+      }
+      return { ...state, ...newState }
+    }
+    case VERIFY_EMAIL_PENDING: {
+      const newState = {
+        verifyEmailResolved: {},
+        verifyEmailPending: action,
+        verifyEmailRejected: {},
+      }
+      return { ...state, ...newState }
+    }
+    case VERIFY_EMAIL_REJECTED: {
+      const newState = {
+        verifyEmailResolved: {},
+        verifyEmailPending: {},
+        verifyEmailRejected: action,
+      }
       return { ...state, ...newState }
     }
     default:

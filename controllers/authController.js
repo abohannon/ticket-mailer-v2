@@ -2,8 +2,6 @@ import passport from 'passport';
 import jwt from 'jwt-simple';
 import User from '../models/user';
 import { sendAccountVerificationEmail } from '../services/emailService';
-import { loginUser } from '../client/src/actions/authenticationActions';
-
 
 const tokenForUser = (user) => {
   const timestamp = new Date().getTime();
@@ -98,20 +96,32 @@ export const signup = (req, res, next) => {
 export const verifyEmail = async (req, res) => {
   const { token } = req.query;
 
-  const decodedToken = jwt.decode(token, process.env.JWT_SECRET);
-  const { exp, sub } = decodedToken;
-  console.log(decodedToken);
-  const now = new Date().getTime();
+  try {
+    const decodedToken = jwt.decode(token, process.env.JWT_SECRET);
+    const { exp, sub } = decodedToken;
 
-  if (exp < now) {
-    return res.status(401).json({ error: 'Link has expired.' });
+    const now = new Date().getTime();
+
+    if (exp < now) {
+      return res.status(401).json({ message: 'This link has expired.' });
+    }
+
+    const foundUser = await User.findOne({ _id: sub }).exec();
+
+    if (!foundUser) {
+      return res.status(401).json({ message: 'No user with those credentials found.' });
+    }
+
+    const { admin, email, name } = foundUser;
+
+    res.status(200).json({
+      admin,
+      email,
+      name,
+      token: tokenForUser(foundUser),
+      message: 'Email verified. Logging in...',
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message, message: 'There was an error validating your email.' });
   }
-
-  const foundUser = await User.findOne({ _id: sub }).exec();
-
-  if (!foundUser) {
-    return res.status(401).json({ error: 'No user found' });
-  }
-  // TODO: Finish. Need to authenticate user and save token in local storage on client
-  res.json(foundUser);
 };

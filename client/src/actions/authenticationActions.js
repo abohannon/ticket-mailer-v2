@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch'
+import { fetchHelper } from 'helpers/util'
 
 import {
   PENDING,
@@ -13,7 +14,10 @@ import {
   LOGOUT_USER,
   AUTH_USER,
   SIGNUP_USER,
-} from './types'
+  VERIFY_EMAIL_RESOLVED,
+  VERIFY_EMAIL_PENDING,
+  VERIFY_EMAIL_REJECTED,
+} from 'actions/types'
 
 export const loginUser = body => async (dispatch) => {
   let action = {
@@ -75,6 +79,7 @@ export const authenticateUser = token => async (dispatch) => {
     type: AUTH_USER,
     status: PENDING,
   }
+
   dispatch(action)
 
   const endpoint = `${API_HOST}/auth/user`
@@ -90,9 +95,12 @@ export const authenticateUser = token => async (dispatch) => {
 
   try {
     const response = await fetch(endpoint, options)
-    const json = await response.json()
-    const payload = response.ok ? json : null
+    const payload = await response.json()
     const status = response.ok ? FULFILLED : REJECTED
+
+    if (!localStorage.getItem('tm_id_token')) {
+      localStorage.setItem('tm_id_token', token)
+    }
 
     action = {
       ...action,
@@ -152,5 +160,53 @@ export const signupUser = userData => async (dispatch) => {
     }
 
     dispatch(action)
+  }
+}
+
+export const verifyEmail = queryWithToken => async (dispatch) => {
+  let action = {
+    type: VERIFY_EMAIL_PENDING,
+  }
+
+  dispatch(action)
+
+  const endpoint = `${API_HOST}/auth/verifyEmail${queryWithToken}`
+
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  }
+
+  const options = {
+    method: GET,
+    headers,
+  }
+
+  try {
+    const response = await fetch(endpoint, options)
+    const payload = await response.json()
+
+    if (response.status !== 200) {
+      action = {
+        type: VERIFY_EMAIL_REJECTED,
+        payload,
+      }
+
+      return dispatch(action)
+    }
+
+    action = {
+      type: VERIFY_EMAIL_RESOLVED,
+      payload,
+    }
+
+    return dispatch(action)
+  } catch (err) {
+    action = {
+      type: VERIFY_EMAIL_REJECTED,
+      payload: err,
+    }
+
+    return dispatch(action)
   }
 }

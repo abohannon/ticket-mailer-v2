@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-const { Schema } = mongoose;
+const { Schema } = mongoose
 
 const emailSchema = new Schema({
   variant_id: Number,
@@ -13,8 +13,8 @@ const emailSchema = new Schema({
   digital_delivery_date: Date,
   event_notes: String,
   qr_code_url: String,
-});
+})
 
-const ModelClass = mongoose.model('email', emailSchema);
+const ModelClass = mongoose.model('email', emailSchema)
 
-export default ModelClass;
+export default ModelClass

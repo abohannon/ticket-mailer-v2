@@ -5,7 +5,7 @@ export const emailSentMetafield = (resource, id) => ({
   namespace: 'email',
   owner_resource: resource,
   owner_id: id,
-});
+})
 
 export const emailFailedMetafield = (resource, id, value) => ({
   key: 'email_failed',
@@ -14,7 +14,7 @@ export const emailFailedMetafield = (resource, id, value) => ({
   namespace: 'email',
   owner_resource: resource,
   owner_id: id,
-});
+})
 
 export const generateStringMetafield = data => ({
   key: data.key,
@@ -23,4 +23,4 @@ export const generateStringMetafield = data => ({
   namespace: 'email',
   owner_resource: data.resource,
   owner_id: data.id,
-});
+})

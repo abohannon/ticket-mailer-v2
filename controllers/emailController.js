@@ -1,24 +1,24 @@
-import moment from 'moment';
-import Email from '../models/email';
-import sgMail from '../services/sendgridService';
+import moment from 'moment'
+import Email from '../models/email'
+import sgMail from '../config/sendgrid'
 import {
   generatePersonalizations,
-} from '../services/emailService';
+} from '../services/emailService'
 import {
   fetchMetafields, searchMetafields, createMetafield, updateMetafieldsForOrders,
-} from '../services/dataService';
+} from '../services/dataService'
 
 // TODO: WIP
 export const parseEmailWebhooks = (req, res) => {
-  const { events } = req.body;
+  const { events } = req.body
 
-  console.log(req.body);
+  console.log(req.body)
 };
 
 export const sendTicketEmail = async (req, res) => {
   const {
     content, orders, showTitle, variantTitle, artistName,
-  } = req.body;
+  } = req.body
 
   const {
     check_in,
@@ -30,10 +30,10 @@ export const sendTicketEmail = async (req, res) => {
     shipping_items,
     start_time,
     variant_id,
-  } = content;
+  } = content
 
   try {
-    const personalizations = await generatePersonalizations(orders);
+    const personalizations = await generatePersonalizations(orders)
 
     const message = {
       personalizations,
@@ -53,14 +53,14 @@ export const sendTicketEmail = async (req, res) => {
         digital_items,
         digital_delivery_date: moment(digital_delivery_date).format('M/D/Y'),
       },
-    };
+    }
 
-    const response = await sgMail.sendMultiple(message);
+    const response = await sgMail.sendMultiple(message)
 
-    if (response[0].statusCode !== 202) throw new Error('Problem sending email. Did not receive 202 response.');
+    if (response[0].statusCode !== 202) throw new Error('Problem sending email. Did not receive 202 response.')
 
-    const variantMetafields = await fetchMetafields('variant', variant_id);
-    const priorEmailSentMetafield = searchMetafields(variantMetafields, 'key', 'email_sent');
+    const variantMetafields = await fetchMetafields('variant', variant_id)
+    const priorEmailSentMetafield = searchMetafields(variantMetafields, 'key', 'email_sent')
 
     if (priorEmailSentMetafield.length < 1) {
       const metafieldData = {
@@ -70,50 +70,50 @@ export const sendTicketEmail = async (req, res) => {
         namespace: 'email',
         owner_resource: 'variant',
         owner_id: variant_id,
-      };
+      }
 
-      await createMetafield(metafieldData);
+      await createMetafield(metafieldData)
     }
 
-    await updateMetafieldsForOrders(orders);
+    await updateMetafieldsForOrders(orders)
 
-    return res.status(200).json(response);
+    return res.status(200).json(response)
   } catch (err) {
-    console.log(err.toString());
-    return res.status(500).json({ error: err.message, sendGrid_error: err.response });
+    console.log(err.toString())
+    return res.status(500).json({ error: err.message, sendGrid_error: err.response })
   }
-};
+}
 
 export const saveEmail = async (req, res) => {
-  const { variant_id } = req.body;
+  const { variant_id } = req.body
 
   try {
-    const email = await Email.findOneAndUpdate({ variant_id }, req.body, { upsert: true, new: true });
+    const email = await Email.findOneAndUpdate({ variant_id }, req.body, { upsert: true, new: true })
 
     if (!email) {
-      throw new Error('Error saving email');
+      throw new Error('Error saving email')
     }
 
-    return res.status(201).json(email);
+    return res.status(201).json(email)
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   }
-};
+}
 
 export const fetchEmail = async (req, res) => {
-  const { variant_id } = req.query;
+  const { variant_id } = req.query
 
   try {
-    const foundEmail = await Email.findOne({ variant_id });
+    const foundEmail = await Email.findOne({ variant_id })
 
-    let response = foundEmail;
+    let response = foundEmail
 
     if (!foundEmail) {
-      response = { error: 'No email found' }; // successful request, but no content found
+      response = { error: 'No email found' } // successful request, but no content found
     }
 
-    return res.status(200).json(response);
+    return res.status(200).json(response)
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message })
   }
-};
+}

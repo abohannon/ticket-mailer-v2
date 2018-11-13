@@ -1,26 +1,26 @@
-import express from 'express';
-import passport from 'passport';
+import express from 'express'
+import passport from 'passport'
 import {
   updateUser,
   verifyEmail,
   fetchUsers,
   deleteUser,
-} from '../controllers/userController';
-import passportService from '../services/passportService';
+} from '../controllers/userController'
+import passportConfig from '../config/passport'
 
 // { session: false } tells passport not to create a cookie
-const requireAuth = passport.authenticate('jwt', { session: false });
+const requireAuth = passport.authenticate('jwt', { session: false })
 
-const router = express.Router();
-const userRouter = express.Router();
+const router = express.Router()
+const userRouter = express.Router()
 
-router.post('/updateUser', requireAuth, updateUser);
-router.post('/verifyEmail', verifyEmail);
+router.post('/updateUser', requireAuth, updateUser)
+router.post('/verifyEmail', verifyEmail)
 
-router.get('/fetchUsers', requireAuth, fetchUsers);
+router.get('/fetchUsers', requireAuth, fetchUsers)
 
-router.delete('/deleteUser', requireAuth, deleteUser);
+router.delete('/deleteUser', requireAuth, deleteUser)
 
-userRouter.use('/user', router);
+userRouter.use('/user', router)
 
-export default userRouter;
+export default userRouter

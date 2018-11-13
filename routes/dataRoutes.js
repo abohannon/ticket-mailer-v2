@@ -1,28 +1,28 @@
-import express from 'express';
-import passport from 'passport';
+import express from 'express'
+import passport from 'passport'
 import {
   fetchTours,
   fetchShows,
   fetchOrders,
   fetchMetafieldsForResource,
   fetchSingleMetafield,
-} from '../controllers/dataController';
-import passportService from '../services/passportService';
+} from '../controllers/dataController'
+import passportConfig from '../config/passport'
 
-const requireAuth = passport.authenticate('jwt', { session: false });
+const requireAuth = passport.authenticate('jwt', { session: false })
 
-const router = express.Router();
-const dataRouter = express.Router();
+const router = express.Router()
+const dataRouter = express.Router()
 
-router.use(requireAuth);
+router.use(requireAuth)
 
-router.get('/fetchTours', fetchTours);
-router.get('/fetchShows', fetchShows);
-router.get('/fetchOrders', fetchOrders);
+router.get('/fetchTours', fetchTours)
+router.get('/fetchShows', fetchShows)
+router.get('/fetchOrders', fetchOrders)
 
-router.get('/fetchMetafieldsForResource', fetchMetafieldsForResource);
-router.get('/fetchSingleMetafield', fetchSingleMetafield);
+router.get('/fetchMetafieldsForResource', fetchMetafieldsForResource)
+router.get('/fetchSingleMetafield', fetchSingleMetafield)
 
-dataRouter.use('/data', router);
+dataRouter.use('/data', router)
 
-export default dataRouter;
+export default dataRouter

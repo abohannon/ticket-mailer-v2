@@ -1,41 +1,45 @@
-import express from 'express';
-import http from 'http';
-import bodyParser from 'body-parser';
-import morgan from 'morgan';
-import mongoose from 'mongoose';
-import authRouter from './routes/authRoutes';
-import dataRouter from './routes/dataRoutes';
-import userRouter from './routes/userRoutes';
-import emailRouter from './routes/emailRoutes';
+import express from 'express'
+import http from 'http'
+import bodyParser from 'body-parser'
+import morgan from 'morgan'
+import mongoose from 'mongoose'
+import redisdb from './config/redis'
+import authRouter from './routes/authRoutes'
+import dataRouter from './routes/dataRoutes'
+import userRouter from './routes/userRoutes'
+import emailRouter from './routes/emailRoutes'
 
-mongoose.Promise = Promise;
+const app = express()
+const ENV = process.env.NODE_ENV || 'development'
 
-// DB Setup
-mongoose.connect(process.env.MONGO_URI, () => console.log('YEWWWWW MongoDB connected!'));
+// Redis
+redisdb(ENV)
 
-// App setup
-const app = express();
-app.use(morgan('combined'));
-app.use(bodyParser.json());
+// MongoDB Setup
+mongoose.connect(process.env.MONGO_URI, () => console.log('YEWWWWW MongoDB connected!'))
+
+// Express middleware
+app.use(morgan('dev'))
+app.use(bodyParser.json())
 
 // Routes
-app.use('/api', dataRouter);
-app.use('/api', authRouter);
-app.use('/api', userRouter);
-app.use('/api', emailRouter);
+app.use('/api', dataRouter)
+app.use('/api', authRouter)
+app.use('/api', userRouter)
+app.use('/api', emailRouter)
 
 // Serve static files for production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/dist'));
+  app.use(express.static('client/dist'))
 
-  const path = require('path');
+  const path = require('path')
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
-  });
+    res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'))
+  })
 }
 
 // Server setup
-const PORT = process.env.PORT || 3001;
-const server = http.createServer(app);
-server.listen(PORT);
-console.log(`Server listening on ${PORT}`);
+const PORT = process.env.PORT || 3001
+const server = http.createServer(app)
+server.listen(PORT)
+console.log(`Server listening on ${PORT}`)

@@ -11,6 +11,7 @@
         "no-param-reassign": 0,
         "no-restricted-syntax": 0,
         "no-prototype-builtins": 0,
-        "import/prefer-default-export": 0
+        "import/prefer-default-export": 0,
+        "semi": [2, "never"]
     }
 }

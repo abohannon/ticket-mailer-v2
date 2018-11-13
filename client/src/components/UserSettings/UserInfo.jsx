@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Input, Button, Popconfirm } from 'antd'
+import { CARD_TITLE_PRIMARY } from 'constants'
+
+import { Card } from 'components/common'
 
 const StyledForm = styled.form`
   width: 30rem;
@@ -53,29 +56,34 @@ class UserInfoForm extends Component {
 
   render() {
     return (
-      <StyledForm>
-        <InputWrapper>
-          <StyledLabel>
+      <Card
+        title="User Settings"
+        headStyle={CARD_TITLE_PRIMARY}
+      >
+        <StyledForm>
+          <InputWrapper>
+            <StyledLabel>
             Email:
-            <Input name="email" value={this.state.email} onChange={this.handleChange} />
-          </StyledLabel>
-        </InputWrapper>
-        <InputWrapper>
-          <StyledLabel>
+              <Input name="email" value={this.state.email} onChange={this.handleChange} />
+            </StyledLabel>
+          </InputWrapper>
+          <InputWrapper>
+            <StyledLabel>
             Name:
-            <Input name="name" value={this.state.name} onChange={this.handleChange} />
-          </StyledLabel>
-        </InputWrapper>
-        <Popconfirm
-          placement="right"
-          title="Are you sure you want to change your user info?"
-          onConfirm={this.handleSubmit}
-          okText="Yep"
-          cancelText="Nope"
-        >
-          <Button type="primary">Update</Button>
-        </Popconfirm>
-      </StyledForm>
+              <Input name="name" value={this.state.name} onChange={this.handleChange} />
+            </StyledLabel>
+          </InputWrapper>
+          <Popconfirm
+            placement="right"
+            title="Are you sure you want to change your user info?"
+            onConfirm={this.handleSubmit}
+            okText="Yep"
+            cancelText="Nope"
+          >
+            <Button type="primary">Update</Button>
+          </Popconfirm>
+        </StyledForm>
+      </Card>
     )
   }
 }

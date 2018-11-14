@@ -20,16 +20,41 @@ class TeamRoles extends Component {
     selectedUser: {},
   }
 
+  // TODO: Refactor this...
   handleModal = (action, data, callback) => {
-    console.log('handleModal')
-    console.log(action, data, callback)
     switch (action) {
       case 'removeAdmin': {
-        console.log('inside remove admin')
         this.setState({
           modalVisible: true,
-          modal: this.renderAdminModal(),
           selectedUser: data,
+        }, () => {
+          this.setState({ modal: this.renderRemoveAdminModal() })
+        })
+        break
+      }
+      case 'deleteUser': {
+        this.setState({
+          modalVisible: true,
+          selectedUser: data,
+        }, () => {
+          this.setState({ modal: this.renderDeleteUserModal() })
+        })
+        break
+      }
+      case 'makeAdmin': {
+        this.setState({
+          modalVisible: true,
+          selectedUser: data,
+        }, () => {
+          this.setState({ modal: this.renderMakeAdminModal() })
+        })
+        break
+      }
+      case 'invite': {
+        this.setState({
+          modalVisible: true,
+        }, () => {
+          this.setState({ modal: this.renderInviteModal() })
         })
         break
       }
@@ -49,27 +74,7 @@ class TeamRoles extends Component {
     }
   }
 
-  setModalVisible = (status, type, user) => {
-    switch (type) {
-      case 'removeAdmin':
-        this.setState({ removeAdminModalVisible: status })
-        break
-      case 'deleteUser':
-        this.setState({ deleteUserModalVisible: status })
-        break
-      case 'makeAdmin':
-        this.setState({ makeAdminModalVisible: status })
-        break
-      default:
-        return null
-    }
-  }
-
-  selectUser = (selectedUser, modal) => {
-    this.setState({ selectedUser }, () => this.setModalVisible(true, modal))
-  }
-
-  renderAdminModal = () => {
+  renderRemoveAdminModal = () => {
     const { modalVisible } = this.state
 
     return (
@@ -78,7 +83,7 @@ class TeamRoles extends Component {
         centered
         visible={modalVisible}
         onOk={() => this.handleModal('closeModal', null, () => console.log('OK!'))}
-        onCancel={() => console.log('onCancel')}
+        onCancel={() => this.handleModal('closeModal')}
         okText="Confirm"
         cancelText="Close"
       >
@@ -87,20 +92,76 @@ class TeamRoles extends Component {
     )
   }
 
+  renderDeleteUserModal = () => {
+    const { modalVisible, selectedUser: { userId } } = this.state
+    const { deleteUser } = this.props
+
+    return (
+      <Modal
+        title="Delete user"
+        centered
+        visible={modalVisible}
+        onOk={() => this.handleModal('closeModal', null, () => deleteUser(userId))}
+        onCancel={() => this.handleModal('closeModal')}
+        okText="Confirm"
+        cancelText="Close"
+      >
+      Are you sure you want to delete this user from Ticket Mailer?
+      </Modal>
+    )
+  }
+
+  renderMakeAdminModal = () => {
+    const { modalVisible } = this.state
+
+    return (
+      <Modal
+        title="Promote user to admin"
+        centered
+        visible={modalVisible}
+        onOk={() => this.handleModal('closeModal', null, () => console.log('Make admin!'))}
+        onCancel={() => this.handleModal('closeModal')}
+        okText="Confirm"
+        cancelText="Close"
+      >
+        Are you sure you want to promote this user to admin?
+      </Modal>
+    )
+  }
+
+  renderInviteModal = () => {
+    const { modalVisible } = this.state
+
+    return (
+      <Modal
+        title="Invite new team member to join Ticket Mailer"
+        centered
+        visible={modalVisible}
+        onOk={() => this.handleModal('closeModal')}
+        onCancel={() => this.handleModal('closeModal')}
+        okText="Confirm"
+        cancelText="Close"
+      >
+        <input />
+      </Modal>
+    )
+  }
+
+
   renderAdminActions = user => ([
     <a href="#" onClick={() => this.handleModal('removeAdmin', user)}>Remove admin</a>,
-    <a href="#" onClick={() => this.selectUser(user, 'deleteUser')}>Delete user</a>,
+    <a href="#" onClick={() => this.handleModal('deleteUser', user)}>Delete user</a>,
   ])
 
   renderEditorActions = user => ([
-    <a href="#" onClick={() => this.selectUser(user, 'makeAdmin')}>Make admin</a>,
-    <a href="#" onClick={() => this.selectUser(user, 'deleteUser')}>Delete user</a>,
+    <a href="#" onClick={() => this.handleModal('makeAdmin', user)}>Make admin</a>,
+    <a href="#" onClick={() => this.handleModal('deleteUser', user)}>Delete user</a>,
   ])
 
   renderInviteButton = () => (
     <Button
       type="primary"
-      onClick={() => console.log('Invite User')}
+      onClick={() => this.handleModal('invite')}
     >
       Invite team member
     </Button>
@@ -149,7 +210,6 @@ class TeamRoles extends Component {
           <List
             size="small"
             header={<div style={{ fontWeight: 700 }}>Editor</div>}
-
             dataSource={editorData}
             renderItem={item => (
               <List.Item actions={isAdmin && this.renderEditorActions(item)}>{item.name}</List.Item>

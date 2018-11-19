@@ -1,3 +1,10 @@
+// Globals
+export const ENV = process.env || {}
+
+export const DEV = ENV.NODE_ENV === 'development'
+export const STAGING = ENV.NODE_ENV === 'staging'
+export const PROD = ENV.NODE_ENV === 'production'
+
 // Async States
 export const FULFILLED = 'FULFILLED'
 export const PENDING = 'PENDING'

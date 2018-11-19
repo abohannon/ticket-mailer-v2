@@ -16,6 +16,7 @@ import {
   loginUser,
   authenticateUser,
   signupUser,
+  verifyToken,
 } from 'actions/authenticationActions'
 
 const Wrapper = styled.div`
@@ -42,6 +43,8 @@ export class Landing extends Component {
       authentication: { isAuthenticated },
       history,
       dispatch,
+      location,
+      path,
     } = this.props
 
     if (isAuthenticated) {
@@ -53,13 +56,34 @@ export class Landing extends Component {
     if (token && !isAuthenticated) {
       dispatch(authenticateUser(token))
     }
+
+    if (path === '/signup') {
+      dispatch(verifyToken(location.search))
+    }
   }
 
   componentDidUpdate(prevProps) {
-    const { authentication: { isAuthenticated }, history } = this.props
+    const {
+      authentication: {
+        isAuthenticated,
+        verifyTokenPending,
+        verifyTokenResolved,
+        verifyTokenRejected,
+      },
+      history,
+    } = this.props
 
     if (!prevProps.isAuthenticated && isAuthenticated) {
       history.push('/dashboard')
+    }
+
+    // if verifyToken is no longer pending...
+    if (!isEmpty(prevProps.authentication.verifyTokenPending) && isEmpty(verifyTokenPending)) {
+      // ...and if the token comes back rejected (i.e. doesn't exist), redirect user to
+      // landing page to keep signup page invite only.
+      if (!isEmpty(verifyTokenRejected) && isEmpty(verifyTokenResolved)) {
+        history.push('/')
+      }
     }
   }
 

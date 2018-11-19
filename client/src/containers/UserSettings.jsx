@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import isEmpty from 'lodash/isEmpty'
-import { CARD_TITLE_PRIMARY, CARD_TITLE_SECONDARY } from 'constants'
 
-import { Card, Spacer } from 'components/common'
+import { Spacer } from 'components/common'
 
 // Components
-import UserInfoForm from 'components/UserSettings/UserInfoForm'
+import UserInfo from 'components/UserSettings/UserInfo'
 import TeamRoles from 'components/UserSettings/TeamRoles'
 
 // Actions
@@ -42,7 +41,7 @@ class UserSettings extends Component {
   render() {
     const { currentUser, user } = this.props
 
-    const userInfoFormProps = {
+    const userInfoProps = {
       currentUser,
       user,
       updateUserInfo: this.updateUserInfo,
@@ -56,19 +55,9 @@ class UserSettings extends Component {
 
     return (
       <div>
-        <Card
-          title="User Settings"
-          headStyle={CARD_TITLE_PRIMARY}
-        >
-          <UserInfoForm {...userInfoFormProps} />
-        </Card>
+        <UserInfo {...userInfoProps} />
         <Spacer />
-        <Card
-          title="Team roles"
-          headStyle={CARD_TITLE_SECONDARY}
-        >
-          <TeamRoles {...teamRolesProps} />
-        </Card>
+        <TeamRoles {...teamRolesProps} />
       </div>
     )
   }

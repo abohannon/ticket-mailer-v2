@@ -1,9 +1,7 @@
 import moment from 'moment'
 import Email from '../models/email'
 import sgMail from '../config/sendgrid'
-import {
-  generatePersonalizations,
-} from '../services/emailService'
+import { generatePersonalizations } from '../services/emailService'
 import {
   fetchMetafields, searchMetafields, createMetafield, updateMetafieldsForOrders,
 } from '../services/dataService'
@@ -13,7 +11,7 @@ export const parseEmailWebhooks = (req, res) => {
   const { events } = req.body
 
   console.log(req.body)
-};
+}
 
 export const sendTicketEmail = async (req, res) => {
   const {

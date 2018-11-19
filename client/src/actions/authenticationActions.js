@@ -17,6 +17,9 @@ import {
   VERIFY_EMAIL_RESOLVED,
   VERIFY_EMAIL_PENDING,
   VERIFY_EMAIL_REJECTED,
+  VERIFY_TOKEN_RESOLVED,
+  VERIFY_TOKEN_PENDING,
+  VERIFY_TOKEN_REJECTED,
 } from 'actions/types'
 
 export const loginUser = body => async (dispatch) => {
@@ -204,6 +207,53 @@ export const verifyEmail = queryWithToken => async (dispatch) => {
   } catch (err) {
     action = {
       type: VERIFY_EMAIL_REJECTED,
+      payload: err,
+    }
+
+    return dispatch(action)
+  }
+}
+
+export const verifyToken = queryWithToken => async (dispatch) => {
+  let action = {
+    type: VERIFY_TOKEN_PENDING,
+  }
+  dispatch(action)
+
+  const endpoint = `${API_HOST}/user/verifyToken${queryWithToken}`
+
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  }
+
+  const options = {
+    method: GET,
+    headers,
+  }
+
+  try {
+    const response = await fetch(endpoint, options)
+    const payload = await response.json()
+
+    if (response.status !== 200) {
+      action = {
+        type: VERIFY_TOKEN_REJECTED,
+        payload,
+      }
+
+      return dispatch(action)
+    }
+
+    action = {
+      type: VERIFY_TOKEN_RESOLVED,
+      payload,
+    }
+
+    return dispatch(action)
+  } catch (err) {
+    action = {
+      type: VERIFY_TOKEN_REJECTED,
       payload: err,
     }
 

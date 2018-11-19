@@ -1,8 +1,10 @@
 import redis from 'redis'
 import { logger } from '../helpers/utils'
+import { userController } from '../controllers/userController'
 
 const {
   DEV_REDISTOGO_URL,
+  PROD_REDISTOGO_URL,
 } = process.env
 
 export default (ENV) => {
@@ -20,14 +22,13 @@ export default (ENV) => {
   }
 
   if (client) {
-    client.on('ready', () => {
+    client.on('connect', () => {
       logger.info('Redis connection established.')
     })
-      .on('end', () => {
-        logger.warn('Redis connection closed.')
-      })
       .on('error', (err) => {
         logger.debug('Redis connection error:', err, err.stack)
       })
+
+    userController.setRedisClient(client)
   }
 }

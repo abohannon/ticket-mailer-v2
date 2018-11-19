@@ -6,6 +6,9 @@ import {
   VERIFY_EMAIL_RESOLVED,
   VERIFY_EMAIL_PENDING,
   VERIFY_EMAIL_REJECTED,
+  VERIFY_TOKEN_RESOLVED,
+  VERIFY_TOKEN_PENDING,
+  VERIFY_TOKEN_REJECTED,
 } from 'actions/types'
 
 import {
@@ -22,6 +25,9 @@ const INITIAL_STATE = {
   verifyEmailResolved: {},
   verifyEmailPending: {},
   verifyEmailRejected: {},
+  verifyTokenResolved: {},
+  verifyTokenPending: {},
+  verifyTokenRejected: {},
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -122,6 +128,30 @@ export default (state = INITIAL_STATE, action) => {
         verifyEmailResolved: {},
         verifyEmailPending: {},
         verifyEmailRejected: action,
+      }
+      return { ...state, ...newState }
+    }
+    case VERIFY_TOKEN_RESOLVED: {
+      const newState = {
+        verifyTokenResolved: action,
+        verifyTokenPending: {},
+        verifyTokenRejected: {},
+      }
+      return { ...state, ...newState }
+    }
+    case VERIFY_TOKEN_PENDING: {
+      const newState = {
+        verifyTokenResolved: {},
+        verifyTokenPending: action,
+        verifyTokenRejected: {},
+      }
+      return { ...state, ...newState }
+    }
+    case VERIFY_TOKEN_REJECTED: {
+      const newState = {
+        verifyTokenResolved: {},
+        verifyTokenPending: {},
+        verifyTokenRejected: action,
       }
       return { ...state, ...newState }
     }

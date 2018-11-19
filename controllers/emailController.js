@@ -1,41 +1,10 @@
 import moment from 'moment'
-import uuidv4 from 'uuid'
 import Email from '../models/email'
 import sgMail from '../config/sendgrid'
-import {
-  generatePersonalizations,
-  sendSingleEmail,
-} from '../services/emailService'
+import { generatePersonalizations } from '../services/emailService'
 import {
   fetchMetafields, searchMetafields, createMetafield, updateMetafieldsForOrders,
 } from '../services/dataService'
-
-export const inviteNewUser = async (req, res) => {
-  const { email } = req.query
-
-  const uuid = uuidv4()
-
-  const link = `${process.env.HOST_URL}/signup?token=${uuid}`
-
-  const message = {
-    to: email,
-    from: 'no-reply@showstubs.com',
-    subject: 'Team member invite to SHOWstubs Ticket Mailer',
-    html: `
-    <p>You've been invited to join the SHOWstubs Ticket Mailer admin dashboard.</p>
-    <br>
-    <p><a href="${link}">Click here</a> to sign up.</p>
-    <p>*Link only valid for 24 hours.</p>
-    `,
-  }
-
-  try {
-    const response = await sendSingleEmail(message)
-    return res.status(200).json(response)
-  } catch (err) {
-    return res.status(500).json({ error: err.message })
-  }
-}
 
 // TODO: WIP
 export const parseEmailWebhooks = (req, res) => {

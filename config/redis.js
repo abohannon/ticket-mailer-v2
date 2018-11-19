@@ -1,5 +1,6 @@
 import redis from 'redis'
 import { logger } from '../helpers/utils'
+import { userController } from '../controllers/userController'
 
 const {
   DEV_REDISTOGO_URL,
@@ -27,5 +28,7 @@ export default (ENV) => {
       .on('error', (err) => {
         logger.debug('Redis connection error:', err, err.stack)
       })
+
+    userController.setRedisClient(client)
   }
 }

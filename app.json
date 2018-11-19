@@ -1,0 +1,44 @@
+{
+  "name": "ticket-mailer-v2",
+  "scripts": {
+  },
+  "env": {
+    "DEV_REDISTOGO_URL": {
+      "required": true
+    },
+    "JWT_SECRET": {
+      "required": true
+    },
+    "MONGO_URI": {
+      "required": true
+    },
+    "SENDGRID_API_KEY": {
+      "required": true
+    },
+    "SHOPIFY_API_ACCESS_TOKEN": {
+      "required": true
+    },
+    "SHOPIFY_API_KEY": {
+      "required": true
+    },
+    "SHOPIFY_API_PASSWORD": {
+      "required": true
+    },
+    "SHOPIFY_STORE_NAME": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

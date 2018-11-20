@@ -8,11 +8,51 @@ import {
   DELETE_USER_RESOLVED,
   DELETE_USER_PENDING,
   DELETE_USER_REJECTED,
+  INVITE_USER_RESOLVED,
+  INVITE_USER_PENDING,
+  INVITE_USER_REJECTED,
 } from 'actions/types'
 
 import { GET, POST, DELETE } from 'constants'
 
 import { fetchHelper } from 'helpers/util'
+
+export const inviteUser = email => async (dispatch) => {
+  let action = {
+    type: INVITE_USER_PENDING,
+  }
+  dispatch(action)
+
+  const endpoint = `${API_HOST}/user/inviteNewUser?email=${email}`
+
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    authorization: localStorage.getItem('tm_id_token'),
+  }
+
+  const options = {
+    method: GET,
+    headers,
+  }
+
+  try {
+    const payload = fetchHelper(endpoint, options)
+
+    action = {
+      type: INVITE_USER_RESOLVED,
+      payload,
+    }
+
+    dispatch(action)
+  } catch (err) {
+    action = {
+      type: INVITE_USER_REJECTED,
+      payload: err,
+    }
+    dispatch(action)
+  }
+}
 
 export const deleteUser = userId => async (dispatch) => {
   let action = {

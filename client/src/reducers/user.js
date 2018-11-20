@@ -8,6 +8,9 @@ import {
   DELETE_USER_RESOLVED,
   DELETE_USER_PENDING,
   DELETE_USER_REJECTED,
+  INVITE_USER_RESOLVED,
+  INVITE_USER_PENDING,
+  INVITE_USER_REJECTED,
 } from 'actions/types'
 
 const INITIAL_STATE = {
@@ -20,6 +23,9 @@ const INITIAL_STATE = {
   deleteUserResolved: {},
   deleteUserPending: {},
   deleteUserRejected: {},
+  inviteUserResolved: {},
+  inviteUserPending: {},
+  inviteUserRejected: {},
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -100,6 +106,32 @@ export default (state = INITIAL_STATE, action) => {
         deleteUserResolved: {},
         deleteUserPending: {},
         deleteUserRejected: action,
+      }
+      return { ...state, ...newState }
+    }
+    case INVITE_USER_RESOLVED: {
+      const newState = {
+        inviteUserResolved: action,
+        inviteUserPending: {},
+        inviteUserRejected: {},
+      }
+
+      return { ...state, ...newState }
+    }
+    case INVITE_USER_PENDING: {
+      const newState = {
+        inviteUserResolved: {},
+        inviteUserPending: action,
+        inviteUserRejected: {},
+      }
+
+      return { ...state, ...newState }
+    }
+    case INVITE_USER_REJECTED: {
+      const newState = {
+        inviteUserResolved: {},
+        inviteUserPending: {},
+        inviteUserRejected: action,
       }
       return { ...state, ...newState }
     }

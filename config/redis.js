@@ -11,6 +11,7 @@ export default (ENV) => {
   let client
 
   switch (ENV) {
+    case 'local':
     case 'development':
       client = redis.createClient(DEV_REDISTOGO_URL)
       break

@@ -15,7 +15,7 @@
     ],
     "globals": {
       "NODE_ENV": true,
-      "API_HOST": true
+      "API": true
     }
   },
   "proxy": {
@@ -25,7 +25,9 @@
   },
   "scripts": {
     "start": "webpack --config webpack.prod.js",
+    "local": "webpack-dev-server --config webpack.dev.js",
     "dev": "webpack-dev-server --config webpack.dev.js",
+    "prod": "yarn start",
     "build": "webpack --config webpack.prod.js",
     "build:dev": "webpack --config webpack.dev.js",
     "test": "NODE_ENV=test jest --verbose"

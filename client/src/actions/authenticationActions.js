@@ -7,6 +7,7 @@ import {
   REJECTED,
   POST,
   GET,
+  API,
 } from 'constants'
 
 import {
@@ -29,7 +30,7 @@ export const loginUser = body => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = `${API_HOST}/auth/login`
+  const endpoint = `${API}/auth/login`
 
   const headers = {
     Accept: 'application/json',
@@ -85,7 +86,7 @@ export const authenticateUser = token => async (dispatch) => {
 
   dispatch(action)
 
-  const endpoint = `${API_HOST}/auth/user`
+  const endpoint = `${API}/auth/user`
 
   const headers = {
     authorization: token,
@@ -130,7 +131,7 @@ export const signupUser = userData => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = `${API_HOST}/auth/signup`
+  const endpoint = `${API}/auth/signup`
 
   const headers = {
     Accept: 'application/json',
@@ -173,7 +174,7 @@ export const verifyEmail = queryWithToken => async (dispatch) => {
 
   dispatch(action)
 
-  const endpoint = `${API_HOST}/auth/verifyEmail${queryWithToken}`
+  const endpoint = `${API}/auth/verifyEmail${queryWithToken}`
 
   const headers = {
     Accept: 'application/json',
@@ -220,7 +221,7 @@ export const verifyToken = queryWithToken => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = `${API_HOST}/user/verifyToken${queryWithToken}`
+  const endpoint = `${API}/user/verifyToken${queryWithToken}`
 
   const headers = {
     Accept: 'application/json',

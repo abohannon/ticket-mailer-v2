@@ -1,9 +1,22 @@
 // Globals
-export const ENV = process.env || {}
+export const BROWSER = typeof window === 'object'
+export const SERVER = typeof process === 'object'
 
-export const DEV = ENV.NODE_ENV === 'development'
-export const STAGING = ENV.NODE_ENV === 'staging'
-export const PROD = ENV.NODE_ENV === 'production'
+export const ENV = (SERVER && process.env) || {}
+
+export const LOCAL = (SERVER && ENV.NODE_ENV === 'local') || (BROWSER && process.env.NODE_ENV === 'local')
+export const DEVELOPMENT = (BROWSER && process.env.NODE_ENV === 'staging') || (BROWSER && process.env.NODE_ENV === 'development')
+export const STAGING = (SERVER && ENV.NODE_ENV === 'staging') || (SERVER && ENV.NODE_ENV === 'development')
+
+export const DEV = STAGING || DEVELOPMENT
+export const PROD = (SERVER && ENV.NODE_ENV === 'production') || (BROWSER && process.env.NODE_ENV === 'production')
+
+export const FETCHAPI = (SERVER && ENV.FETCHAPI)
+|| (BROWSER && sessionStorage.getItem('TMAPIFETCH'))
+|| 'http://localhost:3000/api'
+
+export const API = DEV ? BROWSER && DEV_API_ENDPOINT
+  : PROD ? BROWSER && PROD_API_ENDPOINT : FETCHAPI
 
 // Async States
 export const FULFILLED = 'FULFILLED'

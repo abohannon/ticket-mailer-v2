@@ -5,7 +5,9 @@ import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import isEmpty from 'lodash/isEmpty'
 import { AUTH_USER } from 'actions/types'
-import { BLUE, LIGHT_BLUE } from 'constants'
+import {
+  ENV, DEV, BLUE, LIGHT_BLUE,
+} from 'constants'
 
 // Components
 import Login from 'components/Login'
@@ -88,6 +90,7 @@ export class Landing extends Component {
   }
 
   render() {
+    console.log(process.env.NODE_ENV)
     const { dispatch, authentication } = this.props
 
     if (authentication && !isEmpty(authentication.pending)

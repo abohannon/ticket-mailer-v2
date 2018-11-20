@@ -10,8 +10,10 @@
   "scripts": {
     "start": "node server.babel.js",
     "server": "nodemon --exec babel-node --presets @babel/preset-env --require node_modules/dotenv/config index.js",
-    "client": "npm run dev --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client:dev": "NODE_ENV=development npm run dev --prefix client",
+    "client:local": "NODE_ENV=local npm run local --prefix client",
+    "local": "concurrently \"npm run server\" \"npm run client:local\"",
+    "dev": "concurrently \"npm run server\" \"npm run client:dev\"",
     "client:test": "npm run test --prefix client",
     "heroku-postbuild": "cd client && yarn install && npm run build"
   },

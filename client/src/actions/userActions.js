@@ -13,7 +13,9 @@ import {
   INVITE_USER_REJECTED,
 } from 'actions/types'
 
-import { GET, POST, DELETE } from 'constants'
+import {
+ GET, POST, DELETE, API 
+} from 'constants'
 
 import { fetchHelper } from 'helpers/util'
 
@@ -23,7 +25,7 @@ export const inviteUser = email => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = `${API_HOST}/user/inviteNewUser?email=${email}`
+  const endpoint = `${API}/user/inviteNewUser?email=${email}`
 
   const headers = {
     Accept: 'application/json',
@@ -60,7 +62,7 @@ export const deleteUser = userId => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = `${API_HOST}/user/deleteUser?userId=${userId}`
+  const endpoint = `${API}/user/deleteUser?userId=${userId}`
 
   const headers = {
     Accept: 'application/json',
@@ -97,7 +99,7 @@ export const fetchUsers = () => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = `${API_HOST}/user/fetchUsers`
+  const endpoint = `${API}/user/fetchUsers`
 
   const headers = {
     Accept: 'application/json',
@@ -134,7 +136,7 @@ export const updateUser = updatedUserData => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = `${API_HOST}/user/updateUser`
+  const endpoint = `${API}/user/updateUser`
 
   const headers = {
     Accept: 'application/json',

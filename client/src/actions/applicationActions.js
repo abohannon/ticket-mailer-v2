@@ -10,7 +10,7 @@ import {
   FETCH_ORDERS_REJECTED,
 } from 'actions/types'
 
-import { GET } from 'constants'
+import { GET, API } from 'constants'
 
 import { fetchHelper } from 'helpers/util'
 
@@ -29,7 +29,7 @@ export const fetchTours = () => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = `${API_HOST}/data/fetchTours`
+  const endpoint = `${API}/data/fetchTours`
 
   const headers = {
     Accept: 'application/json',
@@ -66,7 +66,7 @@ export const fetchShows = searchQuery => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = searchQuery ? `${API_HOST}/data/fetchShows${searchQuery}` : `${API_HOST}/data/fetchShows`
+  const endpoint = searchQuery ? `${API}/data/fetchShows${searchQuery}` : `${API}/data/fetchShows`
 
   const headers = {
     Accept: 'application/json',
@@ -103,7 +103,7 @@ export const fetchOrders = searchQuery => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = searchQuery ? `${API_HOST}/data/fetchOrders${searchQuery}` : `${API_HOST}/data/fetchOrders`
+  const endpoint = searchQuery ? `${API}/data/fetchOrders${searchQuery}` : `${API}/data/fetchOrders`
 
   const headers = {
     Accept: 'application/json',

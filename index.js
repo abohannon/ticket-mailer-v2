@@ -16,7 +16,7 @@ const ENV = process.env.NODE_ENV || 'development'
 redisdb(ENV)
 
 // MongoDB Setup
-mongoose.connect(process.env.MONGO_URI, () => console.log('YEWWWWW MongoDB connected!'))
+mongoose.connect(process.env.DEV_MONGO_URI, () => console.log('YEWWWWW MongoDB connected!'))
 
 // Express middleware
 app.use(morgan('dev'))

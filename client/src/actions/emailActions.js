@@ -9,7 +9,7 @@ import {
   SEND_EMAIL_PENDING,
   SEND_EMAIL_REJECTED,
 } from 'actions/types'
-import { GET, POST } from 'constants'
+import { GET, POST, API } from 'constants'
 import { fetchHelper } from 'helpers/util'
 
 export const fetchEmail = searchQuery => async (dispatch) => {
@@ -18,7 +18,7 @@ export const fetchEmail = searchQuery => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = `${API_HOST}/email/fetchEmail${searchQuery}`
+  const endpoint = `${API}/email/fetchEmail${searchQuery}`
 
   const headers = {
     Accept: 'application/json',
@@ -55,7 +55,7 @@ export const saveEmail = data => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = `${API_HOST}/email/saveEmail`
+  const endpoint = `${API}/email/saveEmail`
 
   const headers = {
     Accept: 'application/json',
@@ -93,7 +93,7 @@ export const sendEmail = emailData => async (dispatch) => {
   }
   dispatch(action)
 
-  const endpoint = `${API_HOST}/email/sendEmail`
+  const endpoint = `${API}/email/sendEmail`
 
   const headers = {
     Accept: 'application/json',

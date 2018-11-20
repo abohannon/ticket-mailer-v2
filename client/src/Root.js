@@ -6,6 +6,7 @@ import thunk from 'redux-thunk'
 import decode from 'jwt-decode'
 import reducers from 'reducers'
 import { loadState, saveState } from 'helpers/storage'
+import { LOCAL, DEV } from 'constants'
 
 export default ({ children }) => {
   const persistedState = () => {
@@ -27,7 +28,7 @@ export default ({ children }) => {
 
   const middlewares = [thunk]
 
-  if (NODE_ENV === 'development') {
+  if (LOCAL || DEV) {
     const { logger } = require('redux-logger')
     middlewares.push(logger)
   }

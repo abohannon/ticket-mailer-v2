@@ -12,6 +12,8 @@ import emailRouter from './routes/emailRoutes'
 const app = express()
 const ENV = process.env.NODE_ENV || 'development'
 
+console.log(ENV)
+
 // Redis
 redisdb(ENV)
 

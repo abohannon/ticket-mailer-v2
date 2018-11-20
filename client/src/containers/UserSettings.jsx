@@ -11,6 +11,7 @@ import TeamRoles from 'components/UserSettings/TeamRoles'
 
 // Actions
 import { updateUser, fetchUsers, deleteUser } from 'actions/userActions'
+import { showModal } from 'actions/modalActions'
 
 class UserSettings extends Component {
   componentDidMount() {
@@ -39,7 +40,7 @@ class UserSettings extends Component {
   }
 
   render() {
-    const { currentUser, user } = this.props
+    const { currentUser, user, dispatch } = this.props
 
     const userInfoProps = {
       currentUser,
@@ -51,6 +52,7 @@ class UserSettings extends Component {
       isAdmin: currentUser.admin,
       users: user.fetchUsersResolved,
       deleteUser: this.deleteUser,
+      showModal: (modalType, modalProps) => dispatch(showModal(modalType, modalProps)),
     }
 
     return (

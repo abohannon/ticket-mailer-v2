@@ -1,7 +1,6 @@
 import express from 'express'
 import http from 'http'
 import bodyParser from 'body-parser'
-import cors from 'cors'
 import morgan from 'morgan'
 import mongoose from 'mongoose'
 import redisdb from './config/redis'
@@ -24,7 +23,6 @@ mongoose.connect(process.env.DEV_MONGO_URI, () => console.log('YEWWWWW MongoDB c
 // Express middleware
 app.use(morgan('dev'))
 app.use(bodyParser.json())
-app.use(cors())
 app.set('trust proxy', true)
 
 // Routes

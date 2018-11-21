@@ -23,6 +23,7 @@ mongoose.connect(process.env.DEV_MONGO_URI, () => console.log('YEWWWWW MongoDB c
 // Express middleware
 app.use(morgan('dev'))
 app.use(bodyParser.json())
+app.set('trust proxy', true)
 
 // Routes
 app.use('/api', dataRouter)

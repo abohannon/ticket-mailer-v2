@@ -20,6 +20,7 @@ module.exports = merge(common, {
     new CleanWebpackPlugin(['dist']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
+      SHOPIFY_STORE_URL: JSON.stringify('https://ticketmailerdev.myshopify.com'),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
   ],

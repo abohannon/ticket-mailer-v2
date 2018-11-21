@@ -20,8 +20,6 @@ module.exports = merge(common, {
     new CleanWebpackPlugin(['dist']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      DEV_API_ENDPOINT: JSON.stringify('https://showstubs-tm-staging.herokuapp.com/api'),
-      SHOPIFY_STORE_URL: JSON.stringify('https://ticketmailerdev.myshopify.com'),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     }),
   ],

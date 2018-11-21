@@ -15,6 +15,9 @@ export const FETCHAPI = (SERVER && ENV.FETCHAPI)
 || (BROWSER && sessionStorage.getItem('TMAPIFETCH'))
 || 'http://localhost:3000/api'
 
+export const DEV_API_ENDPOINT = 'https://showstubs-tm-staging/api'
+export const PROD_API_ENDPOINT = 'https://showstubs-prod-staging/api'
+
 export const API = DEV ? BROWSER && DEV_API_ENDPOINT
   : PROD ? BROWSER && PROD_API_ENDPOINT : FETCHAPI
 

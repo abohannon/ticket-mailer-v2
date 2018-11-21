@@ -16,7 +16,7 @@ export const FETCHAPI = (SERVER && ENV.FETCHAPI)
 || 'http://localhost:3000/api'
 
 export const DEV_API_ENDPOINT = 'https://showstubs-tm-staging/api'
-export const PROD_API_ENDPOINT = 'https://showstubs-prod-staging/api'
+export const PROD_API_ENDPOINT = 'https://showstubs-tm-prod/api'
 
 export const API = DEV ? BROWSER && DEV_API_ENDPOINT
   : PROD ? BROWSER && PROD_API_ENDPOINT : FETCHAPI

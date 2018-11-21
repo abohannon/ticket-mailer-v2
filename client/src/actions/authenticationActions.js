@@ -216,6 +216,7 @@ export const verifyEmail = queryWithToken => async (dispatch) => {
 }
 
 export const verifyToken = queryWithToken => async (dispatch) => {
+  console.log('VERIFY TOKEN', queryWithToken)
   let action = {
     type: VERIFY_TOKEN_PENDING,
   }

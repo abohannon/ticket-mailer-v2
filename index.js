@@ -31,7 +31,8 @@ app.use('/api', userRouter)
 app.use('/api', emailRouter)
 
 // Serve static files for production
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production'
+  || process.env.NODE_ENV === 'staging') {
   app.use(express.static('client/dist'))
 
   const path = require('path')

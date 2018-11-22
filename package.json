@@ -8,14 +8,18 @@
     "npm": "6.0.1"
   },
   "scripts": {
-    "start": "node server.babel.js",
+    "start": "node ./build/index.js",
     "server": "nodemon --exec babel-node --presets @babel/preset-env --require node_modules/dotenv/config index.js",
     "client:dev": "npm run dev --prefix client",
     "client:local": "npm run local --prefix client",
     "local": "NODE_ENV=local concurrently \"npm run server\" \"npm run client:local\"",
     "dev": "NODE_ENV=development concurrently \"npm run server\" \"npm run client:dev\"",
     "client:test": "npm run test --prefix client",
-    "heroku-postbuild": "cd client && yarn install && npm run build"
+    "clean": "rm -rf build && mkdir build",
+    "build-server": "babel -d ./build ./ -s",
+    "build-client": "cd client && yarn install && npm run build",
+    "build": "npm run clean && npm run build-server",
+    "heroku-postbuild": "npm run build && npm run build-client"
   },
   "author": "Adam Bohannon",
   "license": "ISC",
